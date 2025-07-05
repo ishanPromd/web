@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Logic Gates Day 2</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style2.css">
+   <link rel="icon" type="image/x-icon" href="https://i.imghippo.com/files/ao9417UdU.png">
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+   <style>
+      /* All your existing CSS remains unchanged */
+      .container {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+      }
+  
+      .player-wrapper {
+          position: relative;
+      }
+  
+      /* Title blocker (top-left 30% width) */
+      .title-blocker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 30%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Share button blocker (top-right 15% width) */
+      .share-blocker {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Center click layer */
+      .center-click-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          cursor: pointer;
+      }
+  
+      iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          z-index: 0;
+      }
+  
+      .plyr__controls {
+          z-index: 2 !important;
+          pointer-events: all !important;
+      }
+
+      /* Original Live Chat Styles */
+      .chat-section {
+          flex: 1;
+          min-width: 20%;
+          height: 435px;
+          background: #1a1a1a;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          overflow: hidden;
+          animation: slideInUp 0.6s ease-out;
+          position: sticky;
+          top: 20px;
+      }
+
+      @keyframes slideInUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      .chat-container { 
+          background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+          border: 1px solid #333;
+          border-radius: 12px;
+          color: #e0e0e0;
+          height: 415px;
+          padding-bottom: 10px;
+      }
+      
+      .chat-header { 
+          padding: 15px 20px; 
+          background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+          border-bottom: 1px solid #444; 
+          display: flex; 
+          justify-content: space-between; 
+          font-size: 0.95em;
+          font-weight: 600;
+          color: #f0f0f0;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      .chat-messages { 
+          height: 410px; 
+          overflow-y: auto; 
+          padding: 15px;
+          background: #1a1a1a;
+          scrollbar-width: thin;
+          scrollbar-color: #555 #2d2d2d;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+          width: 8px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+          background: #2d2d2d;
+          border-radius: 4px;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+          background: #555;
+          border-radius: 4px;
+          transition: background 0.3s ease;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb:hover {
+          background: #777;
+      }
+      
+      .message { 
+          margin-bottom: 12px; 
+          padding: 12px 15px; 
+          border-radius: 8px; 
+          background: linear-gradient(135deg, #2d2d2d 0%, #242424 100%);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          border: 1px solid #333;
+          transition: all 0.3s ease;
+          animation: messageSlideIn 0.4s ease-out;
+      }
+
+      @keyframes messageSlideIn {
+          from {
+              opacity: 0;
+              transform: translateX(-20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateX(0);
+          }
+      }
+      
+      .message:hover {
+          background: linear-gradient(135deg, #333 0%, #2a2a2a 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+      
+      .message.highlight { 
+          background: linear-gradient(135deg, #2d4a6b 0%, #1e3a5f 100%);
+          border-color: #4a90e2;
+          box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+      }
+      
+      .message-header { 
+          display: flex; 
+          align-items: center; 
+          margin-bottom: 8px; 
+      }
+      
+      .avatar { 
+          width: 32px; 
+          height: 32px; 
+          border-radius: 50%; 
+          margin-right: 10px;
+          border: 2px solid #444;
+          transition: border-color 0.3s ease;
+      }
+
+      .message:hover .avatar {
+          border-color: #4a90e2;
+      }
+      
+      .author { 
+          font-weight: 600; 
+          margin-right: 10px; 
+          font-size: 12px;
+          color: #4a90e2;
+      }
+      
+      .timestamp { 
+          font-size: 0.8em; 
+          color: #888;
+          background: #333;
+          padding: 2px 6px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.2s;
+      }
+
+      .timestamp:hover {
+          color: #4a90e2;
+          background: #444;
+      }
+      
+      .message-content { 
+          font-size: 12px; 
+          line-height: 1.5;
+          color: #e0e0e0;
+          word-break: break-word;
+      }
+      
+      .controls { 
+          padding: 15px 20px; 
+          background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+          border-top: 1px solid #444; 
+          display: flex; 
+          flex-wrap: wrap; 
+          gap: 12px; 
+          align-items: center;
+      }
+      
+      .search-container { 
+          display: flex; 
+          align-items: center; 
+          background: #2d2d2d;
+          border: 1px solid #555; 
+          border-radius: 6px; 
+          padding: 0 10px;
+          transition: all 0.3s ease;
+          flex: 1;
+          min-width: 200px;
+      }
+
+      .search-container:focus-within {
+          border-color: #4a90e2;
+          box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      }
+      
+      .search-container i { 
+          margin-right: 8px; 
+          color: #888;
+          transition: color 0.3s ease;
+      }
+
+      .search-container:focus-within i {
+          color: #4a90e2;
+      }
+      
+      #searchInput { 
+          border: none; 
+          outline: none; 
+          padding: 10px 5px; 
+          font-size: 0.9em;
+          background: transparent;
+          color: #e0e0e0;
+          flex: 1;
+      }
+
+      #searchInput::placeholder {
+          color: #888;
+      }
+      
+      .controls button { 
+          padding: 10px 15px; 
+          border: none; 
+          border-radius: 6px; 
+          cursor: pointer; 
+          background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+          color: white; 
+          font-size: 0.9em;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+      }
+      
+      .controls button:hover { 
+          background: linear-gradient(135deg, #357abd 0%, #2968a3 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+      }
+      
+      .controls button.off { 
+          background: linear-gradient(135deg, #666 0%, #555 100%);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .controls button.off:hover {
+          background: linear-gradient(135deg, #777 0%, #666 100%);
+      }
+      
+      .time-indicator { 
+          padding: 10px 15px; 
+          font-size: 0.9em; 
+          color: #bbb; 
+          text-align: center;
+          background: #242424;
+          border-radius: 6px;
+          border: 1px solid #333;
+      }
+      
+      .progress-bar { 
+          width: 100%; 
+          background: #333;
+          height: 6px; 
+          border-radius: 3px; 
+          overflow: hidden; 
+          margin-top: 8px;
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      .progress-fill { 
+          width: 0%; 
+          background: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
+          height: 100%; 
+          transition: width 0.25s linear;
+          box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+      }
+
+      /* Responsive design */
+      @media (max-width: 1024px) {
+          .watch-video {
+              flex-direction: column;
+              gap: 20px;
+          }
+          
+          .chat-section {
+              min-width: unset;
+              position: static;
+          }
+          
+          .chat-messages {
+              height: 400px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .watch-video {
+              padding: 10px;
+              width: 90%;
+              padding-left: 2.5%;
+          }
+          
+          .watch-video .video-container {
+              width: 100%;
+          }
+          
+          .controls {
+              flex-direction: column;
+              align-items: stretch;
+              gap: 10px;
+          }
+          
+          .search-container {
+              width: 100%;
+              min-width: unset;
+          }
+          
+          .controls button {
+              width: 100%;
+          }
+
+          .chat-messages {
+              height: 300px;
+          }
+          
+          .chat-section {
+              min-width: unset;
+          }
+
+          /* Adjust blocker areas on mobile for better usability */
+          .title-blocker { /* Normal mode mobile */
+              width: 60%;
+              height: 12%;
+          }
+          
+          .share-blocker { /* Normal mode mobile */
+              width: 12%;
+              height: 12%;
+          }
+      }
+   </style>
+</head>
+<body>
+   <main class="content-blur">
+
+        <header class="header">
+
+        <section class="flex">
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+            </div>
+
+            <form action="search.html" method="post" class="search-form">
+                <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+                <button type="submit" class="fas fa-search"></button>
+            </form>
+
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image" alt="">
+                <h3 class="name" id="userName"></h3>
+                <div class="flex-btn">
+                </div>
+            </div>
+
+        </section>
+        </header>   
+        
+        <div class="side-bar">
+
+            <div id="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image">
+                <br>
+                <h3 id="userName" class="name"></h3>
+                <p class="role">student</p>
+            </div>
+
+            <nav class="navbar">
+                <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+                <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+                <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+                <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+            </nav>
+
+            <div class="typing-container">
+                <div class="animation-container">
+                <div id="text"></div>
+                <span class="cursor"></span>
+                </div>
+            </div>
+
+        </div>
+
+<section class="watch-video">
+   <div class="video-container">
+      <div class="video">
+         <div class="container">
+            <div class="player-wrapper">
+                <div class="plyr__video-embed" id="player">
+                    <div class="title-blocker"></div>
+                    <div class="share-blocker"></div>
+                    <div class="center-click-layer"></div>
+                    <iframe
+                        src="https://www.youtube.com/embed/jqWQGP7XBdc?controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1"
+                        allowfullscreen
+                        allow="autoplay"
+                    ></iframe>
+                </div>
+            </div>
+         </div>
+      </div>
+      <h3 class="title">Logic Gates Day 2</h3>
+      <br>
+      <div class="tutorbox">
+        <div class="tutor">
+           <img src="https://yt3.googleusercontent.com/bRzjH5rIbDRaHCiXopbsLJh8w64sKd5QduITMma3GZZd6e5Yr1Jp1uaJlHvNN4E37sMiJNTj0A=s160-c-k-c0x00ffffff-no-rj" alt="">
+           <div>
+              <h3>Raindu Bandaranayake</h3>
+              <span>Teacher</span>
+           </div>
+        </div>
+      </div>
+   </div>
+   
+   <div class="chat-section">
+       <div class="chat-container">
+           <div class="chat-header">
+               <span><i class="fas fa-message"></i> Live Chat Replay</span>
+               <span id="chatMessageCount">0 messages</span>
+           </div>
+           <div class="chat-messages" id="chatMessages">
+               <!-- Messages will be inserted here by JavaScript -->
+           </div>
+           <div class="controls">
+               <div class="search-container">
+                   <i class="fas fa-search"></i>
+                   <input type="text" id="searchInput" placeholder="Search chat messages...">
+               </div>
+               <button id="autoScrollBtn">Auto Scroll: ON</button>
+               <div class="time-indicator">
+                   Current time: <span id="currentTimeDisplay">0:00</span>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>
+
+</main>
+
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+
+const chatData = [
+  {
+    "id": "1",
+    "timestamp": "1:00",
+    "timeInSeconds": 60,
+    "author": "xBishop FF",
+    "message": "Sir mcq 36 k hari marking ekak ndda ",
+    "avatar": "https://yt4.ggpht.com/-eTUrjm1edSaY91FCzNJHr1_BUvJGFGvc6tRYUdYEmXVveea_lkJU-xG4TLWMD3D2LC3Qc8oAJ8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "2",
+    "timestamp": "1:36",
+    "timeInSeconds": 96,
+    "author": "xBishop FF",
+    "message": "Sir marking ekak hamba una 36 k hari sir marking ekak denne ndda",
+    "avatar": "https://yt4.ggpht.com/-eTUrjm1edSaY91FCzNJHr1_BUvJGFGvc6tRYUdYEmXVveea_lkJU-xG4TLWMD3D2LC3Qc8oAJ8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "3",
+    "timestamp": "2:18",
+    "timeInSeconds": 138,
+    "author": "Suneth Sasanka",
+    "message": "@xBishop FF ",
+    "avatar": "https://yt4.ggpht.com/NgUyfYGoyCsbPD1iMUYes2YPsfrnKBYB6mtppDYxRItlY1udzoijOWT75a9vRDdnsfMKMYyQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "4",
+    "timestamp": "7:34",
+    "timeInSeconds": 454,
+    "author": "\u0280\u1d0f\u029c\u1d00\u0274 \u1d00\u0299\u026a\u0274\u1d00\ua731\u029c",
+    "message": "Hii aiya ",
+    "avatar": "https://yt4.ggpht.com/8eZY1_gJDMFSmc-SarWWgIlQZPJnjz2WW9vqSidKCfQOJr5D0dP75WjjNuCJKIvbgHn-Cy4uWKQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "5",
+    "timestamp": "9:22",
+    "timeInSeconds": 562,
+    "author": "xBishop FF",
+    "message": "Sir hariytm hari gana bala gnna marking ekak dannako ",
+    "avatar": "https://yt4.ggpht.com/-eTUrjm1edSaY91FCzNJHr1_BUvJGFGvc6tRYUdYEmXVveea_lkJU-xG4TLWMD3D2LC3Qc8oAJ8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "6",
+    "timestamp": "10:13",
+    "timeInSeconds": 613,
+    "author": "SL MEME HUB ",
+    "message": "mm balakotuwe post eke mn comment cupiri ",
+    "avatar": "https://yt4.ggpht.com/6WVLwb-Wqdx6OOFbXgPDCvHDNOYPZSYl8idrtMzOCi1Vv3QgMcIJ5pEROa_MqCMOUdwrNTJkUg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "7",
+    "timestamp": "10:46",
+    "timeInSeconds": 646,
+    "author": "Saduni Kavindya",
+    "message": "Paper eka liyapu apitath milo oni habai",
+    "avatar": "https://yt4.ggpht.com/MN-A96TabuX79iwvDSOh6mjt5SI2_wRimoGxOfTk5VzCvAz2_CoLCU4MjMPoKqqMtacM3UwIFVM=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "8",
+    "timestamp": "11:08",
+    "timeInSeconds": 668,
+    "author": "Deneth Bro",
+    "message": "halo sir mama awa sirwa balala yanna",
+    "avatar": "https://yt4.ggpht.com/AlA8svATH867X-x0LpswINtc28dkbjEKqXg3LMrxDMIcVhe448f9j0tRZPMlybh0HBk3ndBedA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "9",
+    "timestamp": "11:17",
+    "timeInSeconds": 677,
+    "author": "Charuka Lakshan",
+    "message": "sir paper eka gmmk krl awa. nikn live dakala blala ynn awe ",
+    "avatar": "https://yt4.ggpht.com/JoEK7BMDpsOu6rzaK2IXbbjsAsgOm8RkkxdneYCtou2D64A_CZPztTULHOUcCLlHCEajXWlG5g=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "10",
+    "timestamp": "12:04",
+    "timeInSeconds": 724,
+    "author": "xBishop FF",
+    "message": "Inno",
+    "avatar": "https://yt4.ggpht.com/-eTUrjm1edSaY91FCzNJHr1_BUvJGFGvc6tRYUdYEmXVveea_lkJU-xG4TLWMD3D2LC3Qc8oAJ8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "11",
+    "timestamp": "12:19",
+    "timeInSeconds": 739,
+    "author": "Kavindu Rashmika",
+    "message": "innwa sir ",
+    "avatar": "https://yt4.ggpht.com/E7yAluY9qZoII7A6NHb-EInDVEPvHYQm5yilse9vUuv3_690EMPOi5h4HJsj_lOHKG-9cHP1Ag=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "12",
+    "timestamp": "12:28",
+    "timeInSeconds": 748,
+    "author": "SL MEME HUB ",
+    "message": "@Charuka Lakshan plyn ykooo ",
+    "avatar": "https://yt4.ggpht.com/6WVLwb-Wqdx6OOFbXgPDCvHDNOYPZSYl8idrtMzOCi1Vv3QgMcIJ5pEROa_MqCMOUdwrNTJkUg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "13",
+    "timestamp": "12:44",
+    "timeInSeconds": 764,
+    "author": "Saduni Kavindya",
+    "message": "Sirwa balaa yanna awe. ha ha yannamko ehenam",
+    "avatar": "https://yt4.ggpht.com/MN-A96TabuX79iwvDSOh6mjt5SI2_wRimoGxOfTk5VzCvAz2_CoLCU4MjMPoKqqMtacM3UwIFVM=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "14",
+    "timestamp": "13:32",
+    "timeInSeconds": 812,
+    "author": "Nawod",
+    "message": "@Ravindu Bandaranayake Kurunagala apita milo nadda",
+    "avatar": "https://yt4.ggpht.com/v608QxeuJcZl1VtemWrx3l3kmPMyV_Y9pixfReWTYBdseLgCLh9HOGpkFPlsjPml09arfq4jpgE=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "15",
+    "timestamp": "14:20",
+    "timeInSeconds": 860,
+    "author": "xBishop FF",
+    "message": "sir marking ekak dannako",
+    "avatar": "https://yt4.ggpht.com/-eTUrjm1edSaY91FCzNJHr1_BUvJGFGvc6tRYUdYEmXVveea_lkJU-xG4TLWMD3D2LC3Qc8oAJ8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "16",
+    "timestamp": "15:01",
+    "timeInSeconds": 901,
+    "author": "Deshan",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/FuTWMFuqV6txxo57GjV63DinR3mXTIkeuESH3qMam2kkJiX3jvylVGoodAZ8vN0QnUZUr86f7qY=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "17",
+    "timestamp": "15:29",
+    "timeInSeconds": 929,
+    "author": "Kavindu Lakshan",
+    "message": "\u0d85\u0daf \u0db4\u0dd9\u0db4\u0dbb\u0dca \u0d91\u0d9a\u0dd9 \u0dad\u0dba\u0dbb\u0dd2 \u0dad\u0dd2\u0db6\u0dca\u0db6\u0dd9 \u0dc3\u0dbb\u0dca..\u0dc3\u0dbb\u0dca \u0dc4\u0dd0\u0db8\u0dca\u0daf\u0dcf\u0db8 \u0d9a\u0dd2\u0dba\u0db1\u0dca\u0dc0\u0dcf\u0db1\u0dd9 \u0dbd\u0db8\u0dba\u0dd2 \u0d85\u0db1\u0dca\u0dad\u0dd2\u0db8 \u0dc0\u0dd9\u0dbd\u0dcf\u0dc0\u0dd9\u0dad\u0dca \u0dad\u0dd2\u0dba\u0dbb\u0dd2\u0db8 \u0db6\u0dbd\u0db1\u0dca\u0db1 \u0dbd\u0db8\u0dba\u0dd2 \u0d9a\u0dd2\u0dba\u0dbd\u0dcf..\u0d91\u0d9a \u0db8\u0dcf\u0dbb fact \u0d91\u0d9a\u0d9a\u0dca..\u0d85\u0db4\u0dd2 \u0d91\u0dc4\u0dd9\u0db8 \u0d9a\u0dbb\u0dbd\u0dcf \u0dad\u0db8\u0dcf \u0db4\u0dd9\u0db4\u0dbb\u0dca \u0d91\u0d9a \u0d9c\u0ddc\u0da9 \u0daf\u0dd0\u0db8\u0dca\u0db8\u0dd9.\u0dc3\u0dbb\u0dca \u0d9a\u0dd2\u0dba\u0db1\u0dca\u0dc0\u0dcf \u0dc0\u0d9c\u0dda \"\u0dc0\u0dd2\u0db6\u0dcf\u0d9c \u0db4\u0dca\u200d\u0dbb\u0dc1\u0dca\u0db1 \u0d85\u0db4\u0dda \u0dad\u0dd2\u0dba\u0dbb\u0dd2\" ",
+    "avatar": "https://yt4.ggpht.com/NkczdGSjsY9U0jjyHvuqKTOYekzTfwlSaaUzMtgyCt_lgwpDsuSiPtgvzaDNCCdGFndmN0ke7Fo=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "18",
+    "timestamp": "16:42",
+    "timeInSeconds": 1002,
+    "author": "subash kumara",
+    "message": "marking ekak dennakoo sir",
+    "avatar": "https://yt4.ggpht.com/qRJdCwQ7hdVpfUgjVZaYZb5VGT58-g6Bl2XiFFIGvzT0Yv8GeoW6XQgjLjuxXe9oEaNM0a7dmQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "19",
+    "timestamp": "17:07",
+    "timeInSeconds": 1027,
+    "author": "Auto Mobile in Life",
+    "message": "s24 \u0d86\u0dc0\u0dcf \u0db1\u0dda\u0daf \u0d9c\u0db1\u0dca\u0db1\u0dc0\u0daf \u0dc3\u0dbb\u0dca",
+    "avatar": "https://yt4.ggpht.com/CVgEm6ap10Odt_MCyXb9fiX1oPwAZ71ZUgddmhmVdBJDTHL67tTYgWANP30FECWbDz50lAK3KQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "20",
+    "timestamp": "18:57",
+    "timeInSeconds": 1137,
+    "author": "Pramod Kaushalya",
+    "message": "hi sir",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_m_ENOKfbpZK_rSnpF6K27LDv3jZoIGl61IOeRFFv0JnxU=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "21",
+    "timestamp": "19:27",
+    "timeInSeconds": 1167,
+    "author": "ADL",
+    "message": "HIIIIIIIIIIIIIIIIIIIIIIIII",
+    "avatar": "https://yt4.ggpht.com/ojxhWv-34DOg635Id4nCnnB-Y9TT8zsU2T5yZ6PHOFnsbCbbhs3ogrY1O4B6qjyxDxEa1jQVGu8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "22",
+    "timestamp": "19:35",
+    "timeInSeconds": 1175,
+    "author": "IDK",
+    "message": "sir 23 batch party eka moko",
+    "avatar": "https://yt4.ggpht.com/hEG5R1uAF4B2-eO3OoMZ-hmYKo49zXY1j09F-WgLqt0TYVfa0H8-cfJsiSTqcOW1Udh_bO1F=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "23",
+    "timestamp": "20:09",
+    "timeInSeconds": 1209,
+    "author": "Shehan Sandeepa",
+    "message": "Sir peyaganan kiyawa kiyawa ugannapu okkoma ada exam eke thibba ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nlK0XZCHPihWVQ4ZXtf5b8YpsaViKGdlcNQOujPdbuOV75OJmCMvjy0UMhDlldDDfeTw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "24",
+    "timestamp": "20:34",
+    "timeInSeconds": 1234,
+    "author": "SL LEADER FF",
+    "message": "23 marking eka ko",
+    "avatar": "https://yt4.ggpht.com/E6I7GKNUfSKv52YOllcZVSLBVsogNhmC0u8rMa8qmoLp2NttX_gP-Fn6RLBL4OGKr9Awa-3G4A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "25",
+    "timestamp": "21:40",
+    "timeInSeconds": 1300,
+    "author": "AlphaDrax",
+    "message": "live ek dkka gmn awa sirge sathut blnna 23 batch ek smbndw",
+    "avatar": "https://yt4.ggpht.com/reC5nNM9gEUKdGLyAvoYARjq_5T6DH6M5Z0_0l3KrsD3V23hNMjvHWbCz9x4DPJ01iDtZfKN=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "26",
+    "timestamp": "22:45",
+    "timeInSeconds": 1365,
+    "author": "erandaka nirmal",
+    "message": "ah sir , sir kiuv ewa raw dunna theorym bluva",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nd7Wd3yiuW6Afjwna9EB2Us2mleIuJGkt6spSLC2k_P0A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "27",
+    "timestamp": "23:10",
+    "timeInSeconds": 1390,
+    "author": "AlphaDrax",
+    "message": "ethrm confidence sir A ekk denm bya wenna epaaaa",
+    "avatar": "https://yt4.ggpht.com/reC5nNM9gEUKdGLyAvoYARjq_5T6DH6M5Z0_0l3KrsD3V23hNMjvHWbCz9x4DPJ01iDtZfKN=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "28",
+    "timestamp": "23:33",
+    "timeInSeconds": 1413,
+    "author": "KushanCG",
+    "message": "sirrr !",
+    "avatar": "https://yt4.ggpht.com/NkOAY94OP7KSuIpkDXsV453_U3tNXqVegq0aoehat3M1UGN6Uh5oDazCRKjCdnPX03OxvtJfrA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "29",
+    "timestamp": "23:41",
+    "timeInSeconds": 1421,
+    "author": "erandaka nirmal",
+    "message": "api real ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nd7Wd3yiuW6Afjwna9EB2Us2mleIuJGkt6spSLC2k_P0A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "30",
+    "timestamp": "24:34",
+    "timeInSeconds": 1474,
+    "author": "Kaveen Geek",
+    "message": "S24 eka gamu d sir",
+    "avatar": "https://yt4.ggpht.com/VEMgcb2mEoLO54nW3ZmHd754DMKeiUNh59DChkMUYlMCWNKdFln2z4Skid1bzQgnMXK_qQyC_2I=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "31",
+    "timestamp": "27:03",
+    "timeInSeconds": 1623,
+    "author": "Days of Matheez",
+    "message": "kalutara class ndd sir",
+    "avatar": "https://yt4.ggpht.com/-_mNbSuhKQ2nwd0rbltVAgwR5M_ovhu7MVb7kTMWm2U_f1fad-URt9mZA4vzJi5-RJok__YHMNE=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "32",
+    "timestamp": "27:12",
+    "timeInSeconds": 1632,
+    "author": "Days of Matheez",
+    "message": "krnne",
+    "avatar": "https://yt4.ggpht.com/-_mNbSuhKQ2nwd0rbltVAgwR5M_ovhu7MVb7kTMWm2U_f1fad-URt9mZA4vzJi5-RJok__YHMNE=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "33",
+    "timestamp": "27:22",
+    "timeInSeconds": 1642,
+    "author": "gHosT ;-)",
+    "message": "\u0dad\u0dbb\u0dca\u0d9a \u0d9c\u0dda\u0da7\u0dca\u0da7\u0dd4",
+    "avatar": "https://yt4.ggpht.com/n-YToFxrMpRJZADWJcA3aC9OosPZs2QdtkueR4EBzjFn4FlY1evu72Iw9OHK6bj0J50u_McA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "34",
+    "timestamp": "27:22",
+    "timeInSeconds": 1642,
+    "author": "erandaka nirmal",
+    "message": "sir kiuv vgem theorym thm awe hena ghnv vge mcq 35-40 athra vadila thiyenne sir python serama hri thank krl yanna awe sir  after exam katha bahak one krnne monad idea ekk one sir ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nd7Wd3yiuW6Afjwna9EB2Us2mleIuJGkt6spSLC2k_P0A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "35",
+    "timestamp": "27:34",
+    "timeInSeconds": 1654,
+    "author": "Wisdom Whisper",
+    "message": "sir mcq answer Tika dennako",
+    "avatar": "https://yt4.ggpht.com/cAjxouZbHmZgYQe4oKUWOarxhOqQL-1863OjcTUKGRdM75eNR_m9977lUL5OnFPSfF4evUer7g=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "36",
+    "timestamp": "28:01",
+    "timeInSeconds": 1681,
+    "author": "Gameing Alpha",
+    "message": "sir oya kaatha karanndi amathara danumata kiwwath ada mcq awith thibuna",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nORjyYIWeImlv59lRgvisV2wPTNRvaz6BPN6eJqOLH6WLF56Ie3Pd9ifSOmICck_CnBA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "37",
+    "timestamp": "28:10",
+    "timeInSeconds": 1690,
+    "author": "Sahan Nimsara",
+    "message": "Sir galle walata enawada??",
+    "avatar": "https://yt4.ggpht.com/EkYdZ2bGBykDdegxoHLukGuRXpDaRM7pVHkaHzekg_wqYSkqFuADFMMVyxdhBR8dDC2UT8cbh1I=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "38",
+    "timestamp": "29:28",
+    "timeInSeconds": 1768,
+    "author": "Days of Matheez",
+    "message": "sir kalutara class krnne nadda",
+    "avatar": "https://yt4.ggpht.com/-_mNbSuhKQ2nwd0rbltVAgwR5M_ovhu7MVb7kTMWm2U_f1fad-URt9mZA4vzJi5-RJok__YHMNE=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "39",
+    "timestamp": "30:32",
+    "timeInSeconds": 1832,
+    "author": "Ravindu Thikshana",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/R9LYgSkoA4f6lgFSHK2yS3N7yECkfud0PQhZ69z9vGXIQWec-Ppygl87BKcGYdjUKHAp-RVPDQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "40",
+    "timestamp": "31:15",
+    "timeInSeconds": 1875,
+    "author": "Sanex gaming ",
+    "message": "sir ol kattiya hitiyata kamak \u0db1\u0dd0\u0daf\u0dca\u0daf",
+    "avatar": "https://yt4.ggpht.com/2zNiNeaONU6vRmocZY1MCXq3i2pi2kdIHWOtxfuAnRPfyVjCnU135utUTNM1BKkKvQxX7avPGQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "41",
+    "timestamp": "31:35",
+    "timeInSeconds": 1895,
+    "author": "chathunka desilva",
+    "message": "sir mama 2023 A/l mama sir gen thama python database networking half goda dagathhe mama sadamal sir gawatath giya Krishan sirge gawatath giya sir la Thun dennama Maru thank you sir",
+    "avatar": "https://yt4.ggpht.com/4gG_7hEV2IpL-72xZbRN9Bm6tDEciCvh3WCfzwSPerMKNPtLYzbVC6TI0mZOLHJ6hDK2Yxeybg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "42",
+    "timestamp": "31:39",
+    "timeInSeconds": 1899,
+    "author": "Ravindu Thikshana",
+    "message": "\u0dc3\u0dbb\u0dca \u0daf\u0dd2\u0dba\u0dd4\u0db1\u0dd4\u0dc0\u0dd9 \u0dbb\u0dc4\u0dc3\u0dca \u0db8\u0ddc\u0db1\u0dcf\u0daf ",
+    "avatar": "https://yt4.ggpht.com/R9LYgSkoA4f6lgFSHK2yS3N7yECkfud0PQhZ69z9vGXIQWec-Ppygl87BKcGYdjUKHAp-RVPDQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "43",
+    "timestamp": "34:11",
+    "timeInSeconds": 2051,
+    "author": "Avishka Sachin",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/7qCoU5Ot2SfNaR0YLKOLpalzxty-2KMrQDVHtexPouojvE1to92S9UukCOezWJQh42iLVImTCw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "44",
+    "timestamp": "34:15",
+    "timeInSeconds": 2055,
+    "author": "Hiruu online",
+    "message": "\u0dc3\u0dbb\u0dca \u0d94\u0dba \u0d9c\u0dda\u0da7\u0dca\u0da7\u0dd4 \u0d85\u0dc3\u0dca\u0dc3\u0dd9\u0db1\u0dca \u0db6\u0dbd\u0dca\u0dbd\u0ddc\u0db1\u0dd6\u0da7 \u0dbb\u0dd2\u0d82\u0d9c\u0db1\u0dca\u0db1 \u0db6\u0dd0\u0dbb\u0dd2\u0daf ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nKOqIVC_wjCGDpD96rhr1ZSOIcdvmYOi5pFdtljKl4eJy8AVLi8mdgjfZHrXpiFTZecw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "45",
+    "timestamp": "34:34",
+    "timeInSeconds": 2074,
+    "author": "Auto Mobile in Life",
+    "message": "\u0dc3\u0dbb\u0dca\u0d9c\u0dd9 web site \u0d91\u0d9a\u0da7 register \u0dc0\u0dd9\u0db1\u0dca\u0db1\u0dd9 \u0d9a\u0ddc\u0dc4\u0ddc\u0db8\u0daf?",
+    "avatar": "https://yt4.ggpht.com/CVgEm6ap10Odt_MCyXb9fiX1oPwAZ71ZUgddmhmVdBJDTHL67tTYgWANP30FECWbDz50lAK3KQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "46",
+    "timestamp": "36:09",
+    "timeInSeconds": 2169,
+    "author": "hack fren",
+    "message": "sir band eka iwarada",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mFmMDykxr3lGz5FWRvWHgznFmrUUjvmzl9ImuK4gVddDF3sBeW9RiP3Nomuh8l0FF0CA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "47",
+    "timestamp": "36:28",
+    "timeInSeconds": 2188,
+    "author": "Sanex gaming ",
+    "message": "\u0dc3\u0dbb\u0dca \u0db4\u0dbd\u0dc0\u0dd9\u0db1\u0dd2 \u0d91\u0d9a\u0dd9 \u0d9a\u0dd9\u0db6\u0dbd\u0dca \u0daf\u0dd9\u0d9a\u0d9a\u0dca \u0d86\u0dc0\u0ddc\u0dad\u0dca \u0db8\u0ddc\u0d9a\u0daf \u0dc0\u0dd9\u0db1\u0dca\u0db1\u0dd9",
+    "avatar": "https://yt4.ggpht.com/2zNiNeaONU6vRmocZY1MCXq3i2pi2kdIHWOtxfuAnRPfyVjCnU135utUTNM1BKkKvQxX7avPGQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "48",
+    "timestamp": "38:03",
+    "timeInSeconds": 2283,
+    "author": "Surprised Cabin",
+    "message": "\u0dc3\u0dbb\u0dca \u0dbb\u0dd1\u0da7 \u0d9a\u0dcf\u0dbd\u0daf",
+    "avatar": "https://yt4.ggpht.com/U_eakoVwHz6lWNppAdJ6KGSOGepISKIpMzbdaLyn-rRpVD1VR7CYFCzQB8BeodPh-UQ2c7p0m7w=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "49",
+    "timestamp": "38:15",
+    "timeInSeconds": 2295,
+    "author": "Sanex gaming ",
+    "message": "AB \u0daf\u0dd9\u0d9a\u0d9a\u0dca \u0d86\u0dc0\u0ddc\u0dad\u0dca \u0db8\u0ddc\u0d9a\u0daf \u0dc0\u0dd9\u0db1\u0dca\u0db1\u0dd9 \u0db4\u0dbd\u0dc0\u0dd9\u0db1\u0dd2 \u0d91\u0d9a\u0dd9",
+    "avatar": "https://yt4.ggpht.com/2zNiNeaONU6vRmocZY1MCXq3i2pi2kdIHWOtxfuAnRPfyVjCnU135utUTNM1BKkKvQxX7avPGQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "50",
+    "timestamp": "38:53",
+    "timeInSeconds": 2333,
+    "author": "Pramudith Fonseka",
+    "message": "AB/",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mudJBOukNXf6EwU9s9qkSmrQeXVMInDb6nJZWhI4Ee75BBlCMMDWOLtD2fTJpyUniYrg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "51",
+    "timestamp": "39:01",
+    "timeInSeconds": 2341,
+    "author": "isala orisha",
+    "message": "milooooo",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_lsDUMptspaIt3FaHP19eZFYl6_YJzP1heCojhgaxAmFMQNmcFl0aJibEc06A_AjeNV_A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "52",
+    "timestamp": "39:07",
+    "timeInSeconds": 2347,
+    "author": "Hiruu online",
+    "message": "\u0dc3\u0dbb\u0dca \u0d85\u0db4\u0dd2\u0da7 \u0d8b\u0db7\u0dba \u0da2\u0dd3\u0dc0\u0dd2\u0dba\u0ddc \u0dc0\u0dd2\u0daf\u0dd2\u0dba\u0da7 \u0db4\u0dbb\u0dd2\u0dc0\u0dbb\u0dca\u0dad\u0db1\u0dba \u0dc0\u0dd9\u0db1\u0dca\u0db1 \u0db6\u0dd0\u0dbb\u0dd2\u0daf",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nKOqIVC_wjCGDpD96rhr1ZSOIcdvmYOi5pFdtljKl4eJy8AVLi8mdgjfZHrXpiFTZecw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "53",
+    "timestamp": "40:04",
+    "timeInSeconds": 2404,
+    "author": "Pramudith Fonseka",
+    "message": "dot eka multiplication ekak represent karanawa neda sir",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mudJBOukNXf6EwU9s9qkSmrQeXVMInDb6nJZWhI4Ee75BBlCMMDWOLtD2fTJpyUniYrg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "54",
+    "timestamp": "41:48",
+    "timeInSeconds": 2508,
+    "author": "Hiruu online",
+    "message": "1+1 =2 ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nKOqIVC_wjCGDpD96rhr1ZSOIcdvmYOi5pFdtljKl4eJy8AVLi8mdgjfZHrXpiFTZecw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "55",
+    "timestamp": "42:38",
+    "timeInSeconds": 2558,
+    "author": "ADL",
+    "message": "1=1",
+    "avatar": "https://yt4.ggpht.com/ojxhWv-34DOg635Id4nCnnB-Y9TT8zsU2T5yZ6PHOFnsbCbbhs3ogrY1O4B6qjyxDxEa1jQVGu8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "56",
+    "timestamp": "42:43",
+    "timeInSeconds": 2563,
+    "author": "Ravindu Dananjaya",
+    "message": "E pndith kmk wlin wdk na ne @hiruu online ",
+    "avatar": "https://yt4.ggpht.com/keOr4ui95ZZVrdln74DfC_jwo4OPtiDY-LN1OApNvuptSt_YrRafX2RKBSBt8yafcmFiQNDyjhA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "57",
+    "timestamp": "43:32",
+    "timeInSeconds": 2612,
+    "author": "ADL",
+    "message": "@Ravindu Dana U NAM 1000 TA 1KA MODAYEK",
+    "avatar": "https://yt4.ggpht.com/ojxhWv-34DOg635Id4nCnnB-Y9TT8zsU2T5yZ6PHOFnsbCbbhs3ogrY1O4B6qjyxDxEa1jQVGu8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "58",
+    "timestamp": "43:38",
+    "timeInSeconds": 2618,
+    "author": "Dharmajith Ediriweera",
+    "message": "sir A'B+AB' xor gate eke widihatad thiyanna oni",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kQnWSAD6Gm3-wtlJwdGQ5jT55-cFBUBsNuleFX8xZm76T3ar1J01mTypF-cd73dN1eDg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "59",
+    "timestamp": "44:33",
+    "timeInSeconds": 2673,
+    "author": "Ravindu Dananjaya",
+    "message": "@Aadhil bro ",
+    "avatar": "https://yt4.ggpht.com/keOr4ui95ZZVrdln74DfC_jwo4OPtiDY-LN1OApNvuptSt_YrRafX2RKBSBt8yafcmFiQNDyjhA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "60",
+    "timestamp": "44:38",
+    "timeInSeconds": 2678,
+    "author": "Hiruu online",
+    "message": "kolu seen epa ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nKOqIVC_wjCGDpD96rhr1ZSOIcdvmYOi5pFdtljKl4eJy8AVLi8mdgjfZHrXpiFTZecw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "61",
+    "timestamp": "46:18",
+    "timeInSeconds": 2778,
+    "author": "Dinuja Rashmika",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/H-a98aZ0ygj37fkY-oLWUTGITRITimLvNkZFDIuHiQldFZ_J0UGnAuL_43kgi7mek0m1fpDgNA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "62",
+    "timestamp": "46:52",
+    "timeInSeconds": 2812,
+    "author": "thennakoonge ishara",
+    "message": "hi",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kHlVjx23e9xVJc32qnWaQUUnvhIcJaTvj2MU_jzRT1d-PXR1_sjz20Zd9VUy4cCHsHIQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "63",
+    "timestamp": "46:53",
+    "timeInSeconds": 2813,
+    "author": "Thesaru Praneeth",
+    "message": "aaaaa sr ada liwwa gmmt ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mlQn2_OBCM39pqwkVPqWxvQOV-bYkSbk0FZa3zhTd-ww=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "64",
+    "timestamp": "47:26",
+    "timeInSeconds": 2846,
+    "author": "Funny Shorts ",
+    "message": "sir maths giye ajanth sirgeda sir",
+    "avatar": "https://yt4.ggpht.com/CK3r8epLCUiKGN8B8X2WKQUnwt7a_lX4FQJPl6BbC2lH-_9Vqc7U0amfe_7ea6APnFbXAOJtZkM=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "65",
+    "timestamp": "47:58",
+    "timeInSeconds": 2878,
+    "author": "Ravindu Dananjaya",
+    "message": "Ow ow",
+    "avatar": "https://yt4.ggpht.com/keOr4ui95ZZVrdln74DfC_jwo4OPtiDY-LN1OApNvuptSt_YrRafX2RKBSBt8yafcmFiQNDyjhA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "66",
+    "timestamp": "48:29",
+    "timeInSeconds": 2909,
+    "author": "Dinuja Rashmika",
+    "message": "sir,kiyala dena dee hodata ahan hitiyama pattetama thereno,man wenada zoom eken enne yt live danakota yteken balano,yt unlimited nisa",
+    "avatar": "https://yt4.ggpht.com/H-a98aZ0ygj37fkY-oLWUTGITRITimLvNkZFDIuHiQldFZ_J0UGnAuL_43kgi7mek0m1fpDgNA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "67",
+    "timestamp": "49:18",
+    "timeInSeconds": 2958,
+    "author": "HasinthYa",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/WGcpULCm4k9ucaX6ygpCCtgyuNtZ22dgw8lSMc2eBlss3sk0qXS0molkYdeclfA9pAUECSn-eQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "68",
+    "timestamp": "49:53",
+    "timeInSeconds": 2993,
+    "author": "RapidRogue",
+    "message": "sir marking eka dannko",
+    "avatar": "https://yt4.ggpht.com/ajnQAsmEhNuDNt5VrP4lQpN-KIjqpwN_5ESHEmPe2tROXiBrpqWnjdqWCxl2SybLsD1J4Lra7g=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "69",
+    "timestamp": "49:56",
+    "timeInSeconds": 2996,
+    "author": "Hiruu online",
+    "message": "\u0d85\u0da7\u0db4\u0da7\u0dca\u0da7\u0db8 \u0db6\u0dbd\u0db1\u0dca\u0db1\u0dad\u0dca \u0d91\u0db4\u0dcf\u0daf ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nKOqIVC_wjCGDpD96rhr1ZSOIcdvmYOi5pFdtljKl4eJy8AVLi8mdgjfZHrXpiFTZecw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "70",
+    "timestamp": "50:56",
+    "timeInSeconds": 3056,
+    "author": "Dinuja Rashmika",
+    "message": "@Hiruuonline ",
+    "avatar": "https://yt4.ggpht.com/H-a98aZ0ygj37fkY-oLWUTGITRITimLvNkZFDIuHiQldFZ_J0UGnAuL_43kgi7mek0m1fpDgNA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "71",
+    "timestamp": "51:20",
+    "timeInSeconds": 3080,
+    "author": "Shanuka Oshada",
+    "message": "\u0db6\u0dbd\u0db1\u0dca\u0db1\u0dd1 social media \u0dc0\u0dbd\u0dd2\u0db1\u0dca suggests \u0dc0\u0dd9\u0db1\u0dc0\u0dcf \u0db1\u0dda",
+    "avatar": "https://yt4.ggpht.com/V5uiCahNcA0TLLVrbl-cFK720cUVR6kwf_768_s-oGpITzsJeDGJNJaS6I36EwXHUGMPBluI0Q=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "72",
+    "timestamp": "55:58",
+    "timeInSeconds": 3358,
+    "author": "Hiruu online",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nKOqIVC_wjCGDpD96rhr1ZSOIcdvmYOi5pFdtljKl4eJy8AVLi8mdgjfZHrXpiFTZecw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "73",
+    "timestamp": "56:06",
+    "timeInSeconds": 3366,
+    "author": "Ranithu Senuth \ud83d\udc3c",
+    "message": "hy ",
+    "avatar": "https://yt4.ggpht.com/78D8nsxRCtt5SWhMuUQFkoRm7hj1J6qBkaouRk20Hpukcqc3pPxkDvBpBbs9Lb3pVH69iYUIHg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "74",
+    "timestamp": "57:06",
+    "timeInSeconds": 3426,
+    "author": "Funny Shorts ",
+    "message": "2025 ravindu sirge telegram group eke link eka ko",
+    "avatar": "https://yt4.ggpht.com/CK3r8epLCUiKGN8B8X2WKQUnwt7a_lX4FQJPl6BbC2lH-_9Vqc7U0amfe_7ea6APnFbXAOJtZkM=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "75",
+    "timestamp": "57:16",
+    "timeInSeconds": 3436,
+    "author": "Hiruu online",
+    "message": "\u0db6\u0dd6\u0dbd\u0dd2\u0dba \u0d9a\u0dd2\u0dc0\u0dca\u0dc0\u0dd9 \u0dc0\u0dad\u0dd4\u0dbb \u0db6\u0dd6\u0dbd\u0dd2\u0dba\u0daf \u0dc3\u0dbb\u0dca",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nKOqIVC_wjCGDpD96rhr1ZSOIcdvmYOi5pFdtljKl4eJy8AVLi8mdgjfZHrXpiFTZecw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "76",
+    "timestamp": "57:32",
+    "timeInSeconds": 3452,
+    "author": "Ravindu Dananjaya",
+    "message": "Ajage e video nm supr recommend ",
+    "avatar": "https://yt4.ggpht.com/keOr4ui95ZZVrdln74DfC_jwo4OPtiDY-LN1OApNvuptSt_YrRafX2RKBSBt8yafcmFiQNDyjhA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "77",
+    "timestamp": "59:52",
+    "timeInSeconds": 3592,
+    "author": "Pramudith Fonseka",
+    "message": "@Hiruu online gon katha kiyanna epa. hariyata egena ganim ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mudJBOukNXf6EwU9s9qkSmrQeXVMInDb6nJZWhI4Ee75BBlCMMDWOLtD2fTJpyUniYrg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "78",
+    "timestamp": "1:03:50",
+    "timeInSeconds": 3830,
+    "author": "\u2408 \ud83e\udd40 \ud835\udcaf\ud835\udcbe\ud835\udcc8\ud835\udcbd\ud835\udcb6\ud835\udcc3 \ud835\udcc5\ud835\udcb6\ud835\udcc3\ud835\udcc0\ud835\udcb6\ud835\udcbf\ud835\udcb6 \ud80c\udd53",
+    "message": "hasinthya",
+    "avatar": "https://yt4.ggpht.com/c97vcNS3H23zrtZBDZyanyMEblICz_5enAoc1fPfvQvubVELdePGz4kj5X2kM8K5lIT3ffi21ks=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "79",
+    "timestamp": "1:09:37",
+    "timeInSeconds": 4177,
+    "author": "AlphaDrax",
+    "message": "sir maniya ekk stream ekk dmu",
+    "avatar": "https://yt4.ggpht.com/reC5nNM9gEUKdGLyAvoYARjq_5T6DH6M5Z0_0l3KrsD3V23hNMjvHWbCz9x4DPJ01iDtZfKN=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "80",
+    "timestamp": "1:09:44",
+    "timeInSeconds": 4184,
+    "author": "Sanex gaming ",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/2zNiNeaONU6vRmocZY1MCXq3i2pi2kdIHWOtxfuAnRPfyVjCnU135utUTNM1BKkKvQxX7avPGQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "81",
+    "timestamp": "1:09:58",
+    "timeInSeconds": 4198,
+    "author": "Ravindu Dananjaya",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/keOr4ui95ZZVrdln74DfC_jwo4OPtiDY-LN1OApNvuptSt_YrRafX2RKBSBt8yafcmFiQNDyjhA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "82",
+    "timestamp": "1:10:00",
+    "timeInSeconds": 4200,
+    "author": "Thesaru Praneeth",
+    "message": "sr marking ekak danawathe 26 wenidt",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mlQn2_OBCM39pqwkVPqWxvQOV-bYkSbk0FZa3zhTd-ww=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "83",
+    "timestamp": "1:10:10",
+    "timeInSeconds": 4210,
+    "author": "Cricket Doctor ",
+    "message": "AI me free krnneh",
+    "avatar": "https://yt4.ggpht.com/IVeSmS89l7mIr-HWo7-bgUddx6cGBgdregKhdP_6DH8RS6lxop02T3lniwEdp-0tDtql-PRt=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "84",
+    "timestamp": "1:10:10",
+    "timeInSeconds": 4210,
+    "author": "NIRWAN \ud83e\udd1f",
+    "message": "java institute eka gena neda kiwwe ",
+    "avatar": "https://yt4.ggpht.com/sCxMEcfRH5MMIdgoH9NSuiQkai13p225_YNuSl8i11Dtc_xraXKARmRqvGc0IRHNDjquO1ypuw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "85",
+    "timestamp": "1:10:46",
+    "timeInSeconds": 4246,
+    "author": "Niduka Bandara",
+    "message": "ah ayye",
+    "avatar": "https://yt4.ggpht.com/2oGpNY5L9y3QHrAzfTTZQ8exyN9KE1efe6zzRKOlXV89BtDkXJBAZWFiPe4akhnANkB3aiCt=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "86",
+    "timestamp": "1:11:36",
+    "timeInSeconds": 4296,
+    "author": "HasinthYa",
+    "message": "yow",
+    "avatar": "https://yt4.ggpht.com/WGcpULCm4k9ucaX6ygpCCtgyuNtZ22dgw8lSMc2eBlss3sk0qXS0molkYdeclfA9pAUECSn-eQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "87",
+    "timestamp": "1:12:20",
+    "timeInSeconds": 4340,
+    "author": "Thesaru Praneeth",
+    "message": "sirwt??",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mlQn2_OBCM39pqwkVPqWxvQOV-bYkSbk0FZa3zhTd-ww=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "88",
+    "timestamp": "1:12:32",
+    "timeInSeconds": 4352,
+    "author": "OfficialDila",
+    "message": "hii sir api 23",
+    "avatar": "https://yt4.ggpht.com/ZCcyPcUK6Q-dSflJz5WMuVINhdupzGbrWGl6EBFcoqzY3vYkqSDiofhWrovo1hcZb81MA8nVCQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "89",
+    "timestamp": "1:13:03",
+    "timeInSeconds": 4383,
+    "author": "Niduka Bandara",
+    "message": "ape event ek kwdd",
+    "avatar": "https://yt4.ggpht.com/2oGpNY5L9y3QHrAzfTTZQ8exyN9KE1efe6zzRKOlXV89BtDkXJBAZWFiPe4akhnANkB3aiCt=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "90",
+    "timestamp": "1:14:14",
+    "timeInSeconds": 4454,
+    "author": "relax mind",
+    "message": "sir request ekk karanna thiyanawa.sirge tute purchase karanne wenama slot ekk site ekata add karanna puluwanda ??please sir",
+    "avatar": "https://yt4.ggpht.com/I3lTx1hvJVpSB-H5Z6e22slh0BfQwN4OjaYKQtsCCTXdhzs5MTkln-AzzkbnNzXs5pGlVSzhU0w=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "91",
+    "timestamp": "1:14:32",
+    "timeInSeconds": 4472,
+    "author": "relax mind",
+    "message": "sir request ekk karanna thiyanawa.sirge tute purchase karanne wenama slot ekk site ekata add karanna puluwanda ??please sir",
+    "avatar": "https://yt4.ggpht.com/I3lTx1hvJVpSB-H5Z6e22slh0BfQwN4OjaYKQtsCCTXdhzs5MTkln-AzzkbnNzXs5pGlVSzhU0w=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "92",
+    "timestamp": "1:17:58",
+    "timeInSeconds": 4678,
+    "author": "hack fren",
+    "message": "sir band ekk",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mFmMDykxr3lGz5FWRvWHgznFmrUUjvmzl9ImuK4gVddDF3sBeW9RiP3Nomuh8l0FF0CA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "93",
+    "timestamp": "1:19:58",
+    "timeInSeconds": 4798,
+    "author": "Jayakody Arachchige",
+    "message": "sir plz mcq answers Tika denwda",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_ldiuHUDVGlUrvYvequ_claHPBfDXQcnc6YTUzVCOY=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "94",
+    "timestamp": "1:20:44",
+    "timeInSeconds": 4844,
+    "author": "Thesaru Praneeth",
+    "message": "23 unt kalu pata band eka denwd ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mlQn2_OBCM39pqwkVPqWxvQOV-bYkSbk0FZa3zhTd-ww=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "95",
+    "timestamp": "1:22:55",
+    "timeInSeconds": 4975,
+    "author": "Chamidu Gihan",
+    "message": "hlo",
+    "avatar": "https://yt4.ggpht.com/z5ocH9pr1GDuM6j81vEVHfd24DAHuF1-l9-PkqNNsCmyS9G35fs1hV5vIrHFr3_e7qgmLMNyIA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "96",
+    "timestamp": "1:23:11",
+    "timeInSeconds": 4991,
+    "author": "Sajana Sanjaya",
+    "message": "\u0dc3\u0dbb\u0dca \u0d85\u0daf \u0db4\u0dda\u0db4\u0dbb\u0dda mcq 40\u0d9a\u0da7 \u0dc0\u0da9\u0dcf suree",
+    "avatar": "https://yt4.ggpht.com/c_lMF3Px0UI2Fh-Qef3QPxKfSiImKTgcp75pJ05NiOjZJ_cDAyZzOHKVgr5y9_SStC9TcwajZA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "97",
+    "timestamp": "1:23:27",
+    "timeInSeconds": 5007,
+    "author": "Sajana Sanjaya",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/c_lMF3Px0UI2Fh-Qef3QPxKfSiImKTgcp75pJ05NiOjZJ_cDAyZzOHKVgr5y9_SStC9TcwajZA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "98",
+    "timestamp": "1:27:29",
+    "timeInSeconds": 5249,
+    "author": "Sajana Sanjaya",
+    "message": "thank you sir dunna udaw walata.jaya wewa\u0db8\u0db1\u0dca \u0dc3\u0dad\u0dd4\u0da7\u0dd2\u0db1\u0dca",
+    "avatar": "https://yt4.ggpht.com/c_lMF3Px0UI2Fh-Qef3QPxKfSiImKTgcp75pJ05NiOjZJ_cDAyZzOHKVgr5y9_SStC9TcwajZA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "99",
+    "timestamp": "1:27:46",
+    "timeInSeconds": 5266,
+    "author": "\u2408 \ud83e\udd40 \ud835\udcaf\ud835\udcbe\ud835\udcc8\ud835\udcbd\ud835\udcb6\ud835\udcc3 \ud835\udcc5\ud835\udcb6\ud835\udcc3\ud835\udcc0\ud835\udcb6\ud835\udcbf\ud835\udcb6 \ud80c\udd53",
+    "message": "hasinthya sir kiwwa \u0d91\u0db1\u0dca\u0db1 kiyla February idla",
+    "avatar": "https://yt4.ggpht.com/c97vcNS3H23zrtZBDZyanyMEblICz_5enAoc1fPfvQvubVELdePGz4kj5X2kM8K5lIT3ffi21ks=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "100",
+    "timestamp": "1:29:11",
+    "timeInSeconds": 5351,
+    "author": "subash kumara",
+    "message": "sir sirge marking eka dannakoo",
+    "avatar": "https://yt4.ggpht.com/qRJdCwQ7hdVpfUgjVZaYZb5VGT58-g6Bl2XiFFIGvzT0Yv8GeoW6XQgjLjuxXe9oEaNM0a7dmQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "101",
+    "timestamp": "1:29:22",
+    "timeInSeconds": 5362,
+    "author": "Itsluvi",
+    "message": "me 2025 A/L clz ekad?",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_lwipGrMtw03q9rRS3u-wAHkA12LD8UeCn7-UUk93gUoG_7iN7OhFsK3V58eudoVYMMPA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "102",
+    "timestamp": "1:29:35",
+    "timeInSeconds": 5375,
+    "author": "hack fren",
+    "message": "ooo",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mFmMDykxr3lGz5FWRvWHgznFmrUUjvmzl9ImuK4gVddDF3sBeW9RiP3Nomuh8l0FF0CA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "103",
+    "timestamp": "1:32:00",
+    "timeInSeconds": 5520,
+    "author": "Kavishka Lakshan",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/gHgwn1BxKmQg9ARWJWoM7Gn8IE73Bz8q26Yxz6qGwVdv1aJFG7kvEBpYcAd1Ld2ie0p2gsO5jg=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "104",
+    "timestamp": "1:32:28",
+    "timeInSeconds": 5548,
+    "author": "ADL",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/ojxhWv-34DOg635Id4nCnnB-Y9TT8zsU2T5yZ6PHOFnsbCbbhs3ogrY1O4B6qjyxDxEa1jQVGu8=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "105",
+    "timestamp": "1:33:49",
+    "timeInSeconds": 5629,
+    "author": "Itsluvi",
+    "message": "Sirge online clz hama sathiyema yt eke live krnvd?",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_lwipGrMtw03q9rRS3u-wAHkA12LD8UeCn7-UUk93gUoG_7iN7OhFsK3V58eudoVYMMPA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "106",
+    "timestamp": "1:34:49",
+    "timeInSeconds": 5689,
+    "author": "Thesaru Praneeth",
+    "message": "okun chat gpt eken uttr gniwi",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mlQn2_OBCM39pqwkVPqWxvQOV-bYkSbk0FZa3zhTd-ww=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "107",
+    "timestamp": "1:34:54",
+    "timeInSeconds": 5694,
+    "author": "Lehan Ranawaka ",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/-rWmSxaFkLntdyBeR8EFn8LB5z_iX2mDo04I8C4EJ7rsGlRVioYyvQHJtOcbVkMTTOtOw_ydZek=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "108",
+    "timestamp": "1:35:32",
+    "timeInSeconds": 5732,
+    "author": "Itsluvi",
+    "message": "@Chathunj ethakota me live yanne online clz ekak neda?",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_lwipGrMtw03q9rRS3u-wAHkA12LD8UeCn7-UUk93gUoG_7iN7OhFsK3V58eudoVYMMPA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "109",
+    "timestamp": "1:39:01",
+    "timeInSeconds": 5941,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a \u0daf\u0dd9\u0db1\u0dca\u0db1\u0d9a\u0ddc \u0d91\u0d9a \u0d91\u0d9a mark sheet \u0dc0\u0dbd \u0d91\u0d9a \u0d91\u0dc0\u0dcf \u0dad\u0dd2\u0dba\u0dd9\u0db1\u0dca\u0db1\u0dda",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "110",
+    "timestamp": "1:39:58",
+    "timeInSeconds": 5998,
+    "author": "Tharuk Thewnija",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mKMlMB6ufSnukYJpcvS_Ys9dFmHiUj_S46wLc5ze4KvoQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "111",
+    "timestamp": "1:40:18",
+    "timeInSeconds": 6018,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a \u0daf\u0dd9\u0db1\u0dca\u0db1\u0d9a\u0ddc ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "112",
+    "timestamp": "1:40:37",
+    "timeInSeconds": 6037,
+    "author": "Shanuka Oshada",
+    "message": "sir art karanwa nm it karanna epada",
+    "avatar": "https://yt4.ggpht.com/V5uiCahNcA0TLLVrbl-cFK720cUVR6kwf_768_s-oGpITzsJeDGJNJaS6I36EwXHUGMPBluI0Q=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "113",
+    "timestamp": "1:40:58",
+    "timeInSeconds": 6058,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "114",
+    "timestamp": "1:41:45",
+    "timeInSeconds": 6105,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "115",
+    "timestamp": "1:41:52",
+    "timeInSeconds": 6112,
+    "author": "AlphaDrax",
+    "message": "sir mehmama discussion ekk dmuthe mcq eka",
+    "avatar": "https://yt4.ggpht.com/reC5nNM9gEUKdGLyAvoYARjq_5T6DH6M5Z0_0l3KrsD3V23hNMjvHWbCz9x4DPJ01iDtZfKN=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "116",
+    "timestamp": "1:42:23",
+    "timeInSeconds": 6143,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "117",
+    "timestamp": "1:42:28",
+    "timeInSeconds": 6148,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "118",
+    "timestamp": "1:42:36",
+    "timeInSeconds": 6156,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "119",
+    "timestamp": "1:42:46",
+    "timeInSeconds": 6166,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "120",
+    "timestamp": "1:42:48",
+    "timeInSeconds": 6168,
+    "author": "Mrx",
+    "message": "sir marking ekk dennko mcq ekt",
+    "avatar": "https://yt4.ggpht.com/UoOlz2tWX6AcRAu4OiEJowuxuYLYH7fyPFrPmaoFtS41t1VAWy53BNWT1zXmzBXaGEzM54aV7Q=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "121",
+    "timestamp": "1:42:56",
+    "timeInSeconds": 6176,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "122",
+    "timestamp": "1:43:01",
+    "timeInSeconds": 6181,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "123",
+    "timestamp": "1:43:09",
+    "timeInSeconds": 6189,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "124",
+    "timestamp": "1:43:56",
+    "timeInSeconds": 6236,
+    "author": "unknown User",
+    "message": "sir marking \u0d91\u0d9a ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kYc3ypDkYYqRLPaG9Dl3pxX4y-tKtcYEDyYPghXqooXQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "125",
+    "timestamp": "1:44:50",
+    "timeInSeconds": 6290,
+    "author": "\u2408 \ud83e\udd40 \ud835\udcaf\ud835\udcbe\ud835\udcc8\ud835\udcbd\ud835\udcb6\ud835\udcc3 \ud835\udcc5\ud835\udcb6\ud835\udcc3\ud835\udcc0\ud835\udcb6\ud835\udcbf\ud835\udcb6 \ud80c\udd53",
+    "message": "Dn call ganna puluwnda",
+    "avatar": "https://yt4.ggpht.com/c97vcNS3H23zrtZBDZyanyMEblICz_5enAoc1fPfvQvubVELdePGz4kj5X2kM8K5lIT3ffi21ks=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "126",
+    "timestamp": "1:45:09",
+    "timeInSeconds": 6309,
+    "author": "\u2408 \ud83e\udd40 \ud835\udcaf\ud835\udcbe\ud835\udcc8\ud835\udcbd\ud835\udcb6\ud835\udcc3 \ud835\udcc5\ud835\udcb6\ud835\udcc3\ud835\udcc0\ud835\udcb6\ud835\udcbf\ud835\udcb6 \ud80c\udd53",
+    "message": "Dn call ganna puluwnda sir",
+    "avatar": "https://yt4.ggpht.com/c97vcNS3H23zrtZBDZyanyMEblICz_5enAoc1fPfvQvubVELdePGz4kj5X2kM8K5lIT3ffi21ks=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "127",
+    "timestamp": "1:45:50",
+    "timeInSeconds": 6350,
+    "author": "\u2408 \ud83e\udd40 \ud835\udcaf\ud835\udcbe\ud835\udcc8\ud835\udcbd\ud835\udcb6\ud835\udcc3 \ud835\udcc5\ud835\udcb6\ud835\udcc3\ud835\udcc0\ud835\udcb6\ud835\udcbf\ud835\udcb6 \ud80c\udd53",
+    "message": "Dn call ganna puluwn d sir",
+    "avatar": "https://yt4.ggpht.com/c97vcNS3H23zrtZBDZyanyMEblICz_5enAoc1fPfvQvubVELdePGz4kj5X2kM8K5lIT3ffi21ks=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "128",
+    "timestamp": "1:45:56",
+    "timeInSeconds": 6356,
+    "author": "Nethmi Minali",
+    "message": "\u0dc3\u0dbb\u0dca 2024 \u0d85\u0dba\u0da7 databases tute \u0daf\u0dd4\u0db1\u0dca\u0db1\u0daf",
+    "avatar": "https://yt4.ggpht.com/0e8oapqQHHDMk1SUvlVHp1bfIjI8jpL0Trj7XQQxAVq9j2D-7IOfMXj3GGfr1FY4Ou4IiO0_=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "129",
+    "timestamp": "1:48:17",
+    "timeInSeconds": 6497,
+    "author": "\u2408 \ud83e\udd40 \ud835\udcaf\ud835\udcbe\ud835\udcc8\ud835\udcbd\ud835\udcb6\ud835\udcc3 \ud835\udcc5\ud835\udcb6\ud835\udcc3\ud835\udcc0\ud835\udcb6\ud835\udcbf\ud835\udcb6 \ud80c\udd53",
+    "message": "o level dandooookkkoooooooo",
+    "avatar": "https://yt4.ggpht.com/c97vcNS3H23zrtZBDZyanyMEblICz_5enAoc1fPfvQvubVELdePGz4kj5X2kM8K5lIT3ffi21ks=s32-c-k-c0x00ffffff-no-rj"
+  }
+];
+
+
+// Global variables
+let autoScrollEnabled = true;
+let currentVideoTime = 0;
+let displayedMessages = [];
+let plyrPlayer;
+let videoDuration = 0;
+
+// Format time from seconds to MM:SS
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+// Function to replace emoji codes with Unicode characters
+function replaceEmojiCodes(text) {
+    const emojiMap = {
+        ":hand-pink-waving:": "👋",
+        ":relieved_face:": "😌",
+        ":slightly_smiling_face:": "🙂",
+        ":goodvibes:": "👍",
+        ":face-blue-smiling:": "😊",
+        ":hand-purple-blue-peace:": "✌️",
+        ":new_moon_face:": "🌚",
+        ":sleepy_face:": "😴",
+        ":rolling_on_the_floor_laughing:": "🤣",
+        ":raised_hand:": "✋",
+        ":face-red-heart-shape:": "🥰"
+    };
+
+    return text.replace(/:([a-zA-Z0-9_-]+?):/g, (match, codeName) => {
+        const fullCode = `:${codeName}:`;
+        return emojiMap[fullCode] || match;
+    });
+}
+
+// Render chat messages with animations - FIXED VERSION
+function renderChatMessages(messagesToRender) {
+    const container = document.getElementById('chatMessages');
+    if (!container) return;
+    
+    // Store current scroll position BEFORE updating messages
+    const wasScrolledToBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
+    
+    container.innerHTML = '';
+    
+    messagesToRender.forEach((msg, index) => {
+        const messageEl = document.createElement('div');
+        messageEl.className = 'message';
+        messageEl.style.animationDelay = `${index * 0.05}s`;
+        
+        const processedMessage = replaceEmojiCodes(msg.message).replace(/\n/g, "<br>");
+
+        messageEl.innerHTML = `
+            <div class="message-header">
+                <img src="${msg.avatar}" alt="${msg.author}" class="avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiM0YTkwZTIiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+CjxwYXRoIGQ9Ik0xMiAyQzEzLjEgMiAxNCAyLjkgMTQgNEMxNCA1LjEgMTMuMSA2IDEyIDZDMTAuOSA2IDEwIDUuMSAxMCA0QzEwIDIuOSAxMC45IDIgMTIgMlpNMjEgOVYyMkMyMSAyMi41IDIwLjUgMjMgMjAgMjNIMTZWMTVINVYyM0gxQzAuNSAyMyAwIDIyLjUgMCAyMlY5QzAgNy45IDAuOSA3IDIgN0g2VjEwSDE4VjdIMjJDMjMuMSA3IDI0IDcuOSAyNCA5WiIvPgo8L3N2Zz4KPC9zdmc+'">
+                <div class="author">${msg.author}</div>
+                <div class="timestamp">${msg.timestamp}</div>
+            </div>
+            <div class="message-content">${processedMessage}</div>
+        `;
+        container.appendChild(messageEl);
+    });
+
+    const countEl = document.getElementById('chatMessageCount');
+    if (countEl) {
+        countEl.textContent = `${messagesToRender.length} messages`;
+    }
+    
+    // MODIFIED SCROLL LOGIC: Only scroll if we were at bottom OR auto-scroll is enabled
+    if ((autoScrollEnabled && wasScrolledToBottom) || wasScrolledToBottom) {
+        requestAnimationFrame(() => {
+            container.scrollTop = container.scrollHeight;
+        });
+    }
+}
+
+// Show messages up to current time
+function updateChatDisplay() {
+    const messagesToShow = chatData.filter(msg => msg.timeInSeconds <= currentVideoTime);
+    
+    if (messagesToShow.length !== displayedMessages.length || 
+        (messagesToShow.length > 0 && displayedMessages.length > 0 && 
+         messagesToShow[messagesToShow.length-1].id !== displayedMessages[displayedMessages.length-1].id)) {
+        displayedMessages = messagesToShow;
+        renderChatMessages(displayedMessages);
+    }
+    
+    // Update current time display
+    const timeDisplay = document.getElementById('currentTimeDisplay');
+    if (timeDisplay) {
+        timeDisplay.textContent = formatTime(currentVideoTime);
+    }
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing player and chat replay...');
+    
+    const playerElement = document.getElementById('player');
+    if (!playerElement) {
+        console.error('Player element not found');
+        return;
+    }
+
+    plyrPlayer = new Plyr('#player', {
+        youtube: {
+            noCookie: false,
+            rel: 0,
+            showinfo: 0,
+            iv_load_policy: 3,
+            modestbranding: 1
+        },
+        controls: [
+            'play-large', 'rewind', 'play', 'fast-forward', 
+            'progress', 'current-time', 'duration', 'mute', 'volume',
+            'captions', 'settings', 'pip', 'airplay', 'fullscreen'
+        ],
+        settings: ['captions', 'quality', 'speed'],
+        quality: {
+            default: 720,
+            options: [144, 240, 360, 480, 720, 1080, 1440, 2160],
+            forced: true,
+            onChange: (quality) => {
+                console.log(`Quality changed to: ${quality}p`);
+            }
+        },
+        speed: {
+            selected: 1,
+            options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+        }
+    });
+
+    // Set up video event listeners
+    plyrPlayer.on('ready', () => {
+        console.log('Player ready');
+        videoDuration = plyrPlayer.duration || 660; // Default duration if not available
+        updateChatDisplay();
+    });
+
+    plyrPlayer.on('timeupdate', () => {
+        const newTime = plyrPlayer.currentTime || 0;
+        if (Math.abs(newTime - currentVideoTime) > 0.25) { // Update if time changed significantly
+            currentVideoTime = newTime;
+            updateChatDisplay();
+        } else if (newTime < currentVideoTime) { // Handle seeking backwards
+            currentVideoTime = newTime;
+            updateChatDisplay();
+        }
+    });
+
+    plyrPlayer.on('seeked', () => {
+        currentVideoTime = plyrPlayer.currentTime || 0;
+        updateChatDisplay();
+    });
+    
+    plyrPlayer.on('playing', () => {
+        currentVideoTime = plyrPlayer.currentTime || 0;
+        updateChatDisplay();
+    });
+
+    // Add click handler for center click layer
+    const centerClickLayer = document.querySelector('.center-click-layer');
+    if (centerClickLayer) {
+        centerClickLayer.addEventListener('click', function() {
+            plyrPlayer.togglePlay();
+        });
+    }
+
+    // Add click handlers for blockers
+    const titleBlocker = document.querySelector('.title-blocker');
+    const shareBlocker = document.querySelector('.share-blocker');
+    
+    if (titleBlocker) {
+        titleBlocker.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Title area click blocked');
+        });
+    }
+    
+    if (shareBlocker) {
+        shareBlocker.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Share area click blocked');
+        });
+    }
+
+    // Search functionality for chat
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm === '') {
+                updateChatDisplay();
+            } else {
+                const filteredMessages = chatData.filter(msg => 
+                    msg.timeInSeconds <= currentVideoTime &&
+                    (msg.message.toLowerCase().includes(searchTerm) || 
+                    msg.author.toLowerCase().includes(searchTerm))
+                );
+                renderChatMessages(filteredMessages);
+            }
+        });
+    }
+
+    // Auto-scroll toggle functionality
+    const autoScrollBtn = document.getElementById('autoScrollBtn');
+    if (autoScrollBtn) {
+        autoScrollBtn.addEventListener('click', function() {
+            autoScrollEnabled = !autoScrollEnabled;
+            this.classList.toggle('off', !autoScrollEnabled);
+            this.textContent = autoScrollEnabled ? 'Auto Scroll: ON' : 'Auto Scroll: OFF';
+            
+            if (autoScrollEnabled) {
+                scrollToBottom();
+            }
+        });
+    }
+
+    // Jump to time functionality when clicking a timestamp in chat
+    const chatMessagesContainer = document.getElementById('chatMessages');
+    if (chatMessagesContainer) {
+        chatMessagesContainer.addEventListener('click', function(e) {
+            if (e.target.classList.contains('timestamp')) {
+                const timestamp = e.target.textContent;
+                const timeParts = timestamp.split(':');
+                let seconds = 0;
+                
+                if (timeParts.length === 2) { // MM:SS
+                    seconds = parseInt(timeParts[0], 10) * 60 + parseInt(timeParts[1], 10);
+                } else if (timeParts.length === 3) { // HH:MM:SS
+                    seconds = parseInt(timeParts[0], 10) * 3600 + parseInt(timeParts[1], 10) * 60 + parseInt(timeParts[2], 10);
+                }
+                
+                if (plyrPlayer && typeof plyrPlayer.currentTime === 'number') {
+                    plyrPlayer.currentTime = seconds;
+                    console.log(`Jumped to time: ${timestamp} (${seconds}s)`);
+                }
+            }
+        });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Only apply shortcuts when not typing in an input field or textarea
+        const targetTagName = e.target.tagName.toLowerCase();
+        if (targetTagName === 'input' || targetTagName === 'textarea') {
+            return;
+        }
+        
+        if (!plyrPlayer) return;
+
+        switch(e.key.toLowerCase()) {
+            case ' ': // Spacebar - play/pause
+            case 'k': // K key - common alternative for play/pause
+                e.preventDefault();
+                plyrPlayer.togglePlay();
+                break;
+                
+            case 'f': // F key - toggle fullscreen
+                e.preventDefault();
+                plyrPlayer.fullscreen.toggle();
+                break;
+                
+            case 'm': // M key - toggle mute
+                e.preventDefault();
+                plyrPlayer.muted = !plyrPlayer.muted;
+                break;
+                
+            case 'arrowleft': // Left arrow - rewind
+                e.preventDefault();
+                plyrPlayer.rewind(10); // Rewind 10 seconds
+                break;
+                
+            case 'arrowright': // Right arrow - forward
+                e.preventDefault();
+                plyrPlayer.forward(10); // Forward 10 seconds
+                break;
+        }
+    });
+});
+
+// Utility functions
+function scrollToBottom() {
+    const container = document.getElementById('chatMessages');
+    if (container) {
+        container.scrollTop = container.scrollHeight;
+    }
+}
+
+function jumpToTime(seconds) {
+    if (plyrPlayer && typeof plyrPlayer.currentTime === 'number') {
+        plyrPlayer.currentTime = seconds;
+        currentVideoTime = seconds;
+        updateChatDisplay();
+    }
+}
+</script>
+<script src="/js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Logic Gates Day 4</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style2.css">
+   <link rel="icon" type="image/x-icon" href="https://i.imghippo.com/files/ao9417UdU.png">
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+   <style>
+      /* All your existing CSS remains unchanged */
+      .container {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+      }
+  
+      .player-wrapper {
+          position: relative;
+      }
+  
+      /* Title blocker (top-left 30% width) */
+      .title-blocker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 30%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Share button blocker (top-right 15% width) */
+      .share-blocker {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Center click layer */
+      .center-click-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          cursor: pointer;
+      }
+  
+      iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          z-index: 0;
+      }
+  
+      .plyr__controls {
+          z-index: 2 !important;
+          pointer-events: all !important;
+      }
+
+      /* Original Live Chat Styles */
+      .chat-section {
+          flex: 1;
+          min-width: 20%;
+          height: 435px;
+          background: #1a1a1a;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          overflow: hidden;
+          animation: slideInUp 0.6s ease-out;
+          position: sticky;
+          top: 20px;
+      }
+
+      @keyframes slideInUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      .chat-container { 
+          background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+          border: 1px solid #333;
+          border-radius: 12px;
+          color: #e0e0e0;
+          height: 415px;
+          padding-bottom: 10px;
+      }
+      
+      .chat-header { 
+          padding: 15px 20px; 
+          background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+          border-bottom: 1px solid #444; 
+          display: flex; 
+          justify-content: space-between; 
+          font-size: 0.95em;
+          font-weight: 600;
+          color: #f0f0f0;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      .chat-messages { 
+          height: 415px; 
+          overflow-y: auto; 
+          padding: 15px;
+          background: #1a1a1a;
+          scrollbar-width: thin;
+          scrollbar-color: #555 #2d2d2d;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+          width: 8px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+          background: #2d2d2d;
+          border-radius: 4px;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+          background: #555;
+          border-radius: 4px;
+          transition: background 0.3s ease;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb:hover {
+          background: #777;
+      }
+      
+      .message { 
+          margin-bottom: 12px; 
+          padding: 12px 15px; 
+          border-radius: 8px; 
+          background: linear-gradient(135deg, #2d2d2d 0%, #242424 100%);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          border: 1px solid #333;
+          transition: all 0.3s ease;
+          animation: messageSlideIn 0.4s ease-out;
+      }
+
+      @keyframes messageSlideIn {
+          from {
+              opacity: 0;
+              transform: translateX(-20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateX(0);
+          }
+      }
+      
+      .message:hover {
+          background: linear-gradient(135deg, #333 0%, #2a2a2a 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+      
+      .message.highlight { 
+          background: linear-gradient(135deg, #2d4a6b 0%, #1e3a5f 100%);
+          border-color: #4a90e2;
+          box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+      }
+      
+      .message-header { 
+          display: flex; 
+          align-items: center; 
+          margin-bottom: 8px; 
+      }
+      
+      .avatar { 
+          width: 32px; 
+          height: 32px; 
+          border-radius: 50%; 
+          margin-right: 10px;
+          border: 2px solid #444;
+          transition: border-color 0.3s ease;
+      }
+
+      .message:hover .avatar {
+          border-color: #4a90e2;
+      }
+      
+      .author { 
+          font-weight: 600; 
+          margin-right: 10px; 
+          font-size: 12px;
+          color: #4a90e2;
+      }
+      
+      .timestamp { 
+          font-size: 0.8em; 
+          color: #888;
+          background: #333;
+          padding: 2px 6px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.2s;
+      }
+
+      .timestamp:hover {
+          color: #4a90e2;
+          background: #444;
+      }
+      
+      .message-content { 
+          font-size: 12px; 
+          line-height: 1.5;
+          color: #e0e0e0;
+          word-break: break-word;
+      }
+      
+      .controls { 
+          padding: 15px 20px; 
+          background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+          border-top: 1px solid #444; 
+          display: flex; 
+          flex-wrap: wrap; 
+          gap: 12px; 
+          align-items: center;
+      }
+      
+      .search-container { 
+          display: flex; 
+          align-items: center; 
+          background: #2d2d2d;
+          border: 1px solid #555; 
+          border-radius: 6px; 
+          padding: 0 10px;
+          transition: all 0.3s ease;
+          flex: 1;
+          min-width: 200px;
+      }
+
+      .search-container:focus-within {
+          border-color: #4a90e2;
+          box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      }
+      
+      .search-container i { 
+          margin-right: 8px; 
+          color: #888;
+          transition: color 0.3s ease;
+      }
+
+      .search-container:focus-within i {
+          color: #4a90e2;
+      }
+      
+      #searchInput { 
+          border: none; 
+          outline: none; 
+          padding: 10px 5px; 
+          font-size: 0.9em;
+          background: transparent;
+          color: #e0e0e0;
+          flex: 1;
+      }
+
+      #searchInput::placeholder {
+          color: #888;
+      }
+      
+      .controls button { 
+          padding: 10px 15px; 
+          border: none; 
+          border-radius: 6px; 
+          cursor: pointer; 
+          background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+          color: white; 
+          font-size: 0.9em;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+      }
+      
+      .controls button:hover { 
+          background: linear-gradient(135deg, #357abd 0%, #2968a3 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+      }
+      
+      .controls button.off { 
+          background: linear-gradient(135deg, #666 0%, #555 100%);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .controls button.off:hover {
+          background: linear-gradient(135deg, #777 0%, #666 100%);
+      }
+      
+      .time-indicator { 
+          padding: 10px 15px; 
+          font-size: 0.9em; 
+          color: #bbb; 
+          text-align: center;
+          background: #242424;
+          border-radius: 6px;
+          border: 1px solid #333;
+      }
+      
+      .progress-bar { 
+          width: 100%; 
+          background: #333;
+          height: 6px; 
+          border-radius: 3px; 
+          overflow: hidden; 
+          margin-top: 8px;
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      .progress-fill { 
+          width: 0%; 
+          background: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
+          height: 100%; 
+          transition: width 0.25s linear;
+          box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+      }
+
+      /* Responsive design */
+      @media (max-width: 1024px) {
+          .watch-video {
+              flex-direction: column;
+              gap: 20px;
+          }
+          
+          .chat-section {
+              min-width: unset;
+              position: static;
+          }
+          
+          .chat-messages {
+              height: 400px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .watch-video {
+              padding: 10px;
+              width: 90%;
+              padding-left: 2.5%;
+          }
+          
+          .watch-video .video-container {
+              width: 100%;
+          }
+          
+          .controls {
+              flex-direction: column;
+              align-items: stretch;
+              gap: 10px;
+          }
+          
+          .search-container {
+              width: 100%;
+              min-width: unset;
+          }
+          
+          .controls button {
+              width: 100%;
+          }
+
+          .chat-messages {
+              height: 300px;
+          }
+          
+          .chat-section {
+              min-width: unset;
+          }
+
+          /* Adjust blocker areas on mobile for better usability */
+          .title-blocker { /* Normal mode mobile */
+              width: 60%;
+              height: 12%;
+          }
+          
+          .share-blocker { /* Normal mode mobile */
+              width: 12%;
+              height: 12%;
+          }
+      }
+   </style>
+</head>
+<body>
+   <main class="content-blur">
+
+        <header class="header">
+
+        <section class="flex">
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+            </div>
+
+            <form action="search.html" method="post" class="search-form">
+                <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+                <button type="submit" class="fas fa-search"></button>
+            </form>
+
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image" alt="">
+                <h3 class="name" id="userName"></h3>
+                <div class="flex-btn">
+                </div>
+            </div>
+
+        </section>
+        </header>   
+        
+        <div class="side-bar">
+
+            <div id="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image">
+                <br>
+                <h3 id="userName" class="name"></h3>
+                <p class="role">student</p>
+            </div>
+
+            <nav class="navbar">
+                <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+                <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+                <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+                <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+            </nav>
+
+            <div class="typing-container">
+                <div class="animation-container">
+                <div id="text"></div>
+                <span class="cursor"></span>
+                </div>
+            </div>
+
+        </div>
+
+<section class="watch-video">
+   <div class="video-container">
+      <div class="video">
+         <div class="container">
+            <div class="player-wrapper">
+                <div class="plyr__video-embed" id="player">
+                    <div class="title-blocker"></div>
+                    <div class="share-blocker"></div>
+                    <div class="center-click-layer"></div>
+                    <iframe
+                        src="https://www.youtube.com/embed/7f_vOjyE2Zs?controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1"
+                        allowfullscreen
+                        allow="autoplay"
+                    ></iframe>
+                </div>
+            </div>
+         </div>
+      </div>
+      <h3 class="title">Logic Gates Day 4</h3>
+      <br>
+      <div class="tutorbox">
+        <div class="tutor">
+           <img src="https://yt3.googleusercontent.com/bRzjH5rIbDRaHCiXopbsLJh8w64sKd5QduITMma3GZZd6e5Yr1Jp1uaJlHvNN4E37sMiJNTj0A=s160-c-k-c0x00ffffff-no-rj" alt="">
+           <div>
+              <h3>Raindu Bandaranayake</h3>
+              <span>Teacher</span>
+           </div>
+        </div>
+      </div>
+   </div>
+   
+   <div class="chat-section">
+       <div class="chat-container">
+           <div class="chat-header">
+               <span><i class="fas fa-message"></i> Live Chat Replay</span>
+               <span id="chatMessageCount">0 messages</span>
+           </div>
+           <div class="chat-messages" id="chatMessages">
+               <!-- Messages will be inserted here by JavaScript -->
+           </div>
+           <div class="controls">
+               <div class="search-container">
+                   <i class="fas fa-search"></i>
+                   <input type="text" id="searchInput" placeholder="Search chat messages...">
+               </div>
+               <button id="autoScrollBtn">Auto Scroll: ON</button>
+               <div class="time-indicator">
+                   Current time: <span id="currentTimeDisplay">0:00</span>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>
+
+</main>
+
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+
+const chatData = [
+  {
+    "id": "1",
+    "timestamp": "0:32",
+    "timeInSeconds": 32,
+    "author": "J Mihan ",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/WANj7MXtZpDelba0IWko4FrwxEFs31g3aoBSyu4eyJ8WTns07DI3_veTVu5Nm4nCtfnYolAP=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "2",
+    "timestamp": "1:13",
+    "timeInSeconds": 73,
+    "author": "J Mihan ",
+    "message": "Data base video eka danna website ekata",
+    "avatar": "https://yt4.ggpht.com/WANj7MXtZpDelba0IWko4FrwxEFs31g3aoBSyu4eyJ8WTns07DI3_veTVu5Nm4nCtfnYolAP=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "3",
+    "timestamp": "1:20",
+    "timeInSeconds": 80,
+    "author": "Hansaka Sachin",
+    "message": "hello sir",
+    "avatar": "https://yt4.ggpht.com/OCvi65ZRhNsvVcET_9OIKVG8GNmF_tV7sp8MKucB8NJrMSYqwj5zFxmI6pENIwvbHuZ4iVJN=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "4",
+    "timestamp": "9:10",
+    "timeInSeconds": 550,
+    "author": "sandi",
+    "message": "kaud A/L INNE",
+    "avatar": "https://yt4.ggpht.com/2YoUkcvMkmzD6TJFllV-CV0HfGCkmEGfSL3yg7Ptzdr4R_xau7hSwY5VXBPCNgdBfJpB6TG_PcU=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "5",
+    "timestamp": "15:53",
+    "timeInSeconds": 953,
+    "author": "Lalith s",
+    "message": "hello boso",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_mMCFGLpx-oVhpUD-5nWuGkQGaSnhc77pZDhv7mEa7cxk6UAAgzralettYUi9Lid9Cr3w=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "6",
+    "timestamp": "16:26",
+    "timeInSeconds": 986,
+    "author": "Music_Shorts",
+    "message": "na",
+    "avatar": "https://yt4.ggpht.com/Z_ZgMrbq6TCtD8jTZjtXj_RlGrGAEWxbWT6Z6s0n6AE66kJLbu5nfcq3IkcDe2pZ1ODN5cVE=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "7",
+    "timestamp": "16:40",
+    "timeInSeconds": 1000,
+    "author": "Hasitha Dulanga",
+    "message": "Ne sir",
+    "avatar": "https://yt4.ggpht.com/XIOwclF31WAtgL2W9IVlPMDp2vGuEaVzQt89Kg-q0J9WlZo529Ep_3aVbPsudZJC8dqHVxqyWKM=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "8",
+    "timestamp": "17:16",
+    "timeInSeconds": 1036,
+    "author": "Dulitha Madhumal",
+    "message": "Hi sir",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_n6uXwQUZQrJSqgJ6ZF2m7yPyU86vA2cV06lZe_vIJ30N0POsPL-swpaX5qoZBX-P1M2A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "9",
+    "timestamp": "17:32",
+    "timeInSeconds": 1052,
+    "author": "Dulitha Madhumal",
+    "message": "Hi sir",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_n6uXwQUZQrJSqgJ6ZF2m7yPyU86vA2cV06lZe_vIJ30N0POsPL-swpaX5qoZBX-P1M2A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "10",
+    "timestamp": "17:40",
+    "timeInSeconds": 1060,
+    "author": "Dulitha Madhumal",
+    "message": "Hi sir",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_n6uXwQUZQrJSqgJ6ZF2m7yPyU86vA2cV06lZe_vIJ30N0POsPL-swpaX5qoZBX-P1M2A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "11",
+    "timestamp": "18:10",
+    "timeInSeconds": 1090,
+    "author": "reHan.A",
+    "message": "innooo",
+    "avatar": "https://yt4.ggpht.com/3c4dlakWZoCsCG4jPcCEc53JKn82tGio2WXHNh1Y6Yqfzhdm5GZBlkWEThMk8L4Amne-CzC4ofA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "12",
+    "timestamp": "18:10",
+    "timeInSeconds": 1090,
+    "author": "Meow Lanka ",
+    "message": "\u0d85\u0dc0\u0dd4\u0dbd\u0d9a\u0dca \u0db1\u0dd1",
+    "avatar": "https://yt4.ggpht.com/A_l_xA_glcXdS3yCq6dRq0RW_P4ZblMu1ea98xcJnwjKSwBAiZn_p6Ya-lOKT6IckzwwwfdPbA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "13",
+    "timestamp": "18:14",
+    "timeInSeconds": 1094,
+    "author": "Scrappy GaMing ",
+    "message": "awulak nah sir ",
+    "avatar": "https://yt4.ggpht.com/ub5MC9St2Ev20H_aWCEpMonWYapR0535fFksuMWNG8yK1yhFifcfrKX3SNsLht_ya6R0G6uV-Q=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "14",
+    "timestamp": "18:20",
+    "timeInSeconds": 1100,
+    "author": "Theekshana vidarshana ",
+    "message": "sir sunday class eke karanneth oka neda",
+    "avatar": "https://yt4.ggpht.com/NaVucCNOhp1l6E3lYZJseRCv5oi13Blies8NihtRQAJJlotHlJm12j4vm7ZwszcSq4s1Kk7UyA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "15",
+    "timestamp": "24:11",
+    "timeInSeconds": 1451,
+    "author": "thilini kavindaya",
+    "message": "sir meka karama physical clz ekath ekka samana wenavda",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_kiE8Br4e-8yu4POEnhTCOca59YkXMWPVAA95AjO82ww8G_mQeVI6M1wKrGyNZhKuYEpw=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "16",
+    "timestamp": "29:42",
+    "timeInSeconds": 1782,
+    "author": "HasinthYa",
+    "message": "@thilini kavindaya physical clz ek issrahn inns mita vada kara",
+    "avatar": "https://yt4.ggpht.com/WGcpULCm4k9ucaX6ygpCCtgyuNtZ22dgw8lSMc2eBlss3sk0qXS0molkYdeclfA9pAUECSn-eQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "17",
+    "timestamp": "32:11",
+    "timeInSeconds": 1931,
+    "author": "Senesh TheNuka ",
+    "message": "concept eka theruna sir",
+    "avatar": "https://yt4.ggpht.com/cAKFdXCN6OZOEiEJ42VtL4kQon-6DgM3XfKdwTrsAAW_Qf6gzNat4Vy5Ysl4okAaCWKgTm0a=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "18",
+    "timestamp": "33:41",
+    "timeInSeconds": 2021,
+    "author": "Lasidu",
+    "message": "@HasinthaYa mond meh ",
+    "avatar": "https://yt4.ggpht.com/LsT5TiCJb1xlNbjZ8y71DWecaUXOxty-0exrZWj9_QkaWjKI8iAJEputh4DfyFdtCdlwPoVh=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "19",
+    "timestamp": "33:57",
+    "timeInSeconds": 2037,
+    "author": "HasinthYa",
+    "message": "@Lasidu ",
+    "avatar": "https://yt4.ggpht.com/WGcpULCm4k9ucaX6ygpCCtgyuNtZ22dgw8lSMc2eBlss3sk0qXS0molkYdeclfA9pAUECSn-eQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "20",
+    "timestamp": "34:33",
+    "timeInSeconds": 2073,
+    "author": "Lasidu",
+    "message": "amarui",
+    "avatar": "https://yt4.ggpht.com/LsT5TiCJb1xlNbjZ8y71DWecaUXOxty-0exrZWj9_QkaWjKI8iAJEputh4DfyFdtCdlwPoVh=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "21",
+    "timestamp": "34:46",
+    "timeInSeconds": 2086,
+    "author": "HasinthYa",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/WGcpULCm4k9ucaX6ygpCCtgyuNtZ22dgw8lSMc2eBlss3sk0qXS0molkYdeclfA9pAUECSn-eQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "22",
+    "timestamp": "35:41",
+    "timeInSeconds": 2141,
+    "author": "HasinthYa",
+    "message": "@Lasidu mew thama it  bari nm danm ayin wenna ",
+    "avatar": "https://yt4.ggpht.com/WGcpULCm4k9ucaX6ygpCCtgyuNtZ22dgw8lSMc2eBlss3sk0qXS0molkYdeclfA9pAUECSn-eQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "23",
+    "timestamp": "36:15",
+    "timeInSeconds": 2175,
+    "author": "Lasidu",
+    "message": "@HasithYa ehema ain vnne nah sudda A dla nawthine ",
+    "avatar": "https://yt4.ggpht.com/LsT5TiCJb1xlNbjZ8y71DWecaUXOxty-0exrZWj9_QkaWjKI8iAJEputh4DfyFdtCdlwPoVh=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "24",
+    "timestamp": "36:41",
+    "timeInSeconds": 2201,
+    "author": "HasinthYa",
+    "message": "@Lasidu  mmmmmm athal ek hitann epa",
+    "avatar": "https://yt4.ggpht.com/WGcpULCm4k9ucaX6ygpCCtgyuNtZ22dgw8lSMc2eBlss3sk0qXS0molkYdeclfA9pAUECSn-eQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "25",
+    "timestamp": "37:05",
+    "timeInSeconds": 2225,
+    "author": "Lasidu",
+    "message": "@HasithYa lajjavak mta",
+    "avatar": "https://yt4.ggpht.com/LsT5TiCJb1xlNbjZ8y71DWecaUXOxty-0exrZWj9_QkaWjKI8iAJEputh4DfyFdtCdlwPoVh=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "26",
+    "timestamp": "39:22",
+    "timeInSeconds": 2362,
+    "author": "HasinthYa",
+    "message": "@Lasidu augh ",
+    "avatar": "https://yt4.ggpht.com/WGcpULCm4k9ucaX6ygpCCtgyuNtZ22dgw8lSMc2eBlss3sk0qXS0molkYdeclfA9pAUECSn-eQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "27",
+    "timestamp": "41:30",
+    "timeInSeconds": 2490,
+    "author": "erandaka nirmal",
+    "message": "hluuu sir  mkd venne clmb ahs yt ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_nd7Wd3yiuW6Afjwna9EB2Us2mleIuJGkt6spSLC2k_P0A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "28",
+    "timestamp": "48:04",
+    "timeInSeconds": 2884,
+    "author": "SB | ALONE",
+    "message": "\u0db4\u0db1\u0dca\u0dad\u0dd2 \u0dad\u0dd2\u0dba\u0dd9 \u0d9a\u0dd2\u0dba\u0dbd\u0dcf \u0daf\u0dd0\u0db1\u0dca \u0daf\u0dd0\u0d9a\u0dca\u0d9a\u0dd9",
+    "avatar": "https://yt4.ggpht.com/haXRlqwKEBGDyf8OErjUN9NgsKBiKnz-tu2-zED0AVu_-2H5l0aJ0NchNzS5cE42nT4JYN1kbec=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "29",
+    "timestamp": "50:31",
+    "timeInSeconds": 3031,
+    "author": "Shehan Isuru",
+    "message": "2024 revision ekata join wenne kohomada sir",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_meLtS1C8gl1i7ctdw977aqXq65ZlRYz3nJcpNHxhajLNpRpb2AVHlBghoDuIef2xu6gQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "30",
+    "timestamp": "53:33",
+    "timeInSeconds": 3213,
+    "author": "Vishal Kumarasinghe ",
+    "message": "Live ekata enna ",
+    "avatar": "https://yt4.ggpht.com/MVr2j7H8Hy3dUfcpRecU6yWFCOxwdQNanyzTGHBAJs-feeRFVzJwSKUkYf0iKT5GIR-cymWXng=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "31",
+    "timestamp": "54:51",
+    "timeInSeconds": 3291,
+    "author": "GANIDU SASMITHA",
+    "message": " ayyo dan ne notify dkke",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_lnBPtbP1wahUTibFBXckB9MmDz9iLbC7kjCu5F4WT8Mp6TLU2X-XMBvRB0tFwn3YlHnA=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "32",
+    "timestamp": "1:17:45",
+    "timeInSeconds": 4665,
+    "author": "OfficialDila",
+    "message": "A= A+AB",
+    "avatar": "https://yt4.ggpht.com/ZCcyPcUK6Q-dSflJz5WMuVINhdupzGbrWGl6EBFcoqzY3vYkqSDiofhWrovo1hcZb81MA8nVCQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "33",
+    "timestamp": "1:18:01",
+    "timeInSeconds": 4681,
+    "author": "Akith Dulmika",
+    "message": "redudancy danna ba da ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_n2udBzeYBteVO94AOvACDKqyHN4sBTqV2YenVzO3Y2Ic5h7sd9c1UhQi-g7V9kvb_L3A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "34",
+    "timestamp": "1:18:02",
+    "timeInSeconds": 4682,
+    "author": "OfficialDila",
+    "message": "Redundancy ekn puluwan sir",
+    "avatar": "https://yt4.ggpht.com/ZCcyPcUK6Q-dSflJz5WMuVINhdupzGbrWGl6EBFcoqzY3vYkqSDiofhWrovo1hcZb81MA8nVCQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "35",
+    "timestamp": "1:18:28",
+    "timeInSeconds": 4708,
+    "author": "Dammika Priyalal",
+    "message": "me 2024 clz akadda",
+    "avatar": "https://yt4.ggpht.com/Fv9JazGyf0_yns37XcDkbapCixfbBUb4B12UhBhLQzaiyn8gUe7XluJYR0US1j8Fr1jQGUgH=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "36",
+    "timestamp": "1:19:04",
+    "timeInSeconds": 4744,
+    "author": "Akith Dulmika",
+    "message": "Redundancy \u0db4\u0dd4\u0dc5\u0dd4\u0dc0\u0db1\u0dca ",
+    "avatar": "https://yt4.ggpht.com/ytc/AIdro_n2udBzeYBteVO94AOvACDKqyHN4sBTqV2YenVzO3Y2Ic5h7sd9c1UhQi-g7V9kvb_L3A=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "37",
+    "timestamp": "1:23:56",
+    "timeInSeconds": 5036,
+    "author": "Lasindu Senarath",
+    "message": "King Ravindu",
+    "avatar": "https://yt4.ggpht.com/8Cyc9PzBFuCCNm5dqRhsSbrZ3H7Ae2l1NlzPdPVVrOjgG-dxRWRUYaDeS91q2NMWz_Teh5xvcQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "38",
+    "timestamp": "1:28:31",
+    "timeInSeconds": 5311,
+    "author": "Sandeepa",
+    "message": "FV",
+    "avatar": "https://yt4.ggpht.com/AFzyMUtB1HkN2KbccI6dk6AY1pE2c210aAZWRZOWXrQ_EtVYRpCA0ny1C-bPj6kZ1l_BxMVQRQ=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "39",
+    "timestamp": "1:34:50",
+    "timeInSeconds": 5690,
+    "author": "Gagani mihiravi",
+    "message": "",
+    "avatar": "https://yt4.ggpht.com/I764b1ZsbGMhKTAv4nZrnsxPbJD0SkUYLYu0jw1ee8Z3LXrrRbZZCZLPImghHxLPChWVsq-T=s32-c-k-c0x00ffffff-no-rj"
+  },
+  {
+    "id": "40",
+    "timestamp": "1:37:17",
+    "timeInSeconds": 5837,
+    "author": "Thashila Ranoosh TRK",
+    "message": "\u0dc4\u0dbd\u0ddd \u0dc4\u0dbd\u0ddd ",
+    "avatar": "https://yt4.ggpht.com/Hzv6bqA3VE31-5EYihzQ_KqM4zhx5hK6JlzCBRbeAeFQiuAS28zpCWq-8pCfhgxxN6L_Sg3wLA=s32-c-k-c0x00ffffff-no-rj"
+  }
+];
+
+
+// Global variables
+let autoScrollEnabled = true;
+let currentVideoTime = 0;
+let displayedMessages = [];
+let plyrPlayer;
+let videoDuration = 0;
+
+// Format time from seconds to MM:SS
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+// Function to replace emoji codes with Unicode characters
+function replaceEmojiCodes(text) {
+    const emojiMap = {
+        ":hand-pink-waving:": "👋",
+        ":relieved_face:": "😌",
+        ":slightly_smiling_face:": "🙂",
+        ":goodvibes:": "👍",
+        ":face-blue-smiling:": "😊",
+        ":hand-purple-blue-peace:": "✌️",
+        ":new_moon_face:": "🌚",
+        ":sleepy_face:": "😴",
+        ":rolling_on_the_floor_laughing:": "🤣",
+        ":raised_hand:": "✋",
+        ":face-red-heart-shape:": "🥰"
+    };
+
+    return text.replace(/:([a-zA-Z0-9_-]+?):/g, (match, codeName) => {
+        const fullCode = `:${codeName}:`;
+        return emojiMap[fullCode] || match;
+    });
+}
+
+// Render chat messages with animations - FIXED VERSION
+function renderChatMessages(messagesToRender) {
+    const container = document.getElementById('chatMessages');
+    if (!container) return;
+    
+    // Store current scroll position BEFORE updating messages
+    const wasScrolledToBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
+    
+    container.innerHTML = '';
+    
+    messagesToRender.forEach((msg, index) => {
+        const messageEl = document.createElement('div');
+        messageEl.className = 'message';
+        messageEl.style.animationDelay = `${index * 0.05}s`;
+        
+        const processedMessage = replaceEmojiCodes(msg.message).replace(/\n/g, "<br>");
+
+        messageEl.innerHTML = `
+            <div class="message-header">
+                <img src="${msg.avatar}" alt="${msg.author}" class="avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiM0YTkwZTIiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+CjxwYXRoIGQ9Ik0xMiAyQzEzLjEgMiAxNCAyLjkgMTQgNEMxNCA1LjEgMTMuMSA2IDEyIDZDMTAuOSA2IDEwIDUuMSAxMCA0QzEwIDIuOSAxMC45IDIgMTIgMlpNMjEgOVYyMkMyMSAyMi41IDIwLjUgMjMgMjAgMjNIMTZWMTVINVYyM0gxQzAuNSAyMyAwIDIyLjUgMCAyMlY5QzAgNy45IDAuOSA3IDIgN0g2VjEwSDE4VjdIMjJDMjMuMSA3IDI0IDcuOSAyNCA5WiIvPgo8L3N2Zz4KPC9zdmc+'">
+                <div class="author">${msg.author}</div>
+                <div class="timestamp">${msg.timestamp}</div>
+            </div>
+            <div class="message-content">${processedMessage}</div>
+        `;
+        container.appendChild(messageEl);
+    });
+
+    const countEl = document.getElementById('chatMessageCount');
+    if (countEl) {
+        countEl.textContent = `${messagesToRender.length} messages`;
+    }
+    
+    // MODIFIED SCROLL LOGIC: Only scroll if we were at bottom OR auto-scroll is enabled
+    if ((autoScrollEnabled && wasScrolledToBottom) || wasScrolledToBottom) {
+        requestAnimationFrame(() => {
+            container.scrollTop = container.scrollHeight;
+        });
+    }
+}
+
+// Show messages up to current time
+function updateChatDisplay() {
+    const messagesToShow = chatData.filter(msg => msg.timeInSeconds <= currentVideoTime);
+    
+    if (messagesToShow.length !== displayedMessages.length || 
+        (messagesToShow.length > 0 && displayedMessages.length > 0 && 
+         messagesToShow[messagesToShow.length-1].id !== displayedMessages[displayedMessages.length-1].id)) {
+        displayedMessages = messagesToShow;
+        renderChatMessages(displayedMessages);
+    }
+    
+    // Update current time display
+    const timeDisplay = document.getElementById('currentTimeDisplay');
+    if (timeDisplay) {
+        timeDisplay.textContent = formatTime(currentVideoTime);
+    }
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing player and chat replay...');
+    
+    const playerElement = document.getElementById('player');
+    if (!playerElement) {
+        console.error('Player element not found');
+        return;
+    }
+
+    plyrPlayer = new Plyr('#player', {
+        youtube: {
+            noCookie: false,
+            rel: 0,
+            showinfo: 0,
+            iv_load_policy: 3,
+            modestbranding: 1
+        },
+        controls: [
+            'play-large', 'rewind', 'play', 'fast-forward', 
+            'progress', 'current-time', 'duration', 'mute', 'volume',
+            'captions', 'settings', 'pip', 'airplay', 'fullscreen'
+        ],
+        settings: ['captions', 'quality', 'speed'],
+        quality: {
+            default: 720,
+            options: [144, 240, 360, 480, 720, 1080, 1440, 2160],
+            forced: true,
+            onChange: (quality) => {
+                console.log(`Quality changed to: ${quality}p`);
+            }
+        },
+        speed: {
+            selected: 1,
+            options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+        }
+    });
+
+    // Set up video event listeners
+    plyrPlayer.on('ready', () => {
+        console.log('Player ready');
+        videoDuration = plyrPlayer.duration || 660; // Default duration if not available
+        updateChatDisplay();
+    });
+
+    plyrPlayer.on('timeupdate', () => {
+        const newTime = plyrPlayer.currentTime || 0;
+        if (Math.abs(newTime - currentVideoTime) > 0.25) { // Update if time changed significantly
+            currentVideoTime = newTime;
+            updateChatDisplay();
+        } else if (newTime < currentVideoTime) { // Handle seeking backwards
+            currentVideoTime = newTime;
+            updateChatDisplay();
+        }
+    });
+
+    plyrPlayer.on('seeked', () => {
+        currentVideoTime = plyrPlayer.currentTime || 0;
+        updateChatDisplay();
+    });
+    
+    plyrPlayer.on('playing', () => {
+        currentVideoTime = plyrPlayer.currentTime || 0;
+        updateChatDisplay();
+    });
+
+    // Add click handler for center click layer
+    const centerClickLayer = document.querySelector('.center-click-layer');
+    if (centerClickLayer) {
+        centerClickLayer.addEventListener('click', function() {
+            plyrPlayer.togglePlay();
+        });
+    }
+
+    // Add click handlers for blockers
+    const titleBlocker = document.querySelector('.title-blocker');
+    const shareBlocker = document.querySelector('.share-blocker');
+    
+    if (titleBlocker) {
+        titleBlocker.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Title area click blocked');
+        });
+    }
+    
+    if (shareBlocker) {
+        shareBlocker.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Share area click blocked');
+        });
+    }
+
+    // Search functionality for chat
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm === '') {
+                updateChatDisplay();
+            } else {
+                const filteredMessages = chatData.filter(msg => 
+                    msg.timeInSeconds <= currentVideoTime &&
+                    (msg.message.toLowerCase().includes(searchTerm) || 
+                    msg.author.toLowerCase().includes(searchTerm))
+                );
+                renderChatMessages(filteredMessages);
+            }
+        });
+    }
+
+    // Auto-scroll toggle functionality
+    const autoScrollBtn = document.getElementById('autoScrollBtn');
+    if (autoScrollBtn) {
+        autoScrollBtn.addEventListener('click', function() {
+            autoScrollEnabled = !autoScrollEnabled;
+            this.classList.toggle('off', !autoScrollEnabled);
+            this.textContent = autoScrollEnabled ? 'Auto Scroll: ON' : 'Auto Scroll: OFF';
+            
+            if (autoScrollEnabled) {
+                scrollToBottom();
+            }
+        });
+    }
+
+    // Jump to time functionality when clicking a timestamp in chat
+    const chatMessagesContainer = document.getElementById('chatMessages');
+    if (chatMessagesContainer) {
+        chatMessagesContainer.addEventListener('click', function(e) {
+            if (e.target.classList.contains('timestamp')) {
+                const timestamp = e.target.textContent;
+                const timeParts = timestamp.split(':');
+                let seconds = 0;
+                
+                if (timeParts.length === 2) { // MM:SS
+                    seconds = parseInt(timeParts[0], 10) * 60 + parseInt(timeParts[1], 10);
+                } else if (timeParts.length === 3) { // HH:MM:SS
+                    seconds = parseInt(timeParts[0], 10) * 3600 + parseInt(timeParts[1], 10) * 60 + parseInt(timeParts[2], 10);
+                }
+                
+                if (plyrPlayer && typeof plyrPlayer.currentTime === 'number') {
+                    plyrPlayer.currentTime = seconds;
+                    console.log(`Jumped to time: ${timestamp} (${seconds}s)`);
+                }
+            }
+        });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Only apply shortcuts when not typing in an input field or textarea
+        const targetTagName = e.target.tagName.toLowerCase();
+        if (targetTagName === 'input' || targetTagName === 'textarea') {
+            return;
+        }
+        
+        if (!plyrPlayer) return;
+
+        switch(e.key.toLowerCase()) {
+            case ' ': // Spacebar - play/pause
+            case 'k': // K key - common alternative for play/pause
+                e.preventDefault();
+                plyrPlayer.togglePlay();
+                break;
+                
+            case 'f': // F key - toggle fullscreen
+                e.preventDefault();
+                plyrPlayer.fullscreen.toggle();
+                break;
+                
+            case 'm': // M key - toggle mute
+                e.preventDefault();
+                plyrPlayer.muted = !plyrPlayer.muted;
+                break;
+                
+            case 'arrowleft': // Left arrow - rewind
+                e.preventDefault();
+                plyrPlayer.rewind(10); // Rewind 10 seconds
+                break;
+                
+            case 'arrowright': // Right arrow - forward
+                e.preventDefault();
+                plyrPlayer.forward(10); // Forward 10 seconds
+                break;
+        }
+    });
+});
+
+// Utility functions
+function scrollToBottom() {
+    const container = document.getElementById('chatMessages');
+    if (container) {
+        container.scrollTop = container.scrollHeight;
+    }
+}
+
+function jumpToTime(seconds) {
+    if (plyrPlayer && typeof plyrPlayer.currentTime === 'number') {
+        plyrPlayer.currentTime = seconds;
+        currentVideoTime = seconds;
+        updateChatDisplay();
+    }
+}
+</script>
+<script src="/js/profile.js"></script>
+</body>
+</html>

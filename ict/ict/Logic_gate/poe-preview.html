@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Fixed Player - Speed Revision (Day 09)</title>
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+   <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      
+      body {
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+          color: #e6e6e6;
+          min-height: 100vh;
+          padding: 20px;
+      }
+      
+      .header {
+          background: rgba(0, 0, 0, 0.7);
+          backdrop-filter: blur(10px);
+          border-radius: 12px;
+          padding: 15px 0;
+          margin-bottom: 20px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      }
+      
+      .header .flex {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+      }
+      
+      .header .icons {
+          display: flex;
+          gap: 15px;
+      }
+      
+      .header .fas {
+          font-size: 1.5rem;
+          color: #4cc9f0;
+          cursor: pointer;
+          transition: all 0.3s ease;
+      }
+      
+      .header .fas:hover {
+          color: #4361ee;
+          transform: scale(1.1);
+      }
+      
+      .header .search-form {
+          display: flex;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 50px;
+          overflow: hidden;
+          width: 400px;
+      }
+      
+      .header .search-form input {
+          flex: 1;
+          padding: 12px 20px;
+          background: transparent;
+          border: none;
+          outline: none;
+          color: white;
+          font-size: 1rem;
+      }
+      
+      .header .search-form input::placeholder {
+          color: rgba(255, 255, 255, 0.6);
+      }
+      
+      .header .search-form button {
+          background: #4361ee;
+          border: none;
+          padding: 0 20px;
+          cursor: pointer;
+          color: white;
+      }
+      
+      .container {
+          display: flex;
+          gap: 30px;
+          max-width: 1400px;
+          margin: 0 auto;
+      }
+      
+      .player-section {
+          flex: 3;
+      }
+      
+      .chat-section {
+          flex: 1;
+          min-width: 300px;
+      }
+      
+      .player-wrapper {
+          position: relative;
+          width: 100%;
+          height: 0;
+          padding-bottom: 56.25%; /* 16:9 aspect ratio */
+          background-color: #000;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Title blocker (top-left 70% width) */
+      .title-blocker {
+          position: absolute; 
+          top: 0;
+          left: 0;
+          width: 70%;
+          height: 15%;
+          z-index: 15; /* Below Plyr controls */
+          pointer-events: auto;
+          cursor: default;
+          background: transparent;
+      }
+
+      /* Share button blocker (top-right 15% width) */
+      .share-blocker {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15%;
+          height: 15%;
+          z-index: 15; /* Below Plyr controls */
+          pointer-events: auto;
+          cursor: default;
+          background: transparent;
+      }
+
+      /* Center click layer for double-tap */
+      .center-click-layer {
+          position: absolute;
+          top: 15%;
+          left: 30%;
+          width: 55%;
+          height: 70%;
+          z-index: 5;
+          cursor: pointer;
+          pointer-events: none;
+          background: transparent;
+      }
+
+      /* Plyr player container */
+      #player {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+      }
+
+      /* Ensure plyr controls are accessible */
+      .plyr__controls {
+          z-index: 20 !important; /* Above blockers */
+          pointer-events: all !important;
+      }
+
+      .plyr__control {
+          pointer-events: all !important;
+      }
+
+      /* Plyr video container */
+      .plyr__video-wrapper {
+          position: relative;
+          z-index: 1;
+      }
+
+      .plyr__control--overlaid {
+          z-index: 18 !important; /* Above blockers, below controls */
+          pointer-events: all !important;
+      }
+
+      /* ---- ENHANCED FULLSCREEN STYLES ---- */
+      #player.plyr--fullscreen-active {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          z-index: 2147483640 !important;
+          background-color: #000 !important;
+      }
+
+      #player.plyr--fullscreen-active .plyr__video-wrapper,
+      #player.plyr--fullscreen-active iframe {
+          width: 100% !important;
+          height: 100% !important;
+      }
+
+      #player.plyr--fullscreen-active .title-blocker {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 70% !important;
+          height: 15% !important;
+          z-index: 2147483645 !important;
+          pointer-events: auto !important;
+      }
+
+      #player.plyr--fullscreen-active .share-blocker {
+          position: fixed !important;
+          top: 0 !important;
+          right: 0 !important;
+          width: 15% !important;
+          height: 15% !important;
+          z-index: 2147483645 !important;
+          pointer-events: auto !important;
+      }
+
+      #player.plyr--fullscreen-active .plyr__controls {
+          z-index: 2147483647 !important;
+          position: absolute !important; 
+          pointer-events: all !important;
+      }
+
+      #player.plyr--fullscreen-active .plyr__control--overlaid {
+          z-index: 2147483646 !important;
+          pointer-events: all !important;
+      }
+
+      .video-info {
+          padding: 20px 0;
+      }
+      
+      .video-info h3 {
+          font-size: 1.8rem;
+          margin-bottom: 15px;
+          color: #f8f9fa;
+      }
+      
+      .tutorbox {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          padding: 15px;
+          display: flex;
+          align-items: center;
+          margin-top: 15px;
+      }
+      
+      .tutor {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+      }
+      
+      .tutor img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #4361ee;
+      }
+      
+      .tutor div h3 {
+          font-size: 1.3rem;
+          margin-bottom: 5px;
+          color: #f8f9fa;
+      }
+      
+      .tutor div span {
+          color: #adb5bd;
+          font-size: 0.9rem;
+      }
+      
+      .chat-container { 
+          background: linear-gradient(135deg, #1e1e2a 0%, #252536 100%);
+          border: 1px solid #33334d;
+          border-radius: 12px;
+          color: #e0e0e0;
+          height: 600px;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+      
+      .chat-header { 
+          padding: 15px 20px; 
+          background: linear-gradient(135deg, #2d2d42 0%, #3a3a5d 100%);
+          border-bottom: 1px solid #444; 
+          display: flex; 
+          justify-content: space-between; 
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #f0f0f0;
+          border-radius: 12px 12px 0 0;
+      }
+      
+      .chat-messages { 
+          flex: 1;
+          overflow-y: auto; 
+          padding: 15px;
+          background: #1a1a2e;
+          scrollbar-width: thin;
+          scrollbar-color: #4cc9f0 #1a1a2e;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+          width: 8px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+          background: #1a1a2e;
+          border-radius: 4px;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+          background: #4cc9f0;
+          border-radius: 4px;
+          transition: background 0.3s ease;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb:hover {
+          background: #4361ee;
+      }
+      
+      .message { 
+          margin-bottom: 12px; 
+          padding: 12px 15px; 
+          border-radius: 8px; 
+          background: linear-gradient(135deg, #252536 0%, #1e1e2a 100%);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          border: 1px solid #33334d;
+          transition: all 0.3s ease;
+          animation: messageSlideIn 0.4s ease-out;
+      }
+
+      @keyframes messageSlideIn {
+          from {
+              opacity: 0;
+              transform: translateX(-20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateX(0);
+          }
+      }
+      
+      .message:hover {
+          background: linear-gradient(135deg, #2d2d42 0%, #252536 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+      
+      .message.highlight { 
+          background: linear-gradient(135deg, #2d4a6b 0%, #1e3a5f 100%);
+          border-color: #4361ee;
+          box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+      }
+      
+      .message-header { 
+          display: flex; 
+          align-items: center; 
+          margin-bottom: 8px; 
+      }
+      
+      .avatar { 
+          width: 32px; 
+          height: 32px; 
+          border-radius: 50%; 
+          margin-right: 10px;
+          border: 2px solid #4361ee;
+      }
+      
+      .author { 
+          font-weight: 600; 
+          margin-right: 10px; 
+          font-size: 14px;
+          color: #4cc9f0;
+      }
+      
+      .timestamp { 
+          font-size: 0.8rem; 
+          color: #adb5bd;
+          background: rgba(67, 97, 238, 0.2);
+          padding: 2px 8px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+      }
+      
+      .timestamp:hover {
+          background: rgba(67, 97, 238, 0.3);
+          transform: scale(1.05);
+      }
+      
+      .message-content { 
+          font-size: 14px; 
+          line-height: 1.5;
+          color: #e0e0e0;
+          word-break: break-word;
+      }
+      
+      .chat-controls { 
+          padding: 15px 20px; 
+          background: linear-gradient(135deg, #2d2d42 0%, #3a3a5d 100%);
+          border-top: 1px solid #444; 
+          display: flex;
+          gap: 12px;
+          border-radius: 0 0 12px 12px;
+      }
+      
+      .search-container { 
+          display: flex; 
+          align-items: center; 
+          background: #252536;
+          border: 1px solid #4361ee; 
+          border-radius: 6px; 
+          padding: 0 10px;
+          flex: 1;
+      }
+      
+      .search-container i { 
+          margin-right: 8px; 
+          color: #4cc9f0;
+      }
+      
+      #searchInput { 
+          border: none; 
+          outline: none; 
+          padding: 12px 5px; 
+          font-size: 1rem;
+          background: transparent;
+          color: #e0e0e0;
+          flex: 1;
+      }
+
+      #searchInput::placeholder {
+          color: #6c757d;
+      }
+      
+      .controls button { 
+          padding: 10px 20px; 
+          border: none; 
+          border-radius: 6px; 
+          cursor: pointer; 
+          background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+          color: white; 
+          font-size: 1rem;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+      }
+      
+      .controls button:hover { 
+          background: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+      }
+      
+      .controls button.off { 
+          background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+      }
+
+      .controls button.off:hover {
+          background: linear-gradient(135deg, #495057 0%, #6c757d 100%);
+      }
+      
+      .time-indicator { 
+          padding: 10px 15px; 
+          font-size: 0.9rem; 
+          color: #adb5bd; 
+          text-align: center;
+          background: #252536;
+          border-radius: 6px;
+          border: 1px solid #33334d;
+      }
+      
+      .progress-bar { 
+          width: 100%; 
+          background: #33334d;
+          height: 6px; 
+          border-radius: 3px; 
+          overflow: hidden; 
+          margin-top: 8px;
+      }
+      
+      .progress-fill { 
+          width: 0%; 
+          background: linear-gradient(90deg, #4361ee 0%, #4cc9f0 100%);
+          height: 100%; 
+          transition: width 0.25s linear;
+      }
+
+      .fix-notice {
+          background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+          color: white;
+          padding: 20px;
+          border-radius: 12px;
+          margin-top: 30px;
+          box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+      }
+      
+      .fix-notice h3 {
+          font-size: 1.5rem;
+          margin-bottom: 15px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+      }
+      
+      .fix-notice ul {
+          padding-left: 25px;
+          margin: 15px 0;
+          line-height: 1.8;
+      }
+      
+      .fix-notice li {
+          margin-bottom: 8px;
+      }
+      
+      .fix-notice .fa-check {
+          color: #4cc9f0;
+          margin-right: 8px;
+      }
+
+      /* Responsive design */
+      @media (max-width: 1024px) {
+          .container {
+              flex-direction: column;
+          }
+          
+          .chat-section {
+              min-width: unset;
+          }
+          
+          .chat-messages {
+              height: 300px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .header .search-form {
+              width: 250px;
+          }
+          
+          .header .flex {
+              flex-wrap: wrap;
+              gap: 15px;
+          }
+          
+          .header .icons {
+              order: 3;
+              width: 100%;
+              justify-content: center;
+          }
+          
+          .player-wrapper {
+              border-radius: 8px;
+          }
+          
+          /* Adjust blocker areas on mobile */
+          .title-blocker {
+              width: 60%;
+              height: 12%;
+          }
+          
+          .share-blocker {
+              width: 12%;
+              height: 12%;
+          }
+
+          /* Fullscreen mobile adjustments */
+          #player.plyr--fullscreen-active .title-blocker {
+              width: 60% !important;
+              height: 12% !important;
+          }
+
+          #player.plyr--fullscreen-active .share-blocker {
+              width: 12% !important;
+              height: 12% !important;
+          }
+      }
+   </style>
+</head>
+<body>
+   <header class="header">
+      <section class="flex">
+          <div class="icons">
+              <div id="menu-btn" class="fas fa-bars"></div>
+          </div>
+
+          <form action="search.html" method="post" class="search-form">
+              <input type="text" name="search_box" required placeholder="Search lessons..." maxlength="100">
+              <button type="submit" class="fas fa-search"></button>
+          </form>
+
+          <div class="icons">
+              <div id="search-btn" class="fas fa-search"></div>
+              <div id="user-btn1" class="fa-regular fa-clock"></div>
+              <div id="toggle-btn" class="fas fa-sun"></div>
+              <div id="user-btn" class="fas fa-user"></div>
+          </div>
+
+          <div class="profile">
+              <img id="userImage" class="image" alt="">
+              <h3 class="name" id="userName"></h3>
+          </div>
+      </section>
+   </header>   
+
+   <div class="container">
+      <section class="player-section">
+         <div class="player-wrapper">
+            <div id="player" data-plyr-provider="youtube" data-plyr-embed-id="pcYuJeHrwpg">
+                <div class="title-blocker"></div>
+                <div class="share-blocker"></div>
+                <div class="center-click-layer"></div>
+            </div>
+         </div>
+         
+         <div class="video-info">
+            <h3>Logic Gates - Day 1: Fundamentals and Applications</h3>
+            
+            <div class="tutorbox">
+               <div class="tutor">
+                  <img src="https://yt3.googleusercontent.com/bRzjH5rIbDRaHCiXopbsLJh8w64sKd5QduITMma3GZZd6e5Yr1Jp1uaJlHvNN4E37sMiJNTj0A=s900-c-k-c0x00ffffff-no-rj" alt="Teacher">
+                  <div>
+                     <h3>Ravindu Bandaranayake</h3>
+                     <span>Senior Instructor - Digital Electronics</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+         <div class="fix-notice">
+            <h3><i class="fas fa-check-circle"></i> Player Issues Fixed</h3>
+            <ul>
+               <li><i class="fas fa-check"></i> Fullscreen title blocker now works correctly</li>
+               <li><i class="fas fa-check"></i> Double-tap to enter fullscreen enabled</li>
+               <li><i class="fas fa-check"></i> Controls show properly after tablet taps</li>
+               <li><i class="fas fa-check"></i> Optimized touch interactions for mobile devices</li>
+               <li><i class="fas fa-check"></i> Enhanced z-index management for overlays</li>
+            </ul>
+            <p>Try double-tapping the center of the video to toggle fullscreen mode!</p>
+         </div>
+      </section>
+      
+      <section class="chat-section">
+         <div class="chat-container">
+             <div class="chat-header">
+                 <span><i class="fas fa-comments"></i> Live Chat</span>
+                 <span id="chatMessageCount">5 messages</span>
+             </div>
+             <div class="chat-messages" id="chatMessages">
+                 <!-- Messages will be populated by JavaScript -->
+             </div>
+             <div class="chat-controls">
+                 <div class="search-container">
+                     <i class="fas fa-search"></i>
+                     <input type="text" id="searchInput" placeholder="Search chat...">
+                 </div>
+                 <button id="autoScrollBtn" class="controls">Auto Scroll: ON</button>
+             </div>
+         </div>
+      </section>
+   </div>
+
+   <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+   <script>
+   // Sample chat data
+   const chatData = [
+     { "id": "1", "timestamp": "0:29", "timeInSeconds": 29, "author": "DIAS MALLI", "message": "sir", "avatar": "https://randomuser.me/api/portraits/men/32.jpg" },
+     { "id": "2", "timestamp": "1:45", "timeInSeconds": 105, "author": "SARA J.", "message": "Can you explain the AND gate again?", "avatar": "https://randomuser.me/api/portraits/women/44.jpg" },
+     { "id": "3", "timestamp": "3:12", "timeInSeconds": 192, "author": "RAJ K.", "message": "What's the difference between NAND and NOR gates?", "avatar": "https://randomuser.me/api/portraits/men/22.jpg" },
+     { "id": "4", "timestamp": "5:30", "timeInSeconds": 330, "author": "TEACHER", "message": "Great question! NAND is the complement of AND, while NOR is the complement of OR.", "avatar": "https://yt3.googleusercontent.com/bRzjH5rIbDRaHCiXopbsLJh8w64sKd5QduITMma3GZZd6e5Yr1Jp1uaJlHvNN4E37sMiJNTj0A=s900-c-k-c0x00ffffff-no-rj" },
+     { "id": "5", "timestamp": "7:15", "timeInSeconds": 435, "author": "AMIT S.", "message": "When would we use XOR gates in real circuits?", "avatar": "https://randomuser.me/api/portraits/men/67.jpg" }
+   ];
+
+   // Global variables
+   let autoScrollEnabled = true;
+   let currentVideoTime = 0;
+   let displayedMessages = [];
+   let plyrPlayer;
+   let videoDuration = 0;
+   let lastTapTime = 0;
+
+   // Format time from seconds to MM:SS
+   function formatTime(seconds) {
+       const minutes = Math.floor(seconds / 60);
+       const secs = Math.floor(seconds % 60);
+       return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+   }
+
+   // Render chat messages with animations
+   function renderChatMessages(messagesToRender) {
+       const container = document.getElementById('chatMessages');
+       if (!container) return;
+       
+       container.innerHTML = '';
+       
+       messagesToRender.forEach((msg, index) => {
+           const messageEl = document.createElement('div');
+           messageEl.className = 'message';
+           messageEl.style.animationDelay = `${index * 0.05}s`;
+           
+           messageEl.innerHTML = `
+               <div class="message-header">
+                   <img src="${msg.avatar}" alt="${msg.author}" class="avatar">
+                   <div class="author">${msg.author}</div>
+                   <div class="timestamp">${msg.timestamp}</div>
+               </div>
+               <div class="message-content">${msg.message}</div>
+           `;
+           container.appendChild(messageEl);
+       });
+
+       const countEl = document.getElementById('chatMessageCount');
+       if (countEl) {
+           countEl.textContent = `${messagesToRender.length} messages`;
+       }
+       
+       if (autoScrollEnabled && container) {
+           container.scrollTop = container.scrollHeight;
+       }
+   }
+
+   // Show messages up to current time
+   function updateChatDisplay() {
+       const messagesToShow = chatData.filter(msg => msg.timeInSeconds <= currentVideoTime);
+       
+       if (messagesToShow.length !== displayedMessages.length || 
+           (messagesToShow.length > 0 && displayedMessages.length > 0 && 
+            messagesToShow[messagesToShow.length-1].id !== displayedMessages[displayedMessages.length-1].id)) {
+           displayedMessages = messagesToShow;
+           renderChatMessages(displayedMessages);
+       }
+   }
+
+   // Initialize everything when DOM is loaded
+   document.addEventListener('DOMContentLoaded', function() {
+       console.log('Initializing player and chat...');
+       
+       const playerElement = document.getElementById('player');
+       if (!playerElement) {
+           console.error('Player element not found');
+           return;
+       }
+
+       // Initialize Plyr player
+       plyrPlayer = new Plyr('#player', {
+           youtube: {
+               noCookie: true,
+               rel: 0,
+               showinfo: 0,
+               iv_load_policy: 3,
+               modestbranding: 1
+           },
+           controls: [
+               'play-large', 'rewind', 'play', 'fast-forward', 
+               'progress', 'current-time', 'duration', 'mute', 'volume',
+               'captions', 'settings', 'pip', 'airplay', 'fullscreen'
+           ],
+           settings: ['captions', 'quality', 'speed'],
+           quality: {
+               default: 720,
+               options: [144, 240, 360, 480, 720, 1080, 1440, 2160],
+               forced: true
+           },
+           speed: {
+               selected: 1,
+               options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+           }
+       });
+
+       // Set up video event listeners
+       plyrPlayer.on('ready', () => {
+           console.log('Player ready');
+           videoDuration = plyrPlayer.duration || 660;
+           renderChatMessages(chatData);
+       });
+
+       plyrPlayer.on('timeupdate', () => {
+           const newTime = plyrPlayer.currentTime || 0;
+           if (Math.abs(newTime - currentVideoTime) > 0.25) {
+                currentVideoTime = newTime;
+                updateChatDisplay();
+           }
+       });
+
+       plyrPlayer.on('seeked', () => {
+           currentVideoTime = plyrPlayer.currentTime || 0;
+           updateChatDisplay();
+       });
+       
+       plyrPlayer.on('playing', () => {
+           currentVideoTime = plyrPlayer.currentTime || 0;
+           updateChatDisplay();
+       });
+
+       // Fullscreen event listeners
+       plyrPlayer.on('enterfullscreen', () => {
+           console.log('Plyr entered fullscreen');
+       });
+
+       plyrPlayer.on('exitfullscreen', () => {
+           console.log('Plyr exited fullscreen');
+       });
+
+       // Event listeners for blockers
+       const titleBlockerEl = playerElement.querySelector('.title-blocker');
+       const shareBlockerEl = playerElement.querySelector('.share-blocker');
+       const centerLayer = playerElement.querySelector('.center-click-layer');
+
+       // Enhanced click handler for blockers
+       function absorbClick(event) {
+           // Only prevent default for non-touch events
+           if (event.type !== 'touchstart') {
+               event.preventDefault();
+           }
+           event.stopPropagation();
+           console.log(`${event.currentTarget.className} absorbed a ${event.type} event.`);
+       }
+
+       if (titleBlockerEl) {
+           titleBlockerEl.addEventListener('click', absorbClick);
+           titleBlockerEl.addEventListener('touchstart', absorbClick, { passive: true });
+       }
+       if (shareBlockerEl) {
+           shareBlockerEl.addEventListener('click', absorbClick);
+           shareBlockerEl.addEventListener('touchstart', absorbClick, { passive: true });
+       }
+
+       // Double tap for fullscreen on center layer
+       if (centerLayer) {
+           centerLayer.addEventListener('touchend', function(e) {
+               const currentTime = new Date().getTime();
+               const tapLength = currentTime - lastTapTime;
+               
+               if (tapLength < 300 && tapLength > 0) {
+                   // Double tap detected
+                   e.preventDefault();
+                   plyrPlayer.fullscreen.toggle();
+               }
+               lastTapTime = currentTime;
+           }, { passive: false });
+           
+           // Also allow double-click for desktop
+           centerLayer.addEventListener('dblclick', function() {
+               plyrPlayer.fullscreen.toggle();
+           });
+       }
+
+       // Initial render
+       renderChatMessages(chatData);
+
+       // Search functionality
+       const searchInput = document.getElementById('searchInput');
+       if (searchInput) {
+           searchInput.addEventListener('input', function() {
+               const searchTerm = this.value.toLowerCase();
+               if (searchTerm === '') {
+                   updateChatDisplay();
+               } else {
+                   const filteredMessages = chatData.filter(msg => 
+                       (msg.message.toLowerCase().includes(searchTerm) || 
+                        msg.author.toLowerCase().includes(searchTerm))
+                   );
+                   renderChatMessages(filteredMessages);
+               }
+           });
+       }
+
+       // Auto-scroll toggle functionality
+       const autoScrollBtn = document.getElementById('autoScrollBtn');
+       if (autoScrollBtn) {
+           autoScrollBtn.addEventListener('click', function() {
+               autoScrollEnabled = !autoScrollEnabled;
+               this.textContent = autoScrollEnabled ? 'Auto Scroll: ON' : 'Auto Scroll: OFF';
+               this.classList.toggle('off', !autoScrollEnabled);
+               
+               if (autoScrollEnabled) {
+                   const container = document.getElementById('chatMessages');
+                   if (container) {
+                       container.scrollTop = container.scrollHeight;
+                   }
+               }
+           });
+       }
+
+       // Jump to time functionality when clicking a timestamp in chat
+       const chatMessagesContainer = document.getElementById('chatMessages');
+       if (chatMessagesContainer) {
+           chatMessagesContainer.addEventListener('click', function(e) {
+               if (e.target.classList.contains('timestamp')) {
+                   const timestamp = e.target.textContent;
+                   const timeParts = timestamp.split(':');
+                   let seconds = 0;
+                   
+                   if (timeParts.length === 2) { // MM:SS
+                       seconds = parseInt(timeParts[0], 10) * 60 + parseInt(timeParts[1], 10);
+                   } else if (timeParts.length === 3) { // HH:MM:SS
+                       seconds = parseInt(timeParts[0], 10) * 3600 + parseInt(timeParts[1], 10) * 60 + parseInt(timeParts[2], 10);
+                   }
+                   
+                   if (plyrPlayer && typeof plyrPlayer.currentTime === 'number') {
+                       plyrPlayer.currentTime = seconds;
+                       console.log(`Jumped to time: ${timestamp} (${seconds}s)`);
+                   }
+               }
+           });
+       }
+       
+       // Add keyboard shortcuts info
+       console.log("Keyboard shortcuts enabled:\nSpace/K: Play/Pause\nF: Fullscreen\nM: Mute\nArrow Keys: Navigation\n0-9: Jump to percentage");
+   });
+
+   // Keyboard shortcuts
+   document.addEventListener('keydown', function(e) {
+       const targetTagName = e.target.tagName.toLowerCase();
+       if (targetTagName === 'input' || targetTagName === 'textarea') {
+           return;
+       }
+       
+       if (!plyrPlayer) return;
+
+       switch(e.key.toLowerCase()) {
+           case ' ':
+           case 'k':
+               e.preventDefault();
+               plyrPlayer.togglePlay();
+               break;
+           case 'f':
+               e.preventDefault();
+               plyrPlayer.fullscreen.toggle();
+               break;
+           case 'm':
+               e.preventDefault();
+               plyrPlayer.muted = !plyrPlayer.muted;
+               break;
+           case 'arrowleft':
+               e.preventDefault();
+               plyrPlayer.rewind(10);
+               break;
+           case 'arrowright':
+               e.preventDefault();
+               plyrPlayer.forward(10);
+               break;
+           case 'arrowup':
+               e.preventDefault();
+               plyrPlayer.increaseVolume(0.1);
+               break;
+           case 'arrowdown':
+               e.preventDefault();
+               plyrPlayer.decreaseVolume(0.1);
+               break;
+           case '0': case '1': case '2': case '3': case '4': 
+           case '5': case '6': case '7': case '8': case '9':
+               if (plyrPlayer.duration) {
+                   plyrPlayer.currentTime = plyrPlayer.duration * (parseInt(e.key) / 10);
+               }
+               break;
+       }
+   });
+
+   console.log('Video player and chat system initialized successfully');
+   </script>
+</body>
+</html>

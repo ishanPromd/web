@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Database - Theory</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+
+   <header class="header">
+
+      <section class="flex">
+          <div class="icons">
+              <div id="menu-btn" class="fas fa-bars"></div>
+          </div>
+
+          <form action="search.html" method="post" class="search-form">
+              <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+              <button type="submit" class="fas fa-search"></button>
+          </form>
+
+          <div class="icons">
+              <div id="search-btn" class="fas fa-search"></div>
+              <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+              <div id="toggle-btn" class="fas fa-sun"></div>
+              <div id="user-btn" class="fas fa-user"></div>
+              
+          </div>
+
+          <div class="profile">
+              <img id="userImage" class="image" alt="">
+              <h3 class="name" id="userName"></h3>
+              <div class="flex-btn">
+              </div>
+          </div>
+
+      </section>
+      </header>   
+      
+      <div class="side-bar">
+
+          <div id="close-btn">
+              <i class="fas fa-times"></i>
+          </div>
+
+          <div class="profile">
+              <img id="userImage" class="image">
+              <br>
+              <h3 id="userName" class="name"></h3>
+              <p class="role">student</p>
+          </div>
+
+          <nav class="navbar">
+              <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+              <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+              <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+              <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+              <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+          </nav>
+
+          <div class="typing-container">
+              <div class="animation-container">
+              <div id="text"></div>
+              <span class="cursor"></span>
+              </div>
+          </div>
+
+      </div>
+
+<!--<section class="playlist-details">
+
+   <h1 class="heading">playlist details</h1>
+
+   <div class="row">
+
+      <div class="column">
+         <form action="" method="post" class="save-playlist">
+            <button type="submit"><i class="far fa-bookmark"></i> <span>save playlist</span></button>
+         </form>
+   
+         <div class="thumb">
+            <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2FWhatsApp_Image_2025-02-13_at_6.47.09_AM_1.jpeg&w=3840&q=75 "alt="">
+            <span>5 videos</span>
+         </div>
+      </div>
+      <div class="column">
+         <div class="tutor">
+            <img src=" https://yt3.ggpht.com/E2j_ZVZeuG_Z50gSEKRRkAaAnrbvSy4Cs1vgTOG5jE39sXTrOW-mpzfSGWD5p7Ng131ktQ6QtVw=s88-c-k-c0x00ffffff-no-rj" alt="">
+            <div>
+               <h3>upul Bosa</h3>
+               <span>01-01-2025</span>
+            </div>
+         </div>
+   
+         <div class="details">
+            <h3>Database  - Revision - 2025 AL</h3>
+         </div>
+      </div>
+   </div>
+
+</section>-->
+
+<section class="playlist-videos">
+
+   <h1 class="heading">playlist videos</h1>
+
+   <div id="preloader" class="preloader">
+      <div>
+         <div class="loader"></div>
+      </div>
+         <p class="loading-text">Loading...</p>
+      </div>
+      <div id="content" style="display: none;">
+
+   <div class="box-container">
+
+     <div class="card" id="box">
+         <a class="box1" href="watch-video.html">
+         <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+         <div class="card-content">
+            
+               
+                 <div class="title">Database - Theory - 2025 AL (Day 01)</div>
+                 <div class="subtitle">1st Week - 2025 AL</div>
+                 <div class="subtitle">Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Rs. 3300.00</span>
+                     <span class="button">Lesson Pack</span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+      <div class="card" id="box">
+         <a class="box1" href="watch-videod2.html">
+         <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+         <div class="card-content">
+             
+               
+                 <div class="title">Database - Theory - 2025 AL (Day 02)</div>
+                 <div class="subtitle"> 2nd Week - 2025 AL</div>
+                 <div class="subtitle"> Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Rs. 3300.00</span>
+                     <span class="button">Lesson Pack</span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+      <div class="card" id="box">
+         <a class="box1" href="watch-videod3.html">
+         <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+         
+         <div class="card-content">
+             
+               
+                 <div class="title">Database - Theory - 2025 AL (Day 03-I)</div>
+                 <div class="subtitle"> 3rd Week - 2025 AL</div>
+                 <div class="subtitle"> Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Rs. 3300.00</span>
+                     <span class="button">Lesson Pack</span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+    <!--     <div class="card" id="box">
+         <a class="box1" href="watch-videod4.html">
+         <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+         <div class="card-content">
+             
+               
+                 <div class="title">Database - Theory - 2025 AL (Day 03-II)</div>
+                 <div class="subtitle"> 4th Week - 2025 AL</div>
+                 <div class="subtitle"> Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Rs. 3300.00</span>
+                     <span class="button">Lesson Pack</span>
+                 </div>
+             </a>
+      </div>
+      </div>
+
+      <div class="card" id="box"> 
+         <a class="box1" href="watch-videod5.html">
+         <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">Database - Theory - 2025 AL (Day 04)</div>
+                  <div class="subtitle"> 5th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Rs. 3300.00</span>
+                     <span class="button">Lesson Pack</span>
+                  </div>
+               </a>
+         </div>
+      </div>-->
+
+      <div class="card" id="box"> 
+         <a class="box1" href="watch-videod6.html">
+         <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">Database - Theory - 2025 AL (Day 05)</div>
+                  <div class="subtitle"> 6th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Rs. 3300.00</span>
+                     <span class="button">Lesson Pack</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card" id="box"> 
+         <a class="box1" href="watch-videod7.html">
+         <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">Database - Theory - 2025 AL (Day 06)</div>
+                  <div class="subtitle"> 7th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Rs. 3300.00</span>
+                     <span class="button">Lesson Pack</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card" id="box"> 
+         <a class="box1" href="watch-videod8.html">
+         <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">Database - Theory - 2025 AL (Day 07)</div>
+                  <div class="subtitle"> 8th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Rs. 3300.00</span>
+                     <span class="button">Lesson Pack</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+   <div class="card" id="box"> 
+      <a class="box1" href="watch-videod8.html">
+      <img src="https://t4.ftcdn.net/jpg/05/27/56/59/360_F_527565942_mM357p32HN1fPVGFI51f2vZNsXQAMEd0.jpg" alt="Lesson Image">
+      <div class="card-content">
+           
+            
+               <div class="title">Database - Questions(A/L) - 2025 AL (Day 08)</div>
+               <div class="subtitle"> 8th Week - 2025 AL</div>
+               <div class="subtitle"> Physical Lesson Pack</div>
+               <div class="button-container">
+                  <span class="price">Rs. 3300.00</span>
+                  <span class="button">Lesson Pack</span>
+               </div>
+            </a>
+      </div>
+   </div>
+</div>
+      
+      <script>
+         // Function to add gap between cards using JS
+         function addGapBetweenCards() {
+             const cards = document.querySelectorAll('.card');
+             cards.forEach(card => {
+                 card.style.margin = '10px'; // Set the margin to create space between cards
+             });
+         }
+ 
+         // Function to alert when a card is clicked
+         function cardClicked() {
+             alert("You clicked the lesson card!");
+         }
+ 
+         // Call the function to add gap when the page loads
+         window.onload = addGapBetweenCards;
+     </script>
+     
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+
+<script src="/js/profile.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title id="pageTitle">database Lesson</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <link rel="stylesheet" href="/css/style.css">
+   <link rel="icon" type="image/x-icon" href="https://i.imghippo.com/files/ao9417UdU.png">
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
+   <style>
+      /* Keep the inline styles for layout and appearance */
+      .container {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+      }
+      .player-wrapper {
+          position: relative;
+      }
+      /* Title blocker (top-left 30% width) */
+      .title-blocker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 30%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+      /* Share button blocker (top-right 15% width) */
+      .share-blocker {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+      /* Center click layer */
+      .center-click-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          cursor: pointer;
+      }
+      iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          z-index: 0;
+      }
+      .plyr__controls {
+          z-index: 2 !important;
+          pointer-events: all !important;
+      }
+      /* Modern navigation buttons styles */
+      .video-navigation {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto;
+          max-width: 800px;
+          padding: 0 20px;
+      }
+      .nav-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px 25px;
+          background: #222222;
+          color: white;
+          border: none;
+          border-radius: 50px;
+          cursor: pointer;
+          font-size: 12px;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          position: relative;
+          overflow: hidden;
+          text-decoration: none; /* Ensure buttons look like buttons, not links */
+      }
+      .nav-button i {
+          margin-right: 5px; /* Space between icon and text */
+      }
+      .nav-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+      .nav-button:active {
+          transform: translateY(1px);
+      }
+      .nav-button i {
+          transition: all 0.3s ease;
+      }
+      .prev-button:hover i {
+          transform: translateX(-5px);
+      }
+      .next-button:hover i {
+          transform: translateX(5px);
+      }
+      .nav-button::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, #a777e3, #6e8efb);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: -1;
+      }
+      .nav-button:hover::after {
+          opacity: 1;
+      }
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+          .nav-button {
+              padding: 10px 20px;
+              font-size: 14px;
+          }
+          .video-navigation {
+              padding: 0 15px;
+              margin: 20px auto;
+          }
+      }
+      /* Content wrapper to push footer down */
+      .content-wrapper {
+          min-height: calc(100vh - 200px);
+          padding-bottom: 80px;
+      }
+   </style>
+
+   <script src="data.js">
+       
+   </script>
+
+</head>
+<body>
+
+<div class="content-wrapper">
+        <header class="header">
+
+        <section class="flex">
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+            </div>
+
+            <form action="search.html" method="post" class="search-form">
+                <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+                <button type="submit" class="fas fa-search"></button>
+            </form>
+
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image" alt="">
+                <h3 class="name" id="userName"></h3>
+                <div class="flex-btn">
+                </div>
+            </div>
+
+        </section>
+        </header>
+
+        <div class="side-bar">
+
+            <div id="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image">
+                <br>
+                <h3 id="userName" class="name"></h3>
+                <p class="role">student</p>
+            </div>
+
+            <nav class="navbar">
+                <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+                <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+                <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+                <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+            </nav>
+
+            <div class="typing-container">
+                <div class="animation-container">
+                <div id="text"></div>
+                <span class="cursor"></span>
+                </div>
+            </div>
+
+        </div>
+
+<section class="watch-video">
+   <div class="video-container">
+      <div class="video">
+         <div class="container">
+            <div class="player-wrapper">
+                <div class="plyr__video-embed" id="player">
+                    <div class="title-blocker"></div>
+                    <div class="share-blocker"></div>
+                    <div class="center-click-layer"></div>
+                    <iframe id="videoFrame"
+                        src="" allowfullscreen
+                        allow="autoplay"
+                        referrerpolicy="origin"
+                    ></iframe>
+                </div>
+            </div>
+
+
+            <h3 class="title" id="videoTitle">Loading...</h3> <br>
+            <div class="tutorbox">
+               <div class="tutor">
+                  <img id="teacherImg" src="" alt="Teacher Image"> <div>
+                     <h3 id="teacherName"></h3> <span>Teacher</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+<section class="comments">
+</section>
+</div> <div class="video-navigation">
+    <a href="#" class="nav-button prev-button" id="prevLessonLink">
+        <i class="fas fa-chevron-left"></i>
+        <span id="prevButtonText"></span> </a>
+    <a href="#" class="nav-button next-button" id="nextLessonLink">
+        <span id="nextButtonText"></span> <i class="fas fa-chevron-right"></i>
+    </a>
+</div>
+
+<script src="/js/script.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script src="/js/profile.js"></script>
+
+<script>
+    // The lessonData object is defined in the script tag in the head
+
+    let player; // Declare player variable
+
+    console.log("Main script started."); // Debugging message
+
+    // Function to get the lesson ID from the URL parameter 'id'
+    function getLessonIdFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        // Get the 'id' parameter. Default to '1' if not found or invalid
+        const lessonId = urlParams.get('id') || '1'; // Default to lesson '1'
+        console.log("Lesson ID from URL:", lessonId); // Debugging message
+        return lessonId;
+    }
+
+    // Function to load and display lesson content
+    function loadLessonContent(lessonId) {
+        console.log("Attempting to load content for ID:", lessonId); // Debugging message
+
+        // Check if lessonData is available (it should be, as it's now in the same file)
+        if (typeof lessonData === 'undefined') {
+             console.error("FATAL Error: lessonData object not defined!"); // Debugging message
+             // Handle this critical error - maybe display a clear message
+              const videoTitle = document.getElementById('videoTitle');
+              const pageTitle = document.getElementById('pageTitle');
+              const videoContainer = document.querySelector('.video-container');
+              const videoNavigation = document.querySelector('.video-navigation');
+
+             if(videoTitle) videoTitle.textContent = "Fatal Error: Data Missing";
+             if(pageTitle) pageTitle.textContent = "Error";
+             if(videoContainer) videoContainer.innerHTML = '<p style="color: red; text-align: center;">Application error: Lesson data is missing. Check the HTML source.</p>';
+              if(videoNavigation) videoNavigation.style.display = 'none';
+
+             if (player) { player.destroy(); player = null; }
+             return; // Stop execution
+        }
+
+
+        const lesson = lessonData[lessonId]; // Get data from the lessonData object
+        console.log("Lesson data found:", lesson); // Debugging message
+
+         // Get all the elements, checking if they exist
+        const videoFrame = document.getElementById('videoFrame');
+        const videoTitle = document.getElementById('videoTitle');
+        const pageTitle = document.getElementById('pageTitle');
+        const teacherImg = document.getElementById('teacherImg');
+        const teacherName = document.getElementById('teacherName');
+        const prevLessonLink = document.getElementById('prevLessonLink');
+        const nextLessonLink = document.getElementById('nextLessonLink');
+        const prevButtonText = document.getElementById('prevButtonText');
+        const nextButtonText = document.getElementById('nextButtonText');
+        const videoContainer = document.querySelector('.video-container'); // For error message replacement
+        const videoNavigation = document.querySelector('.video-navigation'); // For hiding navigation
+
+
+        if (lesson) {
+            console.log("Lesson data is valid, attempting to update DOM."); // Debugging message
+
+             // Ensure video container is visible and clear any previous error messages
+            if(videoContainer) {
+                 videoContainer.style.display = ''; // Make sure it's not hidden
+                 // Let's just remove any added error message and make sure the original video div is visible
+                  const errorMessage = videoContainer.querySelector('.error-message');
+                  if(errorMessage) errorMessage.remove();
+                   const originalVideoElement = videoContainer.querySelector('.video'); // The div with class 'video'
+                    if(originalVideoElement) originalVideoElement.style.display = ''; // Show original video structure
+
+            }
+             if(videoNavigation) videoNavigation.style.display = ''; // Make sure navigation is visible
+
+
+            // Update video and titles - CHECK BEFORE SETTING
+            if(videoFrame) videoFrame.src = lesson.videoSrc;
+            if(videoTitle) videoTitle.textContent = lesson.title;
+            if(pageTitle) pageTitle.textContent = lesson.title; // Set page title as well
+
+            // Update teacher info - CHECK BEFORE SETTING
+            if(teacherImg) teacherImg.src = lesson.teacherImg;
+            if(teacherName) teacherName.textContent = lesson.teacher;
+
+            // Update navigation links and text - CHECK BEFORE SETTING
+            if(prevLessonLink) {
+                prevLessonLink.href = lesson.prevUrl;
+                if(prevButtonText) prevButtonText.textContent = lesson.prevText;
+            } else {
+                 console.warn("Previous lesson link element (#prevLessonLink) not found."); // Debugging message
+            }
+
+            if(nextLessonLink) {
+                nextLessonLink.href = lesson.nextUrl;
+                if(nextButtonText) nextButtonText.textContent = lesson.nextText;
+            } else {
+                 console.warn("Next lesson link element (#nextLessonLink) not found."); // Debugging message
+            }
+
+            // Initialize or destroy/reinitialize Plyr
+             // Use the #player container ID
+            const playerContainer = document.getElementById('player');
+             if (playerContainer) {
+                 console.log("Player container found, attempting Plyr init/reinit."); // Debugging message
+                // Small delay might help ensure iframe src is set before initializing Plyr
+                setTimeout(() => {
+                     if (player) {
+                         console.log("Destroying existing Plyr instance."); // Debugging message
+                         player.destroy(); // Destroy existing player instance
+                         player = null; // Clear the reference
+                     }
+                     // Check again if the player container and iframe exist and have source before initializing
+                     const currentVideoFrame = document.getElementById('videoFrame'); // Re-get just in case
+                     if (playerContainer && currentVideoFrame && currentVideoFrame.src) {
+                         try {
+                            console.log("Initializing new Plyr instance."); // Debugging message
+                            player = new Plyr(playerContainer); // Initialize new player instance
+                            console.log("Plyr initialized successfully."); // Debugging message
+                         } catch (e) {
+                             console.error("Error initializing Plyr:", e); // Debugging message
+                             // Display a user-friendly message if Plyr fails to init?
+                         }
+                     } else {
+                         console.warn("Plyr not initialized: Video frame or source missing after timeout."); // Debugging message
+                     }
+                }, 200); // Increased delay slightly
+
+
+             } else {
+                 console.error("Player container element (#player) not found in the DOM."); // Debugging message
+             }
+
+
+        } else {
+            // Handle case where lesson ID is not found in lessonData
+            console.error("Lesson data not found in lessonData object for ID: " + lessonId); // Debugging message
+
+            // Re-get elements for this scope's potential error display
+            const videoTitle = document.getElementById('videoTitle');
+            const pageTitle = document.getElementById('pageTitle');
+            const videoFrame = document.getElementById('videoFrame');
+            const teacherImg = document.getElementById('teacherImg');
+            const teacherName = document.getElementById('teacherName');
+            const prevLessonLink = document.getElementById('prevLessonLink');
+            const nextLessonLink = document.getElementById('nextLessonLink');
+            const prevButtonText = document.getElementById('prevButtonText');
+            const nextButtonText = document.getElementById('nextButtonText');
+             const videoContainer = document.querySelector('.video-container'); // Get container
+             const videoNavigation = document.querySelector('.video-navigation'); // Get navigation div
+
+
+            if(videoTitle) videoTitle.textContent = "Lesson Not Found";
+            if(pageTitle) pageTitle.textContent = "Lesson Not Found";
+             if(videoFrame) videoFrame.src = ""; // Clear video source
+             if(teacherImg) teacherImg.src = "";
+             if(teacherName) teacherName.textContent = "";
+
+             if(prevLessonLink) {
+                 prevLessonLink.href = "#"; // Disable button action
+                 if(prevButtonText) prevButtonText.textContent = "Back"; // Default text
+             }
+             if(nextLessonLink) {
+                 nextLessonLink.href = "/paper/sft/playlist.html"; // Link back to playlist (adjust path)
+                 if(nextButtonText) nextButtonText.textContent = "Back to Playlist"; // More descriptive text
+             }
+
+
+             if (player) {
+                 console.log("Destroying Plyr instance due to lesson not found."); // Debugging message
+                 player.destroy(); // Destroy player if lesson not found
+                 player = null;
+            }
+
+             // Hide the original video container content and show an error message
+             if(videoContainer) {
+                 const videoElement = videoContainer.querySelector('.video'); // Find the div with class 'video'
+                 if (videoElement) {
+                      videoElement.style.display = 'none'; // Hide the original video structure
+                 }
+                 // Add the error message if it's not already there
+                 let errorMessage = videoContainer.querySelector('.error-message');
+                 if (!errorMessage) {
+                    errorMessage = document.createElement('p');
+                    errorMessage.className = 'error-message'; // Add a class for potential styling
+                    errorMessage.style.color = 'red';
+                    errorMessage.style.textAlign = 'center';
+                    videoContainer.appendChild(errorMessage); // Add message to container
+                 }
+                 errorMessage.textContent = 'Lesson with ID "' + lessonId + '" not found. Please check the URL or contact support.'; // Set error text
+             }
+              if(videoNavigation) videoNavigation.style.display = 'none'; // Hide navigation buttons
+
+        }
+    }
+
+    // Load content when the page loads
+    window.onload = () => {
+        console.log("Window onload event fired."); // Debugging message
+        const lessonId = getLessonIdFromUrl();
+        loadLessonContent(lessonId);
+        // Plyr initialization is now handled within loadLessonContent after a delay
+    };
+
+    // Listen for the popstate event to handle browser back/forward buttons
+    window.onpopstate = (event) => {
+        console.log("Popstate event triggered by browser navigation."); // Debugging message
+        const lessonId = getLessonIdFromUrl();
+        loadLessonContent(lessonId);
+    };
+
+    console.log("Main script defined."); // Debugging message
+
+</script>
+
+</body>
+</html>

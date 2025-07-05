@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Logic Gates Day 1</title>
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <link rel="stylesheet" href="/css/style2.css">
+   <link rel="icon" type="image/x-icon" href="https://i.imghippo.com/files/ao9417UdU.png">
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+   <style>
+      /* All your existing CSS remains unchanged */
+      .container {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+      }
+  
+      .player-wrapper {
+          position: relative;
+      }
+  
+      /* Title blocker (top-left 30% width) */
+      .title-blocker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 30%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Share button blocker (top-right 15% width) */
+      .share-blocker {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Center click layer */
+      .center-click-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          cursor: pointer;
+      }
+  
+      iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          z-index: 0;
+      }
+  
+      .plyr__controls {
+          z-index: 2 !important;
+          pointer-events: all !important;
+      }
+
+      /* Original Live Chat Styles */
+      .chat-section {
+          flex: 1;
+          min-width: 20%;
+          height: 435px;
+          background: #1a1a1a;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          overflow: hidden;
+          animation: slideInUp 0.6s ease-out;
+          position: sticky;
+          top: 20px;
+      }
+
+      @keyframes slideInUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      .chat-container { 
+          background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+          border: 1px solid #333;
+          border-radius: 12px;
+          color: #e0e0e0;
+          height: 415px;
+          padding-bottom: 10px;
+      }
+      
+      .chat-header { 
+          padding: 15px 20px; 
+          background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+          border-bottom: 1px solid #444; 
+          display: flex; 
+          justify-content: space-between; 
+          font-size: 0.95em;
+          font-weight: 600;
+          color: #f0f0f0;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      .chat-messages { 
+          height: 410px; 
+          overflow-y: auto; 
+          padding: 15px;
+          background: #1a1a1a;
+          scrollbar-width: thin;
+          scrollbar-color: #555 #2d2d2d;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+          width: 8px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+          background: #2d2d2d;
+          border-radius: 4px;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+          background: #555;
+          border-radius: 4px;
+          transition: background 0.3s ease;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb:hover {
+          background: #777;
+      }
+      
+      .message { 
+          margin-bottom: 12px; 
+          padding: 12px 15px; 
+          border-radius: 8px; 
+          background: linear-gradient(135deg, #2d2d2d 0%, #242424 100%);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          border: 1px solid #333;
+          transition: all 0.3s ease;
+          animation: messageSlideIn 0.4s ease-out;
+      }
+
+      @keyframes messageSlideIn {
+          from {
+              opacity: 0;
+              transform: translateX(-20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateX(0);
+          }
+      }
+      
+      .message:hover {
+          background: linear-gradient(135deg, #333 0%, #2a2a2a 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+      
+      .message.highlight { 
+          background: linear-gradient(135deg, #2d4a6b 0%, #1e3a5f 100%);
+          border-color: #4a90e2;
+          box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+      }
+      
+      .message-header { 
+          display: flex; 
+          align-items: center; 
+          margin-bottom: 8px; 
+      }
+      
+      .avatar { 
+          width: 32px; 
+          height: 32px; 
+          border-radius: 50%; 
+          margin-right: 10px;
+          border: 2px solid #444;
+          transition: border-color 0.3s ease;
+      }
+
+      .message:hover .avatar {
+          border-color: #4a90e2;
+      }
+      
+      .author { 
+          font-weight: 600; 
+          margin-right: 10px; 
+          font-size: 12px;
+          color: #4a90e2;
+      }
+      
+      .timestamp { 
+          font-size: 0.8em; 
+          color: #888;
+          background: #333;
+          padding: 2px 6px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.2s;
+      }
+
+      .timestamp:hover {
+          color: #4a90e2;
+          background: #444;
+      }
+      
+      .message-content { 
+          font-size: 12px; 
+          line-height: 1.5;
+          color: #e0e0e0;
+          word-break: break-word;
+      }
+      
+      .controls { 
+          padding: 15px 20px; 
+          background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+          border-top: 1px solid #444; 
+          display: flex; 
+          flex-wrap: wrap; 
+          gap: 12px; 
+          align-items: center;
+      }
+      
+      .search-container { 
+          display: flex; 
+          align-items: center; 
+          background: #2d2d2d;
+          border: 1px solid #555; 
+          border-radius: 6px; 
+          padding: 0 10px;
+          transition: all 0.3s ease;
+          flex: 1;
+          min-width: 200px;
+      }
+
+      .search-container:focus-within {
+          border-color: #4a90e2;
+          box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      }
+      
+      .search-container i { 
+          margin-right: 8px; 
+          color: #888;
+          transition: color 0.3s ease;
+      }
+
+      .search-container:focus-within i {
+          color: #4a90e2;
+      }
+      
+      #searchInput { 
+          border: none; 
+          outline: none; 
+          padding: 10px 5px; 
+          font-size: 0.9em;
+          background: transparent;
+          color: #e0e0e0;
+          flex: 1;
+      }
+
+      #searchInput::placeholder {
+          color: #888;
+      }
+      
+      .controls button { 
+          padding: 10px 15px; 
+          border: none; 
+          border-radius: 6px; 
+          cursor: pointer; 
+          background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+          color: white; 
+          font-size: 0.9em;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+      }
+      
+      .controls button:hover { 
+          background: linear-gradient(135deg, #357abd 0%, #2968a3 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+      }
+      
+      .controls button.off { 
+          background: linear-gradient(135deg, #666 0%, #555 100%);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .controls button.off:hover {
+          background: linear-gradient(135deg, #777 0%, #666 100%);
+      }
+      
+      .time-indicator { 
+          padding: 10px 15px; 
+          font-size: 0.9em; 
+          color: #bbb; 
+          text-align: center;
+          background: #242424;
+          border-radius: 6px;
+          border: 1px solid #333;
+      }
+      
+      .progress-bar { 
+          width: 100%; 
+          background: #333;
+          height: 6px; 
+          border-radius: 3px; 
+          overflow: hidden; 
+          margin-top: 8px;
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      .progress-fill { 
+          width: 0%; 
+          background: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
+          height: 100%; 
+          transition: width 0.25s linear;
+          box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+      }
+
+      /* Responsive design */
+      @media (max-width: 1024px) {
+          .watch-video {
+              flex-direction: column;
+              gap: 20px;
+          }
+          
+          .chat-section {
+              min-width: unset;
+              position: static;
+          }
+          
+          .chat-messages {
+              height: 400px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .watch-video {
+              padding: 10px;
+              width: 90%;
+              padding-left: 2.5%;
+          }
+          
+          .watch-video .video-container {
+              width: 100%;
+          }
+          
+          .controls {
+              flex-direction: column;
+              align-items: stretch;
+              gap: 10px;
+          }
+          
+          .search-container {
+              width: 100%;
+              min-width: unset;
+          }
+          
+          .controls button {
+              width: 100%;
+          }
+
+          .chat-messages {
+              height: 300px;
+          }
+          
+          .chat-section {
+              min-width: unset;
+          }
+
+          /* Adjust blocker areas on mobile for better usability */
+          .title-blocker { /* Normal mode mobile */
+              width: 60%;
+              height: 12%;
+          }
+          
+          .share-blocker { /* Normal mode mobile */
+              width: 12%;
+              height: 12%;
+          }
+      }
+   </style>
+</head>
+<body>
+   <main class="content-blur">
+
+        <header class="header">
+
+        <section class="flex">
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+            </div>
+
+            <form action="search.html" method="post" class="search-form">
+                <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+                <button type="submit" class="fas fa-search"></button>
+            </form>
+
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image" alt="">
+                <h3 class="name" id="userName"></h3>
+                <div class="flex-btn">
+                </div>
+            </div>
+
+        </section>
+        </header>   
+        
+        <div class="side-bar">
+
+            <div id="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image">
+                <br>
+                <h3 id="userName" class="name"></h3>
+                <p class="role">student</p>
+            </div>
+
+            <nav class="navbar">
+                <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+                <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+                <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+                <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+            </nav>
+
+            <div class="typing-container">
+                <div class="animation-container">
+                <div id="text"></div>
+                <span class="cursor"></span>
+                </div>
+            </div>
+
+        </div>
+
+<section class="watch-video">
+   <div class="video-container">
+      <div class="video">
+         <div class="container">
+            <div class="player-wrapper">
+                <div class="plyr__video-embed" id="player">
+                    <div class="title-blocker"></div>
+                    <div class="share-blocker"></div>
+                    <div class="center-click-layer"></div>
+                    <iframe
+                        src="https://www.youtube.com/embed/pcYuJeHrwpg?controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1"
+                        allowfullscreen
+                        allow="autoplay"
+                    ></iframe>
+                </div>
+            </div>
+         </div>
+      </div>
+      <h3 class="title">Logic Gates Day 1</h3>
+      <br>
+      <div class="tutorbox">
+        <div class="tutor">
+           <img src="https://yt3.googleusercontent.com/bRzjH5rIbDRaHCiXopbsLJh8w64sKd5QduITMma3GZZd6e5Yr1Jp1uaJlHvNN4E37sMiJNTj0A=s160-c-k-c0x00ffffff-no-rj" alt="">
+           <div>
+              <h3>Raindu Bandaranayake</h3>
+              <span>Teacher</span>
+           </div>
+        </div>
+      </div>
+   </div>
+   
+   <div class="chat-section">
+       <div class="chat-container">
+           <div class="chat-header">
+               <span><i class="fas fa-message"></i> Live Chat Replay</span>
+               <span id="chatMessageCount">0 messages</span>
+           </div>
+           <div class="chat-messages" id="chatMessages">
+               </div>
+           <div class="controls">
+               <div class="search-container">
+                   <i class="fas fa-search"></i>
+                   <input type="text" id="searchInput" placeholder="Search chat messages...">
+               </div>
+               <button id="autoScrollBtn">Auto Scroll: ON</button>
+               <div class="time-indicator">
+                   Current time: <span id="currentTimeDisplay">0:00</span>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>
+
+</main>
+
+<script src="/js/script.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+// Chat replay data
+const chatData = [
+  { "id": "1", "timestamp": "0:29", "timeInSeconds": 29, "author": "DIAS MALLI", "message": "sir", "avatar": "https://yt4.ggpht.com/Zg0FcUy5aFqMiq_xmSASOOvnE-_lgNVMdpHJWFteOC9IWMLQDTm76pJRWevUd-qUUawwhb0ZFg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "2", "timestamp": "0:54", "timeInSeconds": 54, "author": "chamathka chandupa", "message": ":hand-pink-waving:", "avatar": "https://yt4.ggpht.com/O13B-_V4zMZTWQdeDPkpwb7-26ZW8J_BfnmxvBf9yv9z1V4SB-qDsgTG8xCNfr0uYklPlSAutg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "3", "timestamp": "1:08", "timeInSeconds": 68, "author": "Devil tm Lucif4", "message": "hehe api awa", "avatar": "https://yt4.ggpht.com/36DjkI-T1FJ3DUYKrYYNGB6exKQ5Jx_Nf4oThRrGpY6Pnh_x1gzRlSUVtzmT0_3rZYwWyyysPNc=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "4", "timestamp": "1:20", "timeInSeconds": 80, "author": "DIAS MALLI", "message": "api ava", "avatar": "https://yt4.ggpht.com/Zg0FcUy5aFqMiq_xmSASOOvnE-_lgNVMdpHJWFteOC9IWMLQDTm76pJRWevUd-qUUawwhb0ZFg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "5", "timestamp": "1:45", "timeInSeconds": 105, "author": "Yasiru Nimsara", "message": "timer eka zoom eke update ekak sir eka sirta ain karanna baha man hithana vidiyata", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nhkFhwTpTADDDLQVwY2AI26aoqBXK6MPnB3vKpETOJt1gxMYLW7pekykIYotIXNfKauA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "6", "timestamp": "2:25", "timeInSeconds": 145, "author": "Days of Matheez", "message": "podda is back", "avatar": "https://yt4.ggpht.com/-_mNbSuhKQ2nwd0rbltVAgwR5M_ovhu7MVb7kTMWm2U_f1fad-URt9mZA4vzJi5-RJok__YHMNE=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "7", "timestamp": "3:10", "timeInSeconds": 190, "author": "Ranithu Senuth 🐼", "message": "heta sakya eketh meka neda sirrr", "avatar": "https://yt4.ggpht.com/78D8nsxRCtt5SWhMuUQFkoRm7hj1J6qBkaouRk20Hpukcqc3pPxkDvBpBbs9Lb3pVH69iYUIHg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "8", "timestamp": "5:21", "timeInSeconds": 321, "author": "Janiya Official", "message": "hetth mekd sir krnne", "avatar": "https://yt4.ggpht.com/iSsViuG0pTREsk74UKRO52_8qcacHeeG2HFh3vqeC7TIS0zx0ck-JJNEafCFd5su3XhIoPrqSA8=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "9", "timestamp": "7:57", "timeInSeconds": 477, "author": "K vlogs 💃", "message": "24th innvoo", "avatar": "https://yt4.ggpht.com/cNqGGeMK7PHeBwpsFdTiIT7ubK1G2W-BHOeiTvADM4Cp6zyy-Ym90WbgF7pXg8qdSevjhA3g=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "10", "timestamp": "8:46", "timeInSeconds": 526, "author": "Damindu Avishka", "message": "24 :relieved_face:", "avatar": "https://yt4.ggpht.com/JVP_GmRNuu3nPuN8Wn8Yse1WGDkj1e5di992dx404_gA7etOmS3am1NIpfmd2XJ5V542m76ErX0=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "11", "timestamp": "9:40", "timeInSeconds": 580, "author": "nilupul jayasen arachchi", "message": "sahan nimasara", "avatar": "https://yt4.ggpht.com/vNMPS3RFszUVWeWzURoEqVPM2dbCABP1tS0nrGgHZF9pSRCkv3XQNQZC1X4Y0-1Fmx_wmE6_wA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "12", "timestamp": "9:43", "timeInSeconds": 583, "author": "Natasha Devindi", "message": "heta sakya eke class thiyeda :slightly_smiling_face:", "avatar": "https://yt4.ggpht.com/ytc/AIdro_mLKPfQfsYtfUyqqe6FpMayQRafZoRgOUnqIFjEi-enSreCJmiWcdakwZy3g21qd24UHw=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "13", "timestamp": "9:50", "timeInSeconds": 590, "author": "nilupul jayasen arachchi", "message": "uba paulpaveda", "avatar": "https://yt4.ggpht.com/vNMPS3RFszUVWeWzURoEqVPM2dbCABP1tS0nrGgHZF9pSRCkv3XQNQZC1X4Y0-1Fmx_wmE6_wA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "14", "timestamp": "12:12", "timeInSeconds": 732, "author": "nilupul jayasen arachchi", "message": "kiyapan", "avatar": "https://yt4.ggpht.com/vNMPS3RFszUVWeWzURoEqVPM2dbCABP1tS0nrGgHZF9pSRCkv3XQNQZC1X4Y0-1Fmx_wmE6_wA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "15", "timestamp": "14:00", "timeInSeconds": 840, "author": "Senitha hansara", "message": ":goodvibes:", "avatar": "https://yt4.ggpht.com/ytc/AIdro_k82QyAI4bPkllTGYW1uAh9g2F373PAH3byJC8f1I0FsxpqxMTd2Pi9ZMx0zq4opKmx6Q=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "16", "timestamp": "14:48", "timeInSeconds": 888, "author": "Isura Shavinda", "message": "2025 clz ek ne d me", "avatar": "https://yt4.ggpht.com/ytc/AIdro_lwipGrMtw03q9rRS3u-wAHkA12LD8UeCn7-UUk93gUoG_7iN7OhFsK3V58eudoVYMMPA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "17", "timestamp": "16:33", "timeInSeconds": 993, "author": "Yasiru Nimsara", "message": "ammatasiri", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nhkFhwTpTADDDLQVwY2AI26aoqBXK6MPnB3vKpETOJt1gxMYLW7pekykIYotIXNfKauA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "18", "timestamp": "16:34", "timeInSeconds": 994, "author": "DILL NEON", "message": "sir gihillath awada?", "avatar": "https://yt4.ggpht.com/f_xCi5280TDmQgbhnfujLcBZd_dQAkhDzmvqLPYCS-pIesSYj_egdGVjrKUrS8rAtBctTff-yw=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "19", "timestamp": "16:36", "timeInSeconds": 996, "author": "Yasiru Nimsara", "message": "patta sir", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nhkFhwTpTADDDLQVwY2AI26aoqBXK6MPnB3vKpETOJt1gxMYLW7pekykIYotIXNfKauA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "20", "timestamp": "17:15", "timeInSeconds": 1035, "author": "Yasiru Nimsara", "message": "gammak thamai sir", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nhkFhwTpTADDDLQVwY2AI26aoqBXK6MPnB3vKpETOJt1gxMYLW7pekykIYotIXNfKauA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "21", "timestamp": "18:06", "timeInSeconds": 1086, "author": "Senitha hansara", "message": "Kavda methana kiribathgoda yahansa yanne ", "avatar": "https://yt4.ggpht.com/ytc/AIdro_k82QyAI4bPkllTGYW1uAh9g2F373PAH3byJC8f1I0FsxpqxMTd2Pi9ZMx0zq4opKmx6Q=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "22", "timestamp": "18:20", "timeInSeconds": 1100, "author": "NILAPROMAX", "message": "hi", "avatar": "https://yt4.ggpht.com/YAr4yVoDozF-AXqW2GPwxPbG75Ov9HrgiBjw_oqtkiTwx-D5-rNQLTgpmLV9cGHVBBK8UvA6L6o=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "23", "timestamp": "18:50", "timeInSeconds": 1130, "author": "Senitha hansara", "message": "Kiyannako ", "avatar": "https://yt4.ggpht.com/ytc/AIdro_k82QyAI4bPkllTGYW1uAh9g2F373PAH3byJC8f1I0FsxpqxMTd2Pi9ZMx0zq4opKmx6Q=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "24", "timestamp": "19:33", "timeInSeconds": 1173, "author": "Tharu Studios", "message": "W sir", "avatar": "https://yt4.ggpht.com/28ShE_clBAMzyuk7F98NN-k6LHLWl_IAPz8eVwnghBlW-I17L37LyGeu47AkNMBZcXKIy_vUWA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "25", "timestamp": "21:56", "timeInSeconds": 1316, "author": "hakr hakrs", "message": ":face-blue-smiling:hi", "avatar": "https://yt4.ggpht.com/4vyCYERVbTSmeJ5VTHzOdTkQk2hp2mfsBzKwhCX7c4oyXIsCmcmY3CvRJHT6-wF-cgKEndrJ=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "26", "timestamp": "24:45", "timeInSeconds": 1485, "author": "Ashen Gimsara", "message": "gammak sir, 2025 logic gate:hand-purple-blue-peace::hand-purple-blue-peace:", "avatar": "https://yt4.ggpht.com/3Wjwfac9IX9mGp1Up_ffaIJGVg_RGyaw3Ej9PCdo0B-81-nLEOC5KttSb-glXRcCOjfASLXW=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "27", "timestamp": "26:17", "timeInSeconds": 1577, "author": "Yasiru Nimsara", "message": "geethan sirta ne kivve", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nhkFhwTpTADDDLQVwY2AI26aoqBXK6MPnB3vKpETOJt1gxMYLW7pekykIYotIXNfKauA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "28", "timestamp": "30:05", "timeInSeconds": 1805, "author": "KING කවී bus rider", "message": ":new_moon_face:", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nzTtI6dXn-Cu4_vvTKcrP230DTqZvqC3fSmF5X7oUDAJmoMTco-_b3LV3y5NsoSbrKww=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "29", "timestamp": "36:03", "timeInSeconds": 2163, "author": "NEXUS FF", "message": "23 kuruhari innwd :sleepy_face:", "avatar": "https://yt4.ggpht.com/VqJOw9rtxqAm2CL6MDJ687KI4CkKy-0UzqMUdD1Lrt7uwDcg7i5WPCytDFear-sciq9yKGu-=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "30", "timestamp": "41:05", "timeInSeconds": 2465, "author": "Thilina Madushanka", "message": "o", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nLWtmMy3I3392iap-DeN3HQND3U4uzBlhL_WFUyeD0Idk=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "31", "timestamp": "41:47", "timeInSeconds": 2507, "author": "Ashel Nimesh", "message": ":raised_hand:", "avatar": "https://yt4.ggpht.com/O2mor99Q3il9Qxmgx-gaukkVFgHWXhWQLgvzMwRvQbivFwVpB1WYwn7fHfqsJlAxljX95lPQE3U=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "32", "timestamp": "43:28", "timeInSeconds": 2608, "author": "SprdX", "message": ":hand-pink-waving::hand-pink-waving:", "avatar": "https://yt4.ggpht.com/DqSSpr0fqar4vj3ecZVRkm35xrd8RRsi0aPMQ0SGiUWN0ESOzBG3dq0LNyrkq44zm8eykL7B=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "33", "timestamp": "44:58", "timeInSeconds": 2698, "author": "The Shortrix", "message": "meanwhile dialog usersla :rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing:", "avatar": "https://yt4.ggpht.com/5uo6HZcUXm_JlNeXDUF0pXeWkMqQnoiiA-gVyP-PS2rqlWUK0kVTQJ1MNxV4GHbFG-rWddmxdTg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "34", "timestamp": "45:01", "timeInSeconds": 2701, "author": "The Shortrix", "message": "meanwhile dialog usersla :rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing:", "avatar": "https://yt4.ggpht.com/5uo6HZcUXm_JlNeXDUF0pXeWkMqQnoiiA-gVyP-PS2rqlWUK0kVTQJ1MNxV4GHbFG-rWddmxdTg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "35", "timestamp": "45:04", "timeInSeconds": 2704, "author": "The Shortrix", "message": "meanwhile dialog usersla :rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing:", "avatar": "https://yt4.ggpht.com/5uo6HZcUXm_JlNeXDUF0pXeWkMqQnoiiA-gVyP-PS2rqlWUK0kVTQJ1MNxV4GHbFG-rWddmxdTg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "36", "timestamp": "48:31", "timeInSeconds": 2911, "author": "The Shortrix", "message": "meanwhile dialog usersla :rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing:", "avatar": "https://yt4.ggpht.com/5uo6HZcUXm_JlNeXDUF0pXeWkMqQnoiiA-gVyP-PS2rqlWUK0kVTQJ1MNxV4GHbFG-rWddmxdTg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "37", "timestamp": "48:32", "timeInSeconds": 2912, "author": "The Shortrix", "message": "meanwhile dialog usersla :rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing:", "avatar": "https://yt4.ggpht.com/5uo6HZcUXm_JlNeXDUF0pXeWkMqQnoiiA-gVyP-PS2rqlWUK0kVTQJ1MNxV4GHbFG-rWddmxdTg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "38", "timestamp": "48:34", "timeInSeconds": 2914, "author": "The Shortrix", "message": "meanwhile dialog usersla :rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing::rolling_on_the_floor_laughing:", "avatar": "https://yt4.ggpht.com/5uo6HZcUXm_JlNeXDUF0pXeWkMqQnoiiA-gVyP-PS2rqlWUK0kVTQJ1MNxV4GHbFG-rWddmxdTg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "39", "timestamp": "52:00", "timeInSeconds": 3120, "author": "Ashel Nimesh", "message": "Heta clz thiyenwda", "avatar": "https://yt4.ggpht.com/O2mor99Q3il9Qxmgx-gaukkVFgHWXhWQLgvzMwRvQbivFwVpB1WYwn7fHfqsJlAxljX95lPQE3U=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "40", "timestamp": "53:14", "timeInSeconds": 3194, "author": "Wishmika Kavinga;", "message": "@spc ane pala yanna", "avatar": "https://yt4.ggpht.com/97hyqxjk4iqiWGxn8wNOAMKCJbMHERwI5iep_GlNhAyB-H0YpUP-sYpZBLzCwYBez1rNxgLdSPs=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "41", "timestamp": "54:09", "timeInSeconds": 3249, "author": "D.H", "message": "ඩෙටා ගන්නෙ කොහොමද කියන්කො", "avatar": "https://yt4.ggpht.com/_7RoRwZE4UDsmiJNVNjEPUyPMba677QqaCEa8x8I60vacMrl88pHjftT5YNpAFVNmSCjOEWf=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "42", "timestamp": "55:08", "timeInSeconds": 3308, "author": "Sandu✨", "message": ":face-red-heart-shape:", "avatar": "https://yt4.ggpht.com/2vYxvzeNPj06cNnZ0pd1BribqRKRYyjbirHmEek8AEZhQGxDjtm2DXlq7TEX0ArIo6luKqaODtU=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "43", "timestamp": "55:35", "timeInSeconds": 3335, "author": "The Shortrix", "message": "@CYDER FF dialog un mokth dennea bn free ", "avatar": "https://yt4.ggpht.com/5uo6HZcUXm_JlNeXDUF0pXeWkMqQnoiiA-gVyP-PS2rqlWUK0kVTQJ1MNxV4GHbFG-rWddmxdTg=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "44", "timestamp": "56:07", "timeInSeconds": 3367, "author": "erandaka nirmal", "message": "ah sir awad", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nd7Wd3yiuW6Afjwna9EB2Us2mleIuJGkt6spSLC2k_P0A=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "45", "timestamp": "56:50", "timeInSeconds": 3410, "author": "erandaka nirmal", "message": "23 inna epa palayawkiuve ndd ?", "avatar": "https://yt4.ggpht.com/ytc/AIdro_nd7Wd3yiuW6Afjwna9EB2Us2mleIuJGkt6spSLC2k_P0A=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "46", "timestamp": "1:12:00", "timeInSeconds": 4320, "author": "kelum Kumarasingha", "message": "kiya wasarada", "avatar": "https://yt4.ggpht.com/ytc/AIdro_knXtYx-QEUmDZmIzCc6-scr2gD0sPMpqMGvH-6BHJnFTBf5EoPyv-i01enUxWhfjEWwA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "47", "timestamp": "1:12:16", "timeInSeconds": 4336, "author": "Shanuka Oshada", "message": "12", "avatar": "https://yt4.ggpht.com/V5uiCahNcA0TLLVrbl-cFK720cUVR6kwf_768_s-oGpITzsJeDGJNJaS6I36EwXHUGMPBluI0Q=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "48", "timestamp": "1:26:45", "timeInSeconds": 5205, "author": "Sithum Mihiranga", "message": "සර් මෙහෙ වුන් කියනව මැත්ස් එක්ක it කරන්න එපා කියලාුන්ට පිස්සුද", "avatar": "https://yt4.ggpht.com/ytc/AIdro_kN0vHjIDhTA7B0t2l-8jw4du0Fp3Q4NWDxREtZ0wG6prM4O5dykKEJAxt14lhBl9HMMQ=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "49", "timestamp": "1:28:23", "timeInSeconds": 5303, "author": "Sithum Mihiranga", "message": "සර් මෙහෙ වුන් කියනව මැත්ස් එක්ක it කරන්න එපා කියලාුන්ට පිස්සුද", "avatar": "https://yt4.ggpht.com/ytc/AIdro_kN0vHjIDhTA7B0t2l-8jw4du0Fp3Q4NWDxREtZ0wG6prM4O5dykKEJAxt14lhBl9HMMQ=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "50", "timestamp": "1:29:19", "timeInSeconds": 5359, "author": "hemantha dharmaprya", "message": "luxuernburg", "avatar": "https://yt4.ggpht.com/ytc/AIdro_lN4KO56u-Lg-B-RmaabLS7QD76l9LDCDB_8ae-QSaMFA=s32-c-k-c0x00ffffff-no-rj" },
+  { "id": "51", "timestamp": "1:34:15", "timeInSeconds": 5655, "author": "Janith Priyankara", "message": "finland වල නේද කළුගම්පිටිය සර් ඉනේ", "avatar": "https://yt4.ggpht.com/ytc/AIdro_k_Nnka0UEJapFuUk282HkWUyiam2nqUFSAemG0SeD70Js=s32-c-k-c0x00ffffff-no-rj" }
+];
+
+
+// Global variables
+let autoScrollEnabled = true;
+let currentVideoTime = 0;
+let displayedMessages = [];
+let plyrPlayer;
+let videoDuration = 0;
+
+// Format time from seconds to MM:SS
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+// Function to replace emoji codes with Unicode characters
+function replaceEmojiCodes(text) {
+    const emojiMap = {
+        ":hand-pink-waving:": "👋",
+        ":relieved_face:": "😌",
+        ":slightly_smiling_face:": "🙂",
+        ":goodvibes:": "👍",
+        ":face-blue-smiling:": "😊",
+        ":hand-purple-blue-peace:": "✌️",
+        ":new_moon_face:": "🌚",
+        ":sleepy_face:": "😴",
+        ":rolling_on_the_floor_laughing:": "🤣",
+        ":raised_hand:": "✋",
+        ":face-red-heart-shape:": "🥰"
+    };
+
+    return text.replace(/:([a-zA-Z0-9_-]+?):/g, (match, codeName) => {
+        const fullCode = `:${codeName}:`;
+        return emojiMap[fullCode] || match;
+    });
+}
+
+// Render chat messages with animations
+function renderChatMessages(messagesToRender) {
+    const container = document.getElementById('chatMessages');
+    if (!container) return;
+    
+    const wasScrolledToBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50; // Check BEFORE DOM change
+    
+    container.innerHTML = ''; // Clear existing messages before rendering new set
+    
+    messagesToRender.forEach((msg, index) => {
+        const messageEl = document.createElement('div');
+        messageEl.className = 'message';
+        messageEl.style.animationDelay = `${index * 0.05}s`; // Stagger animation
+        
+        const processedMessage = replaceEmojiCodes(msg.message).replace(/\n/g, "<br>");
+
+        messageEl.innerHTML = `
+            <div class="message-header">
+                <img src="${msg.avatar}" alt="${msg.author}" class="avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiM0YTkwZTIiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+CjxwYXRoIGQ9Ik0xMiAyQzEzLjEgMiAxNCAyLjkgMTQgNEMxNCA1LjEgMTMuMSA2IDEyIDZDMTAuOSA2IDEwIDUuMSAxMCA0QzEwIDIuOSAxMC45IDIgMTIgMlpNMjEgOVYyMkMyMSAyMi41IDIwLjUgMjMgMjAgMjNIMTZWMTVINVYyM0gxQzAuNSAyMyAwIDIyLjUgMCAyMlY5QzAgNy45IDAuOSA3IDIgN0g2VjEwSDE4VjdIMjJDMjMuMSA3IDI0IDcuOSAyNCA5WiIvPgo8L3N2Zz4KPC9zdmc+'">
+                <div class="author">${msg.author}</div>
+                <div class="timestamp">${msg.timestamp}</div>
+            </div>
+            <div class="message-content">${processedMessage}</div>
+        `;
+        container.appendChild(messageEl);
+    });
+
+    const countEl = document.getElementById('chatMessageCount');
+    if (countEl) {
+        countEl.textContent = `${messagesToRender.length} messages`;
+    }
+    
+    // ***** CORRECTED SCROLL LOGIC *****
+    if (autoScrollEnabled) {
+        // If auto scroll is on, always scroll to the bottom to see new messages.
+        requestAnimationFrame(() => { // Use requestAnimationFrame for smoother scroll after DOM updates
+            container.scrollTop = container.scrollHeight;
+        });
+    } else if (wasScrolledToBottom) {
+        // If auto scroll is off, but the user was already at the bottom,
+        // maintain that position (effectively scrolling to the new bottom).
+        requestAnimationFrame(() => {
+            container.scrollTop = container.scrollHeight;
+        });
+    }
+}
+
+// Show messages up to current time
+function updateChatDisplay() {
+    const messagesToShow = chatData.filter(msg => msg.timeInSeconds <= currentVideoTime);
+    
+    // Only re-render if the list of messages to show has actually changed.
+    if (messagesToShow.length !== displayedMessages.length || 
+        (messagesToShow.length > 0 && displayedMessages.length > 0 && 
+         messagesToShow[messagesToShow.length-1].id !== displayedMessages[displayedMessages.length-1].id) ||
+        (messagesToShow.length > 0 && displayedMessages.length === 0) || // Case: from no messages to some messages
+        (messagesToShow.length === 0 && displayedMessages.length > 0)    // Case: from some messages to no messages (e.g., after seeking to start)
+       ) {
+        displayedMessages = messagesToShow;
+        renderChatMessages(displayedMessages);
+    }
+    
+    // Update current time display
+    const timeDisplay = document.getElementById('currentTimeDisplay');
+    if (timeDisplay) {
+        timeDisplay.textContent = formatTime(currentVideoTime);
+    }
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing player and chat replay...');
+    
+    const playerElement = document.getElementById('player');
+    if (!playerElement) {
+        console.error('Player element not found');
+        return;
+    }
+
+    plyrPlayer = new Plyr('#player', {
+        youtube: {
+            noCookie: false,
+            rel: 0,
+            showinfo: 0,
+            iv_load_policy: 3,
+            modestbranding: 1
+        },
+        controls: [
+            'play-large', 'rewind', 'play', 'fast-forward', 
+            'progress', 'current-time', 'duration', 'mute', 'volume',
+            'captions', 'settings', 'pip', 'airplay', 'fullscreen'
+        ],
+        settings: ['captions', 'quality', 'speed'],
+        quality: {
+            default: 720,
+            options: [144, 240, 360, 480, 720, 1080, 1440, 2160],
+            forced: true,
+            onChange: (quality) => {
+                console.log(`Quality changed to: ${quality}p`);
+            }
+        },
+        speed: {
+            selected: 1,
+            options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+        }
+    });
+
+    // Set up video event listeners
+    plyrPlayer.on('ready', () => {
+        console.log('Player ready');
+        videoDuration = plyrPlayer.duration || 0; // Use 0 if duration not immediately available
+        // Attempt to get duration more reliably after a short delay if needed, or on 'loadedmetadata'
+        if (videoDuration === 0 && plyrPlayer.isHTML5) { // For HTML5 video, duration might take a moment
+             plyrPlayer.once('loadedmetadata', () => {
+                 videoDuration = plyrPlayer.duration;
+                 console.log('Video duration (loadedmetadata):', videoDuration);
+             });
+        } else {
+            console.log('Video duration (ready):', videoDuration);
+        }
+        currentVideoTime = 0; // Ensure it starts at 0
+        updateChatDisplay(); // Initial chat display (likely empty or messages at 0:00)
+    });
+
+    // ***** CORRECTED TIMEUPDATE HANDLER *****
+    plyrPlayer.on('timeupdate', () => {
+        const newTime = plyrPlayer.currentTime || 0;
+        // Update currentVideoTime and refresh chat display if the video time has actually changed.
+        if (newTime !== currentVideoTime) {
+            currentVideoTime = newTime; 
+            updateChatDisplay();        
+        }
+    });
+
+    plyrPlayer.on('seeked', () => {
+        currentVideoTime = plyrPlayer.currentTime || 0;
+        updateChatDisplay(); // Ensure chat updates immediately after seeking
+        console.log('Seeked to:', formatTime(currentVideoTime));
+    });
+    
+    plyrPlayer.on('playing', () => {
+        // It's possible that 'playing' fires when resuming, ensure time is current
+        currentVideoTime = plyrPlayer.currentTime || 0;
+        updateChatDisplay(); // Update chat when play starts/resumes
+    });
+
+    // Add click handler for center click layer
+    const centerClickLayer = document.querySelector('.center-click-layer');
+    if (centerClickLayer) {
+        centerClickLayer.addEventListener('click', function() {
+            if (plyrPlayer) plyrPlayer.togglePlay();
+        });
+    }
+
+    // Add click handlers for blockers
+    const titleBlocker = document.querySelector('.title-blocker');
+    const shareBlocker = document.querySelector('.share-blocker');
+    
+    if (titleBlocker) {
+        titleBlocker.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Title area click blocked');
+        });
+    }
+    
+    if (shareBlocker) {
+        shareBlocker.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Share area click blocked');
+        });
+    }
+
+    // Search functionality for chat
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm === '') {
+                // If search is cleared, re-render based on currentVideoTime
+                updateChatDisplay(); 
+            } else {
+                const filteredMessages = chatData.filter(msg => 
+                    msg.timeInSeconds <= currentVideoTime && // Show only messages up to current time that match search
+                    (msg.message.toLowerCase().includes(searchTerm) || 
+                     msg.author.toLowerCase().includes(searchTerm))
+                );
+                renderChatMessages(filteredMessages); // Render only the search results
+            }
+        });
+    }
+
+    // Auto-scroll toggle functionality
+    const autoScrollBtn = document.getElementById('autoScrollBtn');
+    if (autoScrollBtn) {
+        autoScrollBtn.addEventListener('click', function() {
+            autoScrollEnabled = !autoScrollEnabled;
+            this.classList.toggle('off', !autoScrollEnabled);
+            this.textContent = autoScrollEnabled ? 'Auto Scroll: ON' : 'Auto Scroll: OFF';
+            
+            if (autoScrollEnabled) { // If turning on, scroll to bottom immediately
+                scrollToBottom();
+            }
+        });
+    }
+
+    // Jump to time functionality when clicking a timestamp in chat
+    const chatMessagesContainer = document.getElementById('chatMessages');
+    if (chatMessagesContainer) {
+        chatMessagesContainer.addEventListener('click', function(e) {
+            if (e.target.classList.contains('timestamp')) {
+                const timestampText = e.target.textContent;
+                // Find the message associated with this timestamp to get timeInSeconds accurately
+                // This is more robust if timestamps could be ambiguous or formatted differently elsewhere.
+                // For now, we parse from text, assuming consistent M:SS or H:MM:SS from chatData.
+                let seconds = 0;
+                const parentMessage = e.target.closest('.message');
+                if (parentMessage) {
+                    // A more robust way would be to add data-timeinseconds to the timestamp element
+                    // For now, we find the message in chatData by its displayed content (less ideal)
+                    // Or, since we have the timestamp string, parse it directly:
+                    const timeParts = timestampText.split(':');
+                    if (timeParts.length === 2) { // MM:SS
+                        seconds = parseInt(timeParts[0], 10) * 60 + parseInt(timeParts[1], 10);
+                    } else if (timeParts.length === 3) { // HH:MM:SS
+                        seconds = parseInt(timeParts[0], 10) * 3600 + parseInt(timeParts[1], 10) * 60 + parseInt(timeParts[2], 10);
+                    }
+                }
+                
+                if (plyrPlayer && !isNaN(seconds) && typeof plyrPlayer.currentTime === 'number') {
+                    plyrPlayer.currentTime = seconds;
+                    // currentVideoTime will be updated by the 'seeked' or 'timeupdate' event, which then calls updateChatDisplay
+                    console.log(`Jumped to time: ${timestampText} (${seconds}s)`);
+                }
+            }
+        });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        const targetTagName = e.target.tagName.toLowerCase();
+        if (targetTagName === 'input' || targetTagName === 'textarea') {
+            return; // Don't interfere with typing
+        }
+        
+        if (!plyrPlayer) return;
+
+        switch(e.key.toLowerCase()) {
+            case ' ': 
+            case 'k': 
+                e.preventDefault();
+                plyrPlayer.togglePlay();
+                break;
+            case 'f': 
+                e.preventDefault();
+                plyrPlayer.fullscreen.toggle();
+                break;
+            case 'm': 
+                e.preventDefault();
+                plyrPlayer.muted = !plyrPlayer.muted;
+                break;
+            case 'arrowleft': 
+                e.preventDefault();
+                plyrPlayer.rewind(plyrPlayer.config.seekTime || 10); 
+                break;
+            case 'arrowright': 
+                e.preventDefault();
+                plyrPlayer.forward(plyrPlayer.config.seekTime || 10); 
+                break;
+        }
+    });
+    // Initial display
+    updateChatDisplay();
+});
+
+// Utility functions
+function scrollToBottom() {
+    const container = document.getElementById('chatMessages');
+    if (container) {
+        requestAnimationFrame(() => {
+            container.scrollTop = container.scrollHeight;
+        });
+    }
+}
+
+// jumpToTime can be simplified as seeking the player will trigger events
+// function jumpToTime(seconds) {
+//     if (plyrPlayer && typeof plyrPlayer.currentTime === 'number') {
+//         plyrPlayer.currentTime = seconds;
+//         // currentVideoTime and chat display will be updated via player events ('seeked', 'timeupdate')
+//     }
+// }
+</script>
+<script src="/js/profile.js"></script>
+</body>
+</html>
