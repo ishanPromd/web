@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>watch</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style.css">
+   
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+   <style>
+      .container {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+      }
+  
+      .player-wrapper {
+          position: relative;
+      }
+  
+      /* Title blocker (top-left 30% width) */
+      .title-blocker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 30%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Share button blocker (top-right 15% width) */
+      .share-blocker {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Center click layer */
+      .center-click-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          cursor: pointer;
+      }
+  
+      iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          z-index: 0;
+      }
+  
+      .plyr__controls {
+          z-index: 2 !important;
+          pointer-events: all !important;
+      }
+  </style>
+
+</head>
+<body>
+
+
+   <header class="header">
+
+      <section class="flex">
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+         </div>
+
+         <form action="search.html" method="post" class="search-form">
+            <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+            <button type="submit" class="fas fa-search"></button>
+         </form>
+   
+         <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            
+         </div>
+   
+         <div class="profile">
+            <img src="/images/1234.gif" class="image" alt="">
+            <h3 class="name">No name</h3>
+            <p class="role">student</p>
+            <a href="/profile.html" class="btn">view profile</a>
+            <div class="flex-btn">
+               <a href="/login.html" class="option-btn">login</a>
+               <a href="/register.html" class="option-btn">register</a>
+            </div>
+         </div>
+   
+      </section>
+   </header>   
+      
+   <div class="side-bar">
+      
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
+      </div>
+   
+      <div class="profile">
+         
+         <img src="/images/1234.gif" class="image" alt="">
+         <h3 class="name">!No name</h3>
+         <p class="role">student</p>
+      </div>
+   
+      <nav class="navbar">
+         <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+         <a href="/about.html"><i class="fas fa-question"></i><span> &nbsp;Marks</span></a>
+         <a href="/teachers/teachers.html"><i class="fas fa-graduation-cap"></i><span>My Lessons</span></a>
+         <a href="/teachers.html"><i class="fas fa-chalkboard-user"></i><span>Lessons Pack</span></a>
+         <a href="/contact.html"><i class="fas fa-headset"></i><span> Contact Us</span></a>
+      </nav>
+   
+   </div>
+
+<section class="watch-video">
+   <div class="video-container">
+      <div class="video">
+         <div class="container">
+            <div class="player-wrapper">
+                <div class="plyr__video-embed" id="player">
+                    <div class="title-blocker"></div>
+                    <div class="share-blocker"></div>
+                    <div class="center-click-layer"></div>
+                    <iframe
+                        src="https://www.youtube.com/embed/7GW9rSjRpow?controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1"
+                        allowfullscreen
+                        allow="autoplay"
+                    ></iframe>
+                </div>
+      <h3 class="title">තාප රසායනය  (day 03)</h3>
+      <br>
+      <div class="tutorbox">
+         <div class="tutor">
+            <img src=" https://yt3.ggpht.com/E2j_ZVZeuG_Z50gSEKRRkAaAnrbvSy4Cs1vgTOG5jE39sXTrOW-mpzfSGWD5p7Ng131ktQ6QtVw=s88-c-k-c0x00ffffff-no-rj" alt="">
+            <div>
+               <h3>Upul weerasinghe</h3>
+               <span>Teacher</span>
+            </div>
+      </div>
+   </div>
+
+</section>
+
+<section class="comments">
+
+ 
+
+   
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script src="/js/player.js"></script>
+   
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>watch</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style.css">
+   
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+   <style>
+      .container {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+      }
+  
+      .player-wrapper {
+          position: relative;
+      }
+  
+      /* Title blocker (top-left 30% width) */
+      .title-blocker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 30%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Share button blocker (top-right 15% width) */
+      .share-blocker {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Center click layer */
+      .center-click-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          cursor: pointer;
+      }
+  
+      iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          z-index: 0;
+      }
+  
+      .plyr__controls {
+          z-index: 2 !important;
+          pointer-events: all !important;
+      }
+  </style>
+
+</head>
+<body>
+
+
+   <header class="header">
+
+      <section class="flex">
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+         </div>
+
+         <form action="search.html" method="post" class="search-form">
+            <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+            <button type="submit" class="fas fa-search"></button>
+         </form>
+   
+         <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            
+         </div>
+   
+         <div class="profile">
+            <img src="/images/1234.gif" class="image" alt="">
+            <h3 class="name">No name</h3>
+            <p class="role">student</p>
+            <a href="/profile.html" class="btn">view profile</a>
+            <div class="flex-btn">
+               <a href="/login.html" class="option-btn">login</a>
+               <a href="/register.html" class="option-btn">register</a>
+            </div>
+         </div>
+   
+      </section>
+   </header>   
+      
+   <div class="side-bar">
+      
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
+      </div>
+   
+      <div class="profile">
+         
+         <img src="/images/1234.gif" class="image" alt="">
+         <h3 class="name">!No name</h3>
+         <p class="role">student</p>
+      </div>
+   
+      <nav class="navbar">
+         <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+         <a href="/about.html"><i class="fas fa-question"></i><span> &nbsp;Marks</span></a>
+         <a href="/teachers/teachers.html"><i class="fas fa-graduation-cap"></i><span>My Lessons</span></a>
+         <a href="/teachers.html"><i class="fas fa-chalkboard-user"></i><span>Lessons Pack</span></a>
+         <a href="/contact.html"><i class="fas fa-headset"></i><span> Contact Us</span></a>
+      </nav>
+   
+   </div>
+
+<section class="watch-video">
+   <div class="video-container">
+      <div class="video">
+         <div class="container">
+            <div class="player-wrapper">
+                <div class="plyr__video-embed" id="player">
+                    <div class="title-blocker"></div>
+                    <div class="share-blocker"></div>
+                    <div class="center-click-layer"></div>
+                    <iframe
+                        src="https://www.youtube.com/embed/7GW9rSjRpow?controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1"
+                        allowfullscreen
+                        allow="autoplay"
+                    ></iframe>
+                </div>
+      <h3 class="title">තාප රසායනය  (day 03)</h3>
+      <br>
+      <div class="tutorbox">
+         <div class="tutor">
+            <img src=" https://yt3.ggpht.com/E2j_ZVZeuG_Z50gSEKRRkAaAnrbvSy4Cs1vgTOG5jE39sXTrOW-mpzfSGWD5p7Ng131ktQ6QtVw=s88-c-k-c0x00ffffff-no-rj" alt="">
+            <div>
+               <h3>Upul weerasinghe</h3>
+               <span>Teacher</span>
+            </div>
+      </div>
+   </div>
+
+</section>
+
+<section class="comments">
+
+ 
+
+   
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script src="/js/player.js"></script>
+   
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>watch</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style.css">
+   
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+   <style>
+      .container {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+      }
+  
+      .player-wrapper {
+          position: relative;
+      }
+  
+      /* Title blocker (top-left 30% width) */
+      .title-blocker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 30%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Share button blocker (top-right 15% width) */
+      .share-blocker {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15%;
+          height: 15%;
+          z-index: 2;
+          pointer-events: auto;
+          cursor: default;
+      }
+  
+      /* Center click layer */
+      .center-click-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          cursor: pointer;
+      }
+  
+      iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          z-index: 0;
+      }
+  
+      .plyr__controls {
+          z-index: 2 !important;
+          pointer-events: all !important;
+      }
+  </style>
+
+</head>
+<body>
+
+
+   <header class="header">
+
+      <section class="flex">
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+         </div>
+
+         <form action="search.html" method="post" class="search-form">
+            <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+            <button type="submit" class="fas fa-search"></button>
+         </form>
+   
+         <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            
+         </div>
+   
+         <div class="profile">
+            <img src="/images/1234.gif" class="image" alt="">
+            <h3 class="name">No name</h3>
+            <p class="role">student</p>
+            <a href="/profile.html" class="btn">view profile</a>
+            <div class="flex-btn">
+               <a href="/login.html" class="option-btn">login</a>
+               <a href="/register.html" class="option-btn">register</a>
+            </div>
+         </div>
+   
+      </section>
+   </header>   
+      
+   <div class="side-bar">
+      
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
+      </div>
+   
+      <div class="profile">
+         
+         <img src="/images/1234.gif" class="image" alt="">
+         <h3 class="name">!No name</h3>
+         <p class="role">student</p>
+      </div>
+   
+      <nav class="navbar">
+         <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+         <a href="/about.html"><i class="fas fa-question"></i><span> &nbsp;Marks</span></a>
+         <a href="/teachers/teachers.html"><i class="fas fa-graduation-cap"></i><span>My Lessons</span></a>
+         <a href="/teachers.html"><i class="fas fa-chalkboard-user"></i><span>Lessons Pack</span></a>
+         <a href="/contact.html"><i class="fas fa-headset"></i><span> Contact Us</span></a>
+      </nav>
+   
+   </div>
+
+<section class="watch-video">
+   <div class="video-container">
+      <div class="video">
+         <div class="container">
+            <div class="player-wrapper">
+                <div class="plyr__video-embed" id="player">
+                    <div class="title-blocker"></div>
+                    <div class="share-blocker"></div>
+                    <div class="center-click-layer"></div>
+                    <iframe
+                        src="https://www.youtube.com/embed/7GW9rSjRpow?controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1"
+                        allowfullscreen
+                        allow="autoplay"
+                    ></iframe>
+                </div>
+      <h3 class="title">තාප රසායනය  (day 03)</h3>
+      <br>
+      <div class="tutorbox">
+         <div class="tutor">
+            <img src=" https://yt3.ggpht.com/E2j_ZVZeuG_Z50gSEKRRkAaAnrbvSy4Cs1vgTOG5jE39sXTrOW-mpzfSGWD5p7Ng131ktQ6QtVw=s88-c-k-c0x00ffffff-no-rj" alt="">
+            <div>
+               <h3>Upul weerasinghe</h3>
+               <span>Teacher</span>
+            </div>
+      </div>
+   </div>
+
+</section>
+
+<section class="comments">
+
+ 
+
+   
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script src="/js/player.js"></script>
+   
+</body>
+</html>

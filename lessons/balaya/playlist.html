@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>බලය</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+
+   <header class="header">
+
+      <section class="flex">
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+         </div>
+
+         <form action="search.html" method="post" class="search-form">
+            <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+            <button type="submit" class="fas fa-search"></button>
+         </form>
+   
+         <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            
+         </div>
+   
+         <div class="profile">
+            <img src="images/1234.gif" class="image" alt="">
+            <h3 class="name">No name</h3>
+            <p class="role">student</p>
+            <a href="profile.html" class="btn">view profile</a>
+            <div class="flex-btn">
+               <a href="login.html" class="option-btn">login</a>
+               <a href="register.html" class="option-btn">register</a>
+            </div>
+         </div>
+   
+      </section>
+   </header>   
+      
+   <div class="side-bar">
+      
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
+      </div>
+   
+      <div class="profile">
+         
+         <img src="images/1234.gif" class="image" alt="">
+         <h3 class="name">!No name</h3>
+         <p class="role">student</p>
+      </div>
+   
+      <nav class="navbar">
+         <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+         <a href="/about.html"><i class="fas fa-question"></i><span> &nbsp;Marks</span></a>
+         <a href="/teachers/teachers.html"><i class="fas fa-graduation-cap"></i><span>My Lessons</span></a>
+         <a href="/teachers.html"><i class="fas fa-chalkboard-user"></i><span>Lessons Pack</span></a>
+         <a href="/contact.html"><i class="fas fa-headset"></i><span> Contact Us</span></a>
+      </nav>
+   
+   </div>
+
+<!--<section class="playlist-details">
+
+   <h1 class="heading">playlist details</h1>
+
+   <div class="row">
+
+      <div class="column">
+         <form action="" method="post" class="save-playlist">
+            <button type="submit"><i class="far fa-bookmark"></i> <span>save playlist</span></button>
+         </form>
+   
+         <div class="thumb">
+            <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2FWhatsApp_Image_2025-02-13_at_6.47.09_AM_1.jpeg&w=3840&q=75 "alt="">
+            <span>5 videos</span>
+         </div>
+      </div>
+      <div class="column">
+         <div class="tutor">
+            <img src=" https://yt3.ggpht.com/E2j_ZVZeuG_Z50gSEKRRkAaAnrbvSy4Cs1vgTOG5jE39sXTrOW-mpzfSGWD5p7Ng131ktQ6QtVw=s88-c-k-c0x00ffffff-no-rj" alt="">
+            <div>
+               <h3>upul Bosa</h3>
+               <span>01-01-2025</span>
+            </div>
+         </div>
+   
+         <div class="details">
+            <h3>බලය - Revision - 2025 AL</h3>
+         </div>
+      </div>
+   </div>
+
+</section>-->
+
+<section class="playlist-videos">
+
+   <h1 class="heading">බලය</h1>
+
+   <div id="preloader" class="preloader">
+      <div>
+         <div class="loader"></div>
+      </div>
+         <p class="loading-text">Loading...</p>
+      </div>
+      <div id="content" style="display: none;">
+
+   <div class="box-container">
+
+      <div class="card"   id="box">
+         <a class="box1" href="/lessons/balaya/watch-video.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F1b5bcd3371e341c48c95fe55ae3e3d38.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+            
+               
+                 <div class="title">බලය- Theory - 2025 AL (Day 01)</div>
+                 <div class="subtitle">1st Week - 2025 AL</div>
+                 <div class="subtitle">Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box">
+         <a class="box1" href="/lessons/balaya/watch-videod2.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2Fb820210a93bc4756ab26c2ed5c1f1f11.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+             
+               
+                 <div class="title">බලය- Theory - 2025 AL (Day 02)</div>
+                 <div class="subtitle"> 2nd Week - 2025 AL</div>
+                 <div class="subtitle"> Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box">
+         <a class="box1" href="/lessons/balaya/watch-videod3.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2Ffacbf6bceb834150910c6c6e3971d275.png&w=3840&q=75" alt="Lesson Image">
+         
+         <div class="card-content">
+             
+               
+                 <div class="title">බලය- Theory - 2025 AL (Day 03)</div>
+                 <div class="subtitle"> 3rd Week - 2025 AL</div>
+                 <div class="subtitle"> Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box">
+         <a class="box1" href="/lessons/balaya/watch-videod4.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F262935a8c26e4dd79f98146a6c21e6a0.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+             
+               
+                 <div class="title">බලය- Theory - 2025 AL (Day 04)</div>
+                 <div class="subtitle"> 4th Week - 2025 AL</div>
+                 <div class="subtitle"> Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                 </div>
+             </a>
+      </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod5.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2Ffe367115acbe4a549254945031e0fc0d.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">බලය- Theory - 2025 AL (Day 05)</div>
+                  <div class="subtitle"> 5th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box">
+         <a class="box1" href="/lessons/balaya/watch-videod6.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2Fdc51d68949514f268486bdeb951ed25b.png&w=3840&q=75" alt="Lesson Image">
+         
+         <div class="card-content">
+             
+               
+                 <div class="title">බලය- Theory - 2025 AL (Day 06)</div>
+                 <div class="subtitle"> 6th Week - 2025 AL</div>
+                 <div class="subtitle"> Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box">
+         <a class="box1" href="/lessons/balaya/watch-videod7.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F7019702d161d420fa0701779d5e97fc3.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+             
+               
+                 <div class="title">බලය- Theory - 2025 AL (Day 07)</div>
+                 <div class="subtitle"> 7th Week - 2025 AL</div>
+                 <div class="subtitle"> Physical Lesson Pack</div>
+                 <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                 </div>
+             </a>
+      </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod8.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F5ae6f466558f4ab2ba96a6c9be26f736.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">බලය- Theory - 2025 AL (Day 08)</div>
+                  <div class="subtitle"> 8th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod9.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F23f07155abef474a854f87fe380199b6.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">බලය- Theory - 2025 AL (Day 09)</div>
+                  <div class="subtitle"> 9th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod10.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F378286376e2e45ab852f92c127e0d814.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+                  <div class="title">බලය- Theory - 2025 AL (Day 10)</div>
+                  <div class="subtitle"> 10th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod11.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F44eb31bce9f14dcb93e45221d3b2a61a.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">බලය- Theory - 2025 AL (Day 11)</div>
+                  <div class="subtitle"> 11th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod12.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F635a8219289c47f49e68b8981f24a48d.png&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">බලය- Theory - 2025 AL (Day 12 )</div>
+                  <div class="subtitle"> 12th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod13.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2Fcc9635956b3e48f9a9fc39c66ce46891.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">බලය- Theory - 2025 AL (Day 13 )</div>
+                  <div class="subtitle"> 13th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod14.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2Fb266fd2ed8be47dea71b1223fd73aa69.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">බලය- Theory - 2025 AL ( Day 14 )</div>
+                  <div class="subtitle"> 14th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod15.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F0a3e040cb1c04bfe98c371556c1e2c92.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">බලය- Theory - 2025 AL (Day 15)</div>
+                  <div class="subtitle"> 15th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod16.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F3021bd58c77b4ea8a0a1d51da2a89cdd.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">බලය- Theory - 2025 AL (Day 16)</div>
+                  <div class="subtitle"> 16th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod17.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F5055afac66ee432dbb948e73091db88f.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">බලය- Theory - 2025 AL (Day 17)</div>
+                  <div class="subtitle"> 17th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod18.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F7027debf1a0a4868b18b199bad4146d2.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">
+              
+               
+                  <div class="title">බලය- Theory - 2025 AL (Day 18)</div>
+                  <div class="subtitle"> 18th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod19.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F1c2da530e3ec4fb6853d08b51a7bec0f.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">බලය- Theory - 2025 AL (Day 19)</div>
+                  <div class="subtitle"> 19th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod20.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F58bb322209a64b3ead5ad87903fdc649.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">බලය- Theory - 2025 AL (Day 20)</div>
+                  <div class="subtitle"> 20th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod21.html">
+         <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FThumb%2FVideos%2F488c1f5ee62c4eba8d491eb1447a0886.jpeg&w=3840&q=75" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">බලය- Theory - 2025 AL (Day 21)</div>
+                  <div class="subtitle"> 21th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod22.html">
+         <img src="https://img.youtube.com/vi/SnDbt2hUm2c/maxresdefault.jpg" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">2025- SFT | බලය ප්‍රශ්න සාකච්ඡාව Day 01</div>
+                  <div class="subtitle"> 15th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod23.html">
+         <img src="https://img.youtube.com/vi/SnDbt2hUm2c/maxresdefault.jpg" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">2025- SFT | බලය ප්‍රශ්න සාකච්ඡාව Day 02</div>
+                  <div class="subtitle"> 15th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      <div class="card"   id="box"> 
+         <a class="box1" href="/lessons/balaya/watch-videod24.html">
+         <img src="https://img.youtube.com/vi/SnDbt2hUm2c/maxresdefault.jpg" alt="Lesson Image">
+         <div class="card-content">              
+                  <div class="title">2025- SFT | බලය ප්‍රශ්න සාකච්ඡාව Day 03</div>
+                  <div class="subtitle"> 15th Week - 2025 AL</div>
+                  <div class="subtitle"> Physical Lesson Pack</div>
+                  <div class="button-container">
+                     <span class="price">Free</span>
+                     <span class="button"> <i class="fa-solid fa-video"></i>&nbsp; Video</span>
+                  </div>
+               </a>
+         </div>
+      </div>
+
+      
+      <script>
+         // Function to add gap between cards using JS
+         function addGapBetweenCards() {
+             const cards = document.querySelectorAll('.card');
+             cards.forEach(card => {
+                 card.style.margin = '10px'; // Set the margin to create space between cards
+             });
+         }
+ 
+         // Function to alert when a card is clicked
+         function cardClicked() {
+             alert("You clicked the lesson card!");
+         }
+ 
+         // Call the function to add gap when the page loads
+         window.onload = addGapBetweenCards;
+     </script>
+     
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+<script src="/js/profile.js"></script>
+<script src="/js/sw.js"></script>
+</body>
+</html>

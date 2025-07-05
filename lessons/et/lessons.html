@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ET Lessons</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <link rel="stylesheet" href="/css/style.css">
+   <link rel="icon" type="image/x-icon" href="https://i.imghippo.com/files/ao9417UdU.png">
+   <link rel="stylesheet" href="/css/text.css">
+
+   <script src="lessons.js? v=1.0.5"></script> 
+   <script src="lessons.js? t=20250513002056"></script>
+
+   
+       
+   </script>
+</head>
+<body>
+
+   <header class="header">
+
+      <section class="flex">
+          <div class="icons">
+              <div id="menu-btn" class="fas fa-bars"></div>
+          </div>
+
+          <form action="search.html" method="post" class="search-form">
+              <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+              <button type="submit" class="fas fa-search"></button>
+          </form>
+
+          <div class="icons">
+              <div id="search-btn" class="fas fa-search"></div>
+              <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+              <div id="toggle-btn" class="fas fa-sun"></div>
+              <div id="user-btn" class="fas fa-user"></div>
+
+          </div>
+
+          <div class="profile">
+              <img id="userImage" class="image" alt="">
+              <h3 class="name" id="userName"></h3>
+              <div class="flex-btn">
+              </div>
+          </div>
+
+      </section>
+      </header>
+
+      <div class="side-bar">
+
+          <div id="close-btn">
+              <i class="fas fa-times"></i>
+          </div>
+
+          <div class="profile">
+              <img id="userImage" class="image">
+              <br>
+              <h3 id="userName" class="name"></h3>
+              <p class="role">student</p>
+          </div>
+
+          <nav class="navbar">
+              <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+              <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+              <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+              <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+              <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+          </nav>
+
+          <div class="typing-container">
+              <div class="animation-container">
+              <div id="text"></div>
+              <span class="cursor"></span>
+              </div>
+          </div>
+
+      </div>
+
+
+<section class="playlist-videos">
+
+   <div id="preloader" class="preloader">
+      <div>
+         <div class="loader"></div>
+      </div>
+         <p class="loading-text">Loading...</p>
+      </div>
+      <div id="content" style="display: none;"> <h1 class="heading">ET Lessons <i class="fa-solid fa-clock"></i></h1> <div class="box-container" id="coursesContainer">
+              </div>
+      </div>
+
+</section>
+<script src="/js/script.js"></script>
+<script src="/js/55papers.js"></script>
+<script src="/js/profile.js"></script>
+<script src="/js/text.js"></script>
+
+<script>
+    
+    // Function to generate course cards
+    function generateCourseCards() {
+        console.log("Generating course cards..."); // Debugging message
+        const coursesContainer = document.getElementById('coursesContainer');
+        if (!coursesContainer) {
+            console.error("Error: #coursesContainer element not found!");
+            return; // Stop if container isn't found
+        }
+        coursesContainer.innerHTML = ''; // Clear existing content
+
+        courseData.forEach(course => {
+            // Splitting subtitle by newline for displaying on separate lines if needed
+            const subtitles = course.subtitle.split('\n').map(sub => `<div class="subtitle">${sub}</div>`).join('');
+
+            const cardHTML = `
+                <div class="card">
+                    <a href="${course.url}">
+                        <img src="${course.imgSrc}" alt="${course.title} Image">
+                        <div class="card-content">
+                            <div class="title">${course.title}</div>
+                            ${subtitles} <div class="button-container">
+                                <span class="price">${course.priceStatus}</span>
+                                <span class="button">${course.buttonText}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `;
+            coursesContainer.innerHTML += cardHTML;
+        });
+         console.log("Finished generating course cards."); // Debugging message
+    }
+
+    // Call the function to generate cards and show content when the page loads
+    window.onload = () => {
+         console.log("Window onload event fired for playlist page."); // Debugging message
+        generateCourseCards();
+        showContent();
+        // The addGapBetweenCards and cardClicked functions from original script are not used here
+        // addGapBetweenCards was replaced by CSS gap. cardClicked was never called.
+    };
+
+    // Note: The original script also included addGapBetweenCards and cardClicked.
+    // addGapBetweenCards was replaced by CSS gap for the card container.
+    // cardClicked function was defined but never actually called by clicking the card elements
+    // in the original HTML. If you need specific click behavior (other than navigating via the link),
+    // you would add event listeners in the generateCourseCards function.
+
+</script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/profile.js"></script>
+<script src="/js/text.js"></script>
+<script src="/js/lessons.js"></script>
+</body>
+</html>

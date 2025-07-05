@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>TDS ( ඇස්තමේන්තුකරණය ) - Theory</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <link rel="icon" type="image/x-icon" href="https://i.imghippo.com/files/ao9417UdU.png">
+   <link rel="stylesheet" href="/css/style.css">
+
+   
+      <script src="index.js? v=1.0.6"></script> 
+         <script src="index.js? t=20250513003056"></script>
+
+   </head>
+
+<body>
+
+   <header class="header">
+
+      <section class="flex">
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+         </div>
+
+         <form action="search.html" method="post" class="search-form">
+            <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+            <button type="submit" class="fas fa-search"></button>
+         </form>
+
+         <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+
+         </div>
+
+         <div class="profile">
+            <img id="userImage" src="/images/1234.gif" class="image" alt="">
+            <h3 class="name" id="userName">No name</h3>
+
+            
+                        <div class="flex-btn"></div>
+         </div>
+
+      </section>
+   </header>
+
+   <div class="side-bar">
+
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
+      </div>
+
+      <div class="profile">
+         <img id="userImage" src="/images/1234.gif" class="image" alt="">
+         <br>
+         <h3 id="userName" class="name">!No name</h3>
+         <p class="role">student</p>
+      </div>
+
+      <nav class="navbar">
+         <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+         <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a> <a href="/progress.html"><i class="fa-solid fa-question"></i><span> My Progress</span></a> <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+         <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+      </nav>
+
+      <div class="typing-container">
+         <div class="animation-container">
+         <div id="text"></div>
+         <span class="cursor"></span>
+         </div>
+      </div>
+
+   </div>
+
+<section class="playlist-videos">
+
+   <div id="preloader" class="preloader">
+      <div>
+         <div class="loader"></div>
+      </div>
+         <p class="loading-text">Loading...</p>
+      </div>
+
+      <div id="content" style="display: none;"> <h1 class="heading">TDS ( ඇස්තමේන්තුකරණය ) Theory</h1> <div class="box-container" id="chalithayaLessonsContainer">
+            </div>
+      </div>
+
+</section>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/profile.js"></script>
+<script src="/js/text.js"></script>
+
+<script>
+  
+    // Function to generate lesson cards
+    function generateChalithayaLessonCards() {
+        console.log("Generating Chalithaya lesson cards..."); // Debugging message
+        const lessonsContainer = document.getElementById('chalithayaLessonsContainer');
+        if (!lessonsContainer) {
+            console.error("Error: #chalithayaLessonsContainer element not found!");
+            return; // Stop if container isn't found
+        }
+        lessonsContainer.innerHTML = ''; // Clear existing content
+
+        chalithayaLessonsData.forEach(lesson => {
+            // Combine subtitles, add empty string for subtitle2 if it doesn't exist to prevent undefined
+            const subtitlesHTML = `
+                <div class="subtitle">${lesson.subtitle}</div>
+                ${lesson.subtitle2 ? `<div class="subtitle">${lesson.subtitle2}</div>` : ''}
+            `;
+
+            const cardHTML = `
+                <div class="card" id="box"> <a href="${lesson.url}" class="box1"> <img src="${lesson.imgSrc}" alt="${lesson.title} Image">
+                        <div class="card-content">
+                            <div class="title">${lesson.title}</div>
+                            ${subtitlesHTML} <div class="button-container">
+                                <span class="price">${lesson.priceStatus}</span>
+                                <span class="button">${lesson.buttonText}</span>
+                            </div>
+                        </div>
+                    </a> </div> `;
+            lessonsContainer.innerHTML += cardHTML;
+        });
+        console.log("Finished generating Chalithaya lesson cards."); // Debugging message
+    }
+
+    // Function to hide preloader and show content
+    function showContent() {
+        console.log("Hiding preloader and showing content..."); // Debugging message
+        const preloader = document.getElementById('preloader');
+        const content = document.getElementById('content');
+        if (preloader) preloader.style.display = 'none';
+        if (content) content.style.display = 'block';
+        console.log("Content displayed."); // Debugging message
+    }
+
+    // Call the function to generate cards and show content when the page loads
+    window.onload = () => {
+        console.log("Window onload event fired for Chalithaya playlist page."); // Debugging message
+        generateChalithayaLessonCards();
+        showContent();
+        // The original addGapBetweenCards and cardClicked functions are included below but not called here
+    };
+
+    // Original functions (kept here as they were in your input, but not actively used by window.onload)
+    /*
+    function addGapBetweenCards() {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.style.margin = '10px'; // Set the margin to create space between cards
+        });
+    }
+
+    function cardClicked() {
+        alert("You clicked the lesson card!");
+    }
+    */
+
+</script>
+
+<script src="/js/script.js"></script>
+<script src="/js/profile.js"></script>
+<script src="/js/text.js"></script>
+</body>
+</html>
