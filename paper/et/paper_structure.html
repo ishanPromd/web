@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ඉංජිනේරු තාක්ෂණවේදය (ET) විෂය නිර්දේශය</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/x-icon" href="https://i.imghippo.com/files/ao9417UdU.png">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --civil-color: #ff9800;
+            --mechanical-color: #ffc107;
+            --electronic-color: #4caf50;
+            --accent-color: #e74c3c;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+        }
+        
+
+        
+        body {
+            font-family: 'Noto Sans Sinhala', 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .container1 {
+            max-width: 1200px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+        
+
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 4px;
+            background-color: white;
+            border-radius: 2px;
+        }
+        
+        .subtitle1 {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+        
+        main {
+            padding: 40px 0;
+        }
+        
+        .card1 {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card1:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            font-size: 10px;
+        }
+        
+        .section-title i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin: 0;
+        }
+        
+        .subject-list {
+            font-size: 12px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            column-count: 2;
+            column-gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .subject-list {
+                column-count: 1;
+            }
+        }
+        
+        .subject-list ol {
+            list-style-position: inside;
+            padding-left: 10px;
+            break-inside: avoid;
+        }
+        
+        .subject-list li {
+            margin-bottom: 10px;
+            padding-left: 5px;
+            position: relative;
+        }
+        
+        .modules {
+            font-size: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .module {
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .module::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .module:hover::before {
+            width: 100%;
+            opacity: 0.1;
+        }
+        
+        .module h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .module ul {
+            list-style-type: none;
+            padding-left: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .module li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .module li::before {
+            content: "•";
+            position: absolute;
+            left: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .civil {
+            background-color: #fff9f0;
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+        
+        .civil::before {
+            background-color: var(--civil-color);
+        }
+        
+        .civil h3, .civil li::before {
+            color: var(--civil-color);
+        }
+        
+        .mechanical {
+            background-color: #fffdf0;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .mechanical::before {
+            background-color: var(--mechanical-color);
+        }
+        
+        .mechanical h3, .mechanical li::before {
+            color: var(--mechanical-color);
+        }
+        
+        .electronic {
+            background-color: #f0fff4;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .electronic::before {
+            background-color: var(--electronic-color);
+        }
+        
+        .electronic h3, .electronic li::before {
+            color: var(--electronic-color);
+        }
+        
+        .exam-section {
+            margin-top: 40px;
+        }
+        
+        .exam-paper {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .exam-paper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .exam-paper h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .exam-paper h4 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin: 20px 0 10px;
+        }
+        
+        .exam-paper ul, .exam-paper ol {
+            padding-left: 20px;
+        }
+        
+        .exam-paper li {
+            margin-bottom: 10px;
+        }
+        
+        .exam-paper li ul, .exam-paper li ol {
+            margin-top: 10px;
+        }
+        
+        .paper-mcq {
+            border-top: 4px solid #ff9800;
+        }
+        
+        .paper-structure {
+            border-top: 4px solid #3498db;
+        }
+        
+        .paper-essay {
+            border-top: 4px solid #e74c3c;
+        }
+        
+        footer {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .footer-content p {
+            margin: 10px 20px;
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.009);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .slide-in-left {
+            animation: slideInFromLeft 0.5s forwards;
+        }
+        
+        .slide-in-right {
+            animation: slideInFromRight 0.5s forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle1 {
+                font-size: 1rem;
+            }
+            
+            .modules {
+                grid-template-columns: 1fr;
+            }
+        }
+        .texxt{
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+    
+    <header class="header">
+
+        <section class="flex">
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+            </div>
+
+            <form action="search.html" method="post" class="search-form">
+                <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+                <button type="submit" class="fas fa-search"></button>
+            </form>
+
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image" alt="">
+                <h3 class="name" id="userName"></h3>
+                <div class="flex-btn">
+                </div>
+            </div>
+
+        </section>
+        </header>   
+        
+        <div class="side-bar">
+
+            <div id="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image">
+                <br>
+                <h3 id="userName" class="name"></h3>
+                <p class="role">student</p>
+            </div>
+
+            <nav class="navbar">
+                <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+                <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+                <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+                <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+            </nav>
+
+            <div class="typing-container">
+                <div class="animation-container">
+                <div id="text"></div>
+                <span class="cursor"></span>
+                </div>
+            </div>
+
+        </div>
+    <main class="container1">
+        <div class="card1 animate__animated animate__fadeInUp">
+            <div class="section-title">
+                <i class="fas fa-book"></i>
+                <h2>විෂය පථය</h2>
+            </div>
+            
+            <div class="subject-list">
+                <ol>
+                    <li class="fade-in">ඉංජිනේරු තාක්ෂණවේදය හැදින්වීම</li>
+                    <li class="fade-in">සැලසුම් චිත්‍ර ඇදීම</li>
+                    <li class="fade-in">තාක්ෂණවේදය සදහා සෞඛ්‍ය හා ආරක්ෂාව</li>
+                    <li class="fade-in">ගොඩනැගිලි තාක්ෂණවේදය</li>
+                    <li class="fade-in">චලිතය හා ජව සම්ප්‍රේෂණ පද්ධති</li>
+                    <li class="fade-in">ස්වයංචල තාක්ෂණවේදය</li>
+                    <li class="fade-in">මුලික විදුලි තාක්ෂණවේදය</li>
+                    <li class="fade-in">නිෂ්පාදන තාක්ෂණවේදය</li>
+                    <li class="fade-in">සම්මත මිනුම් හා උපකරණ</li>
+                </ol>
+                <ol start="10">
+                    <li class="fade-in">ඉංජිනේරු ප්‍රමිති හා පිරිවිතර</li>
+                    <li class="fade-in">විදුලි යන්ත්‍ර හා බල පද්ධති</li>
+                    <li class="fade-in">ඉලෙක්ට්‍රොනික තාක්ෂණවේදය</li>
+                    <li class="fade-in">තරල යන්ත්‍ර</li>
+                    <li class="fade-in">බිම් මැනුම</li>
+                    <li class="fade-in">ගෘහස්ථ ජල සම්පාදනය හා කසල අපවහනය</li>
+                    <li class="fade-in">ඇස්තමේන්තුකරණය</li>
+                    <li class="fade-in">ව්‍යවසායකත්වය</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="card1 animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="section-title">
+                <i class="fas fa-layer-group"></i>
+                <h2>විෂය ක්‍රමවේදය</h2>
+            </div>
+            
+            <div class="modules">
+                <div class="module civil slide-in-left">
+                    <h3>🟠 සිවිල් තාක්ෂණවේදය</h3>
+                    <ul>
+                        <li>ගොඩනැගිලි තාක්ෂණවේදය</li>
+                        <li>බිම් මැනුම</li>
+                        <li>ඇස්තමේන්තුකරණය</li>
+                        <li>ගෘහස්ථ ජල සම්පාදනය හා කසල අපවහනය</li>
+                    </ul>
+                </div>
+                
+                <div class="module mechanical slide-in-left delay-1">
+                    <h3>🟡 යාන්ත්‍රික තාක්ෂණවේදය</h3>
+                    <ul>
+                        <li>චලිතය හා ජව සම්ප්‍රේෂණ පද්ධති</li>
+                        <li>ස්වයංචල තාක්ෂණවේදය</li>
+                        <li>නිෂ්පාදන තාක්ෂණවේදය</li>
+                        <li>තරල යන්ත්‍ර</li>
+                    </ul>
+                </div>
+                
+                <div class="module electronic slide-in-left delay-2">
+                    <h3>🟢 ඉලෙක්ට්‍රොනික තාක්ෂණවේදය</h3>
+                    <ul>
+                        <li>මූලික විදුලි තාක්ෂණවේදය</li>
+                        <li>විදුලි යන්ත්‍ර හා බල පද්ධති</li>
+                        <li>ඉලෙක්ට්‍රොනික තාක්ෂණවේදය</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exam-section animate__animated animate__fadeInUp animate__delay-2s">
+            <div class="section-title">
+                <i class="fas fa-file-alt"></i>
+                <h2>විභාග ආකෘතිය</h2>
+            </div>
+            
+            <div class="exam-paper paper-mcq slide-in-right">
+                <h2>🔸 MCQ Paper (0.7 × 50 = 35)</h3>
+                    <br>
+                <ul class="texxt">
+                    <li>සිවිල් තාක්ෂණවේදය - 14</li>
+                    <li>යාන්ත්‍රික තාක්ෂණවේදය - 14</li>
+                    <li>විදුලි හා ඉලෙක්ට්‍රොනික තාක්ෂණවේදය - 14</li>
+                    <li>ඉංජිනේරු තාක්ෂණවේදය හැදින්වීම - 01</li>
+                    <li>ඉංජිනේරු ඇදීම - 02</li>
+                    <li>සම්මත මිනුම් - 01</li>
+                    <li>සෞඛ්‍ය හා ආරක්ෂාව - 01</li>
+                    <li>ඉංජිනේරු ප්‍රමිතිය - 01</li>
+                    <li>ව්‍යවසායකත්වය හා කළමනාකරණය - 02</li>
+                </ul>
+            </div>
+            
+            <div class="exam-paper paper-structure slide-in-right delay-1">
+                <h2>🔹 Structure Paper (3.75 × 4 = 15)</h3>
+                    <br>
+                <ol class="texxt">
+                    <li>ඉංජිනේරු ඇදීම</li>
+                    <li>සමෝධානය
+                        <ul>
+                            <li>සිවිල් තාක්ෂණවේදය</li>
+                            <li>යාන්ත්‍රික තාක්ෂණවේදය</li>
+                            <li>විදුලි හා ඉලෙක්ට්‍රොනික තාක්ෂණවේදය</li>
+                        </ul>
+                    </li>
+                    <li>සමෝධානය
+                        <ul>
+                            <li>සිවිල් තාක්ෂණවේදය</li>
+                            <li>යාන්ත්‍රික තාක්ෂණවේදය</li>
+                            <li>විදුලි හා ඉලෙක්ට්‍රොනික තාක්ෂණවේදය</li>
+                        </ul>
+                    </li>
+                    <li>ව්‍යවසායකත්වය / ඉංජිනේරු ප්‍රමිතිය හා සම්මත මිනුම් / සෞඛ්‍ය හා ආරක්ෂාව</li>
+                </ol>
+            </div>
+            
+            <div class="exam-paper paper-essay slide-in-right delay-2">
+                <h2>🔺 Essay Paper (5 × 4 = 20)</h3>
+                    <br>
+                <h3>C කොටස [සිවිලි තාක්ෂණවේදය]</h4>
+                <ol start="5" class="texxt">
+                    <li>ගොඩනැගිලි තාක්ෂණවේදය</li>
+                    <li>
+                        <ul>
+                            <li>බිම් මැනුම</li>
+                            <li>ගෘහස්ථ කසල අපවහනය</li>
+                            <li>ඇස්තමේන්තුකරණය</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li>ස්වයංචල තාක්ෂණවේදය</li>
+                            <li>චලිතය හා ජව සම්ප්‍රේෂණ පද්ධති</li>
+                            <li>තරල යන්ත්‍ර</li>
+                        </ul>
+                    </li>
+                    <li>නිෂ්පාදන තාක්ෂණවේදය</li>
+                </ol>
+                
+                <h3>D කොටස [විදුලි හා ඉලෙක්ට්‍රොනික තාක්ෂණවේදය]</h4>
+                    <br>
+                <ol start="9" class="texxt">
+                    <li>
+                        <ul>
+                            <li>විදුලි තාක්ෂණවේදය</li>
+                            <li>විදුලි යන්ත්‍ර සහ බල පද්ධති</li>
+                        </ul>
+                    </li>
+                    <li>ඉලෙක්ට්‍රොනික තාක්ෂණවේදය</li>
+                </ol>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container1">
+            <div class="footer-content">
+                <p>© 2025 ඉංජිනේරු තාක්ෂණවේදය (ET)</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Fade-in animation for elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fade in elements when they enter the viewport
+            const fadeElems = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElems.forEach(elem => {
+                observer.observe(elem);
+            });
+            
+            // Add pulse animation to important elements
+            setTimeout(() => {
+                const headers = document.querySelectorAll('h3');
+                headers.forEach(header => {
+                    header.classList.add('pulse');
+                });
+            }, 2000);
+        });
+    </script>
+    
+<script src="/js/script.js"></script>
+<script src="/js/profile.js"></script>
+</body>
+</html>

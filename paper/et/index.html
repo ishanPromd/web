@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ET LESSON WISE PAPER </title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <section class="flex">
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+            </div>
+
+            <form action="search.html" method="post" class="search-form">
+                <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+                <button type="submit" class="fas fa-search"></button>
+            </form>
+
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image" alt="">
+                <h3 class="name" id="userName"></h3>
+                <div class="flex-btn">
+                </div>
+            </div>
+
+        </section>
+        </header>   
+        
+        <div class="side-bar">
+
+            <div id="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <div class="profile">
+                <img id="userImage" class="image">
+                <br>
+                <h3 id="userName" class="name"></h3>
+                <p class="role">student</p>
+            </div>
+
+            <nav class="navbar">
+                <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+                <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+                <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+                <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+            </nav>
+
+            <div class="typing-container">
+                <div class="animation-container">
+                <div id="text"></div>
+                <span class="cursor"></span>
+                </div>
+            </div>
+
+        </div>
+
+<section class="playlist-videos">
+
+   <h1 class="heading">Lesson Wise Papers</h1>
+
+   <div id="preloader" class="preloader">
+      <div>
+         <div class="loader"></div>
+      </div>
+         <p class="loading-text">Loading...</p>
+      </div>
+      <div id="content" style="display: none;">
+
+   <div class="box-container">
+      <div class="card" id="box">
+         <a class="box1" href="https://drive.google.com/file/d/1-DgC8RkXQ-SoaTwRWh_33YfBsJx2jJeb/view?usp=drivesdk">
+         <img src="https://i.ibb.co/Wvcyr49p/snapedit-1746134438046-jpg.jpg" alt="Lesson Image">
+         <div class="card-content">
+                 <div class="title">තරල යන්ත්‍ර Lessons Wise Papers </div>
+                 <div class="subtitle">Subjet :- ET</div>
+                 <div class="subtitle"> <i class="fa-brands fa-gg-circle"></i> ET Unit Papers </div>
+                 <div class="button-container">
+                     <span class="price"> Limited Time Free <i class="fa-solid fa-circle-exclamation"></i></span>
+                     <span class="button"> Pdf </span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+  <div class="card" id="box">
+         <a class="box1" href="https://drive.google.com/file/d/1-6F2NC3lmD47cEi4b0FUM_AB4lbqGwPI/view?usp=drivesdk">
+         <img src="https://i.ibb.co/cKxcfhPY/Screenshot-20250502-154142.png" alt="Lesson Image">
+         <div class="card-content">
+                 <div class="title">Electrical Lessons Wise Papers</div>
+                 <div class="subtitle">Subjet :- ET</div>
+                 <div class="subtitle"> <i class="fa-brands fa-gg-circle"></i> Questions</div>
+                 <div class="button-container">
+                     <span class="price">Limited Time Free <i class="fa-solid fa-circle-exclamation"></i></span>
+                     <span class="button"> Pdf </span>
+                 </div>
+             </a>
+         </div>
+      </div>
+
+      <div class="card" id="box">
+         <a class="box1" href="https://drive.google.com/file/d/1--Z3KZcEja06dcZwXN3XbFxPnroGeyPB/view?usp=drivesdk">
+         <img src="https://i.ibb.co/5g7RgZdh/Screenshot-20250502-154807.png" alt="Lesson Image">
+         <div class="card-content">
+                 <div class="title">Safety Lesson Wise Papers</div>
+                 <div class="subtitle">Subjet :- ET</div>
+                 <div class="subtitle"> <i class="fa-brands fa-gg-circle"></i>Lesson Wise Papers</div>
+                 <div class="button-container">
+                     <span class="price">Limited Time Free <i class="fa-solid fa-circle-exclamation"></i></span>
+                     <span class="button"> Pdf </span>
+                 </div>
+             </a>
+         </div>
+      </div>
+   -->
+      <script>
+         // Function to add gap between cards using JS
+         function addGapBetweenCards() {
+             const cards = document.querySelectorAll('.card');
+             cards.forEach(card => {
+                 card.style.margin = '10px'; // Set the margin to create space between cards
+             });
+         }
+ 
+         // Function to alert when a card is clicked
+         function cardClicked() {
+             alert("You clicked the lesson card!");
+         }
+ 
+         // Call the function to add gap when the page loads
+         window.onload = addGapBetweenCards;
+     </script>
+     
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+
+<script src="/js/profile.js"></script>
+   
+</body>
+</html>

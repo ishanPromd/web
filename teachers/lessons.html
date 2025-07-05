@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>SFT Lessons</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/css/style.css">
+   <link rel="stylesheet" href="/css/text.css">
+   <link rel="icon" type="image/x-icon" href="https://i.imghippo.com/files/ao9417UdU.png">
+
+</head>
+<body>
+
+   <header class="header">
+
+      <section class="flex">
+          <div class="icons">
+              <div id="menu-btn" class="fas fa-bars"></div>
+          </div>
+
+          <form action="search.html" method="post" class="search-form">
+              <input type="text" name="search_box" required placeholder="search Lessons..." maxlength="100">
+              <button type="submit" class="fas fa-search"></button>
+          </form>
+
+          <div class="icons">
+              <div id="search-btn" class="fas fa-search"></div>
+              <div id="user-btn1"i class="fa-regular fa-clock" ></div>
+              <div id="toggle-btn" class="fas fa-sun"></div>
+              <div id="user-btn" class="fas fa-user"></div>
+              
+          </div>
+
+          <div class="profile">
+              <img id="userImage" class="image" alt="">
+              <h3 class="name" id="userName"></h3>
+              <div class="flex-btn">
+              </div>
+          </div>
+
+      </section>
+      </header>   
+      
+      <div class="side-bar">
+
+          <div id="close-btn">
+              <i class="fas fa-times"></i>
+          </div>
+
+          <div class="profile">
+              <img id="userImage" class="image">
+              <br>
+              <h3 id="userName" class="name"></h3>
+              <p class="role">student</p>
+          </div>
+
+          <nav class="navbar">
+              <a href="/home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+              <a href="/teachers/teachers.html"><i class="fas fa-chalkboard-user"></i><span>My Lessons</span></a>
+              <a href="/progress.html"><i class="fas fa-question"></i><span> My Progress</span></a>
+              <a href="/weekplan.html"><i class="fa-solid fa-calendar"></i><span> Week Plan</span></a>
+              <a href="/paper/sft/playlist.html"> <i class="fa-solid fa-address-book"></i><span> Papers</span></a>
+          </nav>
+
+          <div class="typing-container">
+              <div class="animation-container">
+              <div id="text"></div>
+              <span class="cursor"></span>
+              </div>
+          </div>
+
+      </div>
+
+
+      <section class="courses">    
+
+         <h1 class="heading">SFT (Upul Weerasinghe)</h1>
+      <div id="preloader" class="preloader">
+         <div>
+            <div class="loader"></div>
+         </div>
+            <p class="loading-text">Loading...</p>
+         </div>
+         <div id="content" style="display: none;">
+
+<div class="box-container">
+             <!--  <div class="card" id="box">
+                <a class="box1" href="/lessons/SPEED REVISION/">
+                     <span class="span">5 videos</span>
+                  <img src="https://i.ibb.co/tS2gT2S/20250430-200443.jpg" alt="Speed Revision">
+                  <div class="card-content">
+                        <div class="title"> 2025 AL - Speed revision </div>
+                        <div class="subtitle"> එක පාරින් බලලා ඉවර කරහම් 😒</div>
+                        <div class="subtitle">Physical Lesson Pack</div>
+                        <div class="button-container">
+                              <span class="price">(<i class="fa-solid fa-user"></i>)  Limited access</span>
+                              <span class="button">Lesson Pack</span>
+                        </div>
+                     </a>
+                  </div>
+            </div>-->
+            
+            <div class="box-container">
+               <div class="card" id="box">
+                  <a class="box1" href="/lessons/jeiwanu/playlist.html">
+                     <span class="span">4 videos</span>
+                  <img src="https://iili.io/3KDGAs2.png" alt="Lesson Image">
+                  <div class="card-content">
+                        <div class="title">ජෛවාණු - 2025 AL - Theory </div>
+                        <div class="subtitle">🔴ජෛවාණු පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල noහැක.</div>
+                        <div class="subtitle">Physical Lesson Pack</div>
+                        <div class="button-container">
+                              <span class="price">Rs. 3300.00</span>
+                              <span class="button">Lesson Pack</span>
+                        </div>
+                     </a>
+                  </div>
+            </div>
+</div>
+            <div class="box-container">
+               <div class="card" id="box">
+                  <a class="box1" href="/lessons/kandanka-jamithiya/playlist.html">
+                     <span class="span">3 videos</span>
+                  <img src="https://iili.io/3KDWAsR.md.png" alt="Lesson Image">
+                  <div class="card-content">
+                        <div class="title">ඛණ්ඩාංක ජ්‍යාමිතිය - 2025 AL - Theory </div>
+                        <div class="subtitle">🔴ඛණ්ඩාංක ජ්‍යාමිතිය පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල noහැක.</div>
+                        <div class="subtitle">Physical Lesson Pack</div>
+                        <div class="button-container">
+                              <span class="price">Rs. 3300.00</span>
+                              <span class="button">Lesson Pack</span>
+                        </div>
+                     </a>
+                  </div>
+            </div>
+            </div>
+    
+            <div class="box-container">
+               <div class="card" id="box">
+                  <a class="box1" href="/lessons/thapa-rasayanaya/playlist_new.html">
+                     <span class="span">3 videos</span>
+                  <img src="https://iili.io/3KDhnta.png" alt="Lesson Image">
+                  <div class="card-content">
+                        <div class="title">තාප රසායනය - 2025 AL - Theory </div>
+                        <div class="subtitle">🔴තාප රසායනය ගුණ පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                        <div class="subtitle">Physical Lesson Pack</div>
+                        <div class="button-container">
+                              <span class="price">Rs. 4500.00</span>
+                              <span class="button">Lesson Pack</span>
+                        </div>
+                     </a>
+                  </div>
+            </div>
+            </div>
+        <div class="card" id="box">
+                     <a class="box1" href="/lessons/yanthrika/">
+                        <span class="span">4 videos</span>
+                     <img class="IMG12" src="https://storage.upulweerasinghe.lk/web-data/Covers/Classes/WhatsApp_Image_2025-01-30_at_10.39.23_AM_1.jpeg" alt="Lesson Image">
+                     <div class="card-content">
+                           <div class="title">යාන්ත්‍රික ශක්තිය- 2025 AL - Theory </div>
+                           <div class="subtitle">🔴 යාන්ත්‍රික ශක්තිය පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                           <div class="subtitle">Physical Lesson Pack</div>
+                           <div class="button-container">
+                                 <span class="price">Rs. 4500.00</span>
+                                 <span class="button">Lesson Pack</span>
+                           </div>
+                        </a>
+                     </div>
+               </div>
+               <div class="card" id="box">
+                     <a class="box1" href="/lessons/padarthaya/playlist.html">
+                        <span class="span">3 videos</span>
+                     <img class="IMG12" src="https://iili.io/3KDwKTF.md.png" alt="Lesson Image">
+                     <div class="card-content">
+                           <div class="title">පදාර්ථයේ යාන්ත්‍රික ගුණ - 2025 AL - Theory </div>
+                           <div class="subtitle">🔴පදාර්ථයේ යාන්ත්‍රික ගුණ පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                           <div class="subtitle">Physical Lesson Pack</div>
+                           <div class="button-container">
+                                 <span class="price">Rs. 4500.00</span>
+                                 <span class="button">Lesson Pack</span>
+                           </div>
+                        </a>
+                     </div>
+               </div>
+
+               <div class="card" id="box">
+                  <a class="box1" href="/lessons/Calithaya/playlist.html">
+                     <span class="span">5 videos</span>
+                  <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2FWhatsApp_Image_2025-02-13_at_6.47.09_AM_1.jpeg&w=3840&q=75" alt="Lesson Image">
+                  <div class="card-content">
+                        <div class="title">චලිතය - Theory - 2025 AL</div>
+                        <div class="subtitle">🔴 චලිතය පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                        <div class="subtitle">Physical Lesson Pack</div>
+                        <div class="button-container">
+                              <span class="price">Rs. 3300.00</span>
+                              <span class="button">Lesson Pack</span>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+
+               <div class="card" id="box">
+                  <a class="box1" href="/lessons/thapaya/playlist.html">
+                     <span class="span">8 videos</span>
+                  <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2FWhatsApp_Image_2025-02-13_at_6.47.09_AM.jpeg&w=1920&q=75" alt="Lesson Image">
+                  <div class="card-content">
+                        <div class="title">තාපය - Revision - 2025 AL</div>
+                        <div class="subtitle">🔴 තාපය පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                        <div class="subtitle">Physical Lesson Pack</div>
+                        <div class="button-container">
+                              <span class="price">Rs. 2500.00</span>
+                              <span class="button">Lesson Pack</span>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+
+               <div class="card"  id="box">
+                  <a class="box1" href="/lessons/balaya/playlist.html">
+                     <span class="span">22 videos</span>
+                  <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2FTHEORY_.png&w=1920&q=75" alt="Lesson Image">
+                  <div class="card-content">
+                        <div class="title">බලය - Theory - 2025 AL</div>
+                        <div class="subtitle">🔴 බලය පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                        <div class="subtitle">Physical Lesson Pack</div>
+                        <div class="button-container">
+                              <span class="price">Rs. 4300.00</span>
+                              <span class="button">Lesson Pack</span>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+
+
+               <div class="card" id="box">
+                  <a class="box1" href="/lessons/Mulika_ganithaya/playlist.html">
+                     <span class="span">6 videos</span>
+                  <img class="IMG12" src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2Fmulika_ganithaya_THEORY.png&w=1920&q=75" alt="Lesson Image">
+                  <div class="card-content">
+                        <div class="title">මූලික ගණිතය - - 2025 AL - Theory </div>
+                        <div class="subtitle">🔴මූලික ගණිතය - පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                        <div class="subtitle">Physical Lesson Pack</div>
+                        <div class="button-container">
+                              <span class="price">Rs. 4500.00</span>
+                              <span class="button">Lesson Pack</span>
+                        </div>
+                     </a>
+                  </div>
+            </div>
+
+            <div class="card" id="box">
+               <a class="box1" href="/lessons/mulika_ganithaya/playlist.html">
+                  <span class="span">1 videos</span>
+               <img class="IMG12" src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2Fthrikonamithiya_THEORY_.png&w=3840&q=75" alt="Lesson Image">
+               <div class="card-content">
+                     <div class="title">ත්‍රිකෝණමිතිය  - - 2025 AL - Theory </div>
+                     <div class="subtitle">🔴ත්‍රිකෝණමිතිය  - පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                     <div class="subtitle">Physical Lesson Pack</div>
+                     <div class="button-container">
+                           <span class="price">Rs. 4500.00</span>
+                           <span class="button">Lesson Pack</span>
+                     </div>
+                  </a>
+               </div>
+            </div>
+
+            <div class="card" id="box">
+               <a class="box1" href="/lessons/seyila/playlist.html">
+                  <span class="span">12 videos + 2 tutes</span>
+               <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2Fsaila_THEORY_.png&w=1920&q=75" alt="Lesson Image">
+               <div class="card-content">
+                     <div class="title">සෛලීය සංවිධානයක් සහිත ජීවීන්  - Theory - 2025 L</div>
+                     <div class="subtitle">🔴සෛලීය සංවිධානයක් සහිත ජීවීන් පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                     <div class="subtitle">Physical Lesson Pack</div>
+                     <div class="button-container">
+                           <span class="price">Rs. 4500.00</span>
+                           <span class="button">Lesson Pack</span>
+                     </div>
+                  </a>
+               </div>
+            </div>
+
+            <div class="card" id="box">
+               <a class="box1" href="/lessons/minum/playlist.html">
+                  <span class="span">7 videos + 2 Tutes</span>
+               <img src="https://upulweerasinghe.lk/_next/image?url=https%3A%2F%2Fstorage.upulweerasinghe.lk%2Fweb-data%2FCovers%2FClasses%2Fminum_upakarana_THEORY_.png&w=1920&q=75" alt="Lesson Image">
+               <div class="card-content">
+                     <div class="title">මිනුම් උපකරණ - 2025 AL - Theory </div>
+                     <div class="subtitle">🔴මිනුම් උපකරණ ගුණ පාඩම අංගසම්පූර්ණව මේ හරහා අධ්‍යනය කල හැක.</div>
+                     <div class="subtitle">Physical Lesson Pack</div>
+                     <div class="button-container">
+                           <span class="price">Rs. 4500.00</span>
+                           <span class="button">Lesson Pack</span>
+                     </div>
+                  </a>
+               </div>
+         </div>
+
+
+
+         </div>
+      </div>
+</section>
+<!-- custom js file link  -->
+<script src="/js/script.js"></script>
+<script src="/js/profile.js"></script>
+   <script src="/js/text.js"></script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Login</title>
+
+   <!-- font awesome cdn link -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+   <link rel="icon" type="image/x-icon" href="https://i.imghippo. com/files/ao9417UdU.png">
+
+   <style>
+      :root {
+         --primary: #ebe8e8;
+         --primary-hover: #8f8f8f;
+         --background: #1e1e1f;
+         --card-bg: #252525;
+         --text: #f8fafc;
+         --text-muted: #f1f1f1;
+         --border: #414141;
+         --error: #ef4444;
+      }
+
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         transition: all 0.2s ease;
+      }
+
+      body {
+         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+         background-color: var(--background);
+         color: var(--text);
+         display: flex;
+         flex-direction: column;
+         min-height: 100vh;
+         position: relative;
+      }
+
+      .header {
+         position: fixed;
+         top: 20px;
+         border-radius: 10px;
+         width: 95%;
+         margin-left: 2.5%;
+         left: 0;
+         right: 0;
+         background-color: rgba(49, 49, 49, 0.98);
+         border-bottom: 1px solid var(--border);
+         z-index: 1000;
+         backdrop-filter: blur(10px);
+      }
+
+      .header .flex {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 1rem 2rem;
+         max-width: 1200px;
+         margin: 0 auto;
+         width: 100%;
+      }
+
+      .header .icons {
+         display: flex;
+         gap: 1.5rem;
+      }
+
+      .header .icons div {
+         font-size: 1.2rem;
+         color: var(--text);
+         cursor: pointer;
+      }
+
+      .header .icons div:hover {
+         color: var(--primary);
+      }
+
+      .side-bar {
+         position: fixed;
+         top: 0;
+         left: -320px;
+         height: 100vh;
+         width: 300px;
+         background-color: var(--card-bg);
+         border-right: 1px solid var(--border);
+         z-index: 1200;
+         padding: 2rem 1.5rem;
+         transition: left 0.3s ease;
+         box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .side-bar.active {
+         left: 0;
+      }
+
+      .side-bar #close-btn {
+         position: absolute;
+         top: 1.2rem;
+         right: 1.2rem;
+         font-size: 1.5rem;
+         cursor: pointer;
+         color: var(--text);
+      }
+
+      .side-bar #close-btn:hover {
+         color: var(--primary);
+      }
+
+      .profile {
+         text-align: center;
+         margin: 3rem 0;
+      }
+
+      .profile .image {
+         width: 80px;
+         height: 80px;
+         border-radius: 50%;
+         object-fit: cover;
+         margin: 0 auto;
+         border: 2px solid var(--primary);
+      }
+
+      .profile .name {
+         margin-top: 1rem;
+         font-size: 1.2rem;
+         color: var(--text);
+      }
+
+      .profile .role {
+         font-size: 0.9rem;
+         color: var(--text-muted);
+         margin-top: 0.5rem;
+      }
+
+      .auth-container {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         min-height: 100vh;
+         padding: 1rem;
+      }
+
+      .form-container {
+         width: 100%;
+         max-width: 420px;
+         padding: 2.5rem;
+         background-color: var(--card-bg);
+         border-radius: 12px;
+         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+         margin-top: 60px;
+      }
+
+      #gSignIn {
+         display: flex;
+         justify-content: center;
+         margin: 1rem 0;
+         min-height: 40px; /* Ensure the button has space to render */
+      }
+
+      /* Plain button as fallback */
+      .google-btn {
+         background-color: white;
+         color: #444;
+         border: 1px solid #ddd;
+         border-radius: 24px;
+         padding: 10px 24px;
+         font-weight: 500;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
+         width: 100%;
+         max-width: 240px;
+         margin: 0 auto;
+      }
+
+      .google-btn img {
+         width: 18px;
+         margin-right: 8px;
+      }
+
+      #userInfo {
+         display: none;
+         text-align: center;
+      }
+
+      #userImage {
+         width: 100px;
+         height: 100px;
+         border-radius: 50%;
+         margin: 1rem auto;
+         border: 3px solid var(--primary);
+         box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+      }
+
+      #userName {
+         font-size: 1.2rem;
+         margin: 0.5rem 0 1.5rem;
+      }
+
+      .button-container {
+         display: flex;
+         flex-direction: column;
+         gap: 0.75rem;
+         margin-top: 1.5rem;
+      }
+
+      .button {
+         background-color: var(--primary);
+         color: rgb(10, 10, 10);
+         border: none;
+         border-radius: 8px;
+         padding: 0.875rem;
+         font-size: 1rem;
+         font-weight: 500;
+         cursor: pointer;
+         transition: all 0.2s;
+         text-decoration: none;
+         display: inline-block;
+         text-align: center;
+         width: 100%;
+      }
+
+      .button:hover {
+         background-color: var(--primary-hover);
+         transform: translateY(-1px);
+         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+      }
+
+      .button:active {
+         transform: translateY(0);
+      }
+
+      .button i {
+         margin-left: 0.5rem;
+      }
+
+      .overlay {
+         position: fixed;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         background-color: rgba(0, 0, 0, 0.5);
+         z-index: 1100;
+         display: none;
+      }
+
+      .overlay.active {
+         display: block;
+      }
+      
+      .signin-notice {
+         text-align: center;
+         margin-bottom: 1rem;
+         color: var(--text-muted);
+      }
+
+      @media (max-width: 640px) {
+         .header .flex {
+            padding: 0.875rem 1rem;
+         }
+
+         .form-container {
+            padding: 1.75rem;
+            margin-top: 48px;
+            border-radius: 8px;
+         }
+      }
+   </style>
+   <meta name="google-signin-client_id" content="544000326327-fap2n9ebapq8iv7opagmaajddci5n5rp.apps.googleusercontent.com">
+</head>
+<body>
+
+   <header class="header">
+      <section class="flex">
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+         </div>
+   
+         <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn1" class="fa-regular fa-clock"></div>
+            <div id="toggle-btn" class="fas fa-moon"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+         </div>
+      </section>
+   </header>   
+      
+   <div class="side-bar">
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
+      </div>
+   
+      <div class="profile">
+         <img src="/images/1234.gif" class="image" alt="">
+         <h3 class="name">! Login Required</h3>
+         <p class="role">Please sign in to continue</p>
+      </div>
+   </div>
+
+   <div class="overlay"></div>
+
+   <div class="auth-container">
+      <section class="form-container">
+         <p class="signin-notice">Sign in with your account</p>
+         
+         <!-- Google Sign-In button -->
+         <div id="gSignIn">
+            <!-- Fallback button in case Google button doesn't load -->
+            <button class="google-btn" onclick="tryGoogleSignIn()">
+               <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+               Sign in with Google
+            </button>
+         </div>
+   
+         <div id="userInfo">
+            <img id="userImage" alt="User profile">
+            <h2 id="userName"></h2>
+            <div class="button-container">
+               <a href="/home.html" class="button">Access Dashboard <i class="fa-solid fa-arrow-right"></i></a>
+               <button class="button" onclick="signOut()">Sign Out</button>
+            </div>
+         </div>
+      </section>
+   </div>
+
+   
+   
+   <script src="/js/animation.js? v=1.1.2"></script> <script src="/js/animation.js? t=20250505232900"></script>
+   <script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+</html>

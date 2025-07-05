@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Account Banned</title>
+
+   <!-- font awesome cdn link -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <style>
+      :root {
+         --primary: #ebe8e8;
+         --primary-hover: #8f8f8f;
+         --background: #1e1e1f;
+         --card-bg: #252525;
+         --text: #f8fafc;
+         --text-muted: #f1f1f1;
+         --border: #414141;
+         --error: #ef4444;
+      }
+
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         transition: all 0.2s ease;
+      }
+
+      body {
+         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+         background-color: var(--background);
+         color: var(--text);
+         display: flex;
+         flex-direction: column;
+         min-height: 100vh;
+         position: relative;
+      }
+
+      .header {
+         position: fixed;
+         top: 20px;
+         border-radius: 10px;
+         width: 95%;
+         margin-left: 2.5%;
+         left: 0;
+         right: 0;
+         background-color: rgba(49, 49, 49, 0.98);
+         border-bottom: 1px solid var(--border);
+         z-index: 1000;
+         backdrop-filter: blur(10px);
+      }
+
+      .header .flex {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 1rem 2rem;
+         max-width: 1200px;
+         margin: 0 auto;
+         width: 100%;
+      }
+
+      .header .icons {
+         display: flex;
+         gap: 1.5rem;
+      }
+
+      .header .icons div {
+         font-size: 1.2rem;
+         color: var(--text);
+         cursor: pointer;
+      }
+
+      .header .icons div:hover {
+         color: var(--primary);
+      }
+
+      .side-bar {
+         position: fixed;
+         top: 0;
+         left: -320px;
+         height: 100vh;
+         width: 300px;
+         background-color: var(--card-bg);
+         border-right: 1px solid var(--border);
+         z-index: 1200;
+         padding: 2rem 1.5rem;
+         transition: left 0.3s ease;
+         box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .side-bar.active {
+         left: 0;
+      }
+
+      .side-bar #close-btn {
+         position: absolute;
+         top: 1.2rem;
+         right: 1.2rem;
+         font-size: 1.5rem;
+         cursor: pointer;
+         color: var(--text);
+      }
+
+      .side-bar #close-btn:hover {
+         color: var(--primary);
+      }
+
+      .profile {
+         text-align: center;
+         margin: 3rem 0;
+      }
+
+      .profile .icon-container {
+         margin: 0 auto;
+         width: 80px;
+         height: 80px;
+         border-radius: 50%;
+         background-color: var(--error);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         border: 2px solid var(--primary);
+      }
+
+      .profile .icon {
+         font-size: 2.5rem;
+         color: var(--text);
+      }
+
+      .profile .name {
+         margin-top: 1rem;
+         font-size: 1.2rem;
+         color: var(--text);
+      }
+
+      .profile .role {
+         font-size: 0.9rem;
+         color: var(--text-muted);
+         margin-top: 0.5rem;
+      }
+
+      .auth-container {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         min-height: 100vh;
+         padding: 1rem;
+      }
+
+      .form-container {
+         width: 100%;
+         max-width: 420px;
+         padding: 2.5rem;
+         background-color: var(--card-bg);
+         border-radius: 12px;
+         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+         margin-top: 60px;
+      }
+
+      .banned-notice {
+         text-align: center;
+         margin-bottom: 1.5rem;
+         color: var(--error);
+         font-weight: 600;
+         font-size: 1.5rem;
+      }
+
+      .icon-container {
+         width: 100px;
+         height: 100px;
+         margin: 0 auto 1.5rem;
+         border-radius: 50%;
+         background-color: var(--error);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         border: 3px solid var(--primary);
+         box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+      }
+
+      .ban-icon {
+         font-size: 3rem;
+         color: var(--text);
+      }
+
+      .message {
+         text-align: center;
+         margin: 1.5rem 0;
+         color: var(--text-muted);
+         line-height: 1.6;
+      }
+
+      .button-container {
+         display: flex;
+         flex-direction: column;
+         gap: 0.75rem;
+         margin-top: 1.5rem;
+      }
+
+      .button {
+         background-color: var(--primary);
+         color: rgb(10, 10, 10);
+         border: none;
+         border-radius: 8px;
+         padding: 0.875rem;
+         font-size: 1rem;
+         font-weight: 500;
+         cursor: pointer;
+         transition: all 0.2s;
+         text-decoration: none;
+         display: inline-block;
+         text-align: center;
+         width: 100%;
+      }
+
+      .button:hover {
+         background-color: var(--primary-hover);
+         transform: translateY(-1px);
+         box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+      }
+
+      .button:active {
+         transform: translateY(0);
+      }
+
+      .button i {
+         margin-left: 0.5rem;
+      }
+
+      .overlay {
+         position: fixed;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         background-color: rgba(0, 0, 0, 0.5);
+         z-index: 1100;
+         display: none;
+      }
+
+      .overlay.active {
+         display: block;
+      }
+
+      /* Floating particles animation */
+      .particles-container {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         overflow: hidden;
+         z-index: -1;
+      }
+
+      .particle {
+         position: absolute;
+         width: 5px;
+         height: 5px;
+         background-color: rgba(239, 68, 68, 0.3);
+         border-radius: 50%;
+         animation: float 8s infinite linear;
+      }
+
+      @keyframes float {
+         0% {
+            transform: translateY(0) translateX(0);
+            opacity: 0;
+         }
+         10% {
+            opacity: 1;
+         }
+         90% {
+            opacity: 1;
+         }
+         100% {
+            transform: translateY(-100vh) translateX(20px);
+            opacity: 0;
+         }
+      }
+
+      @media (max-width: 640px) {
+         .header .flex {
+            padding: 0.875rem 1rem;
+         }
+
+         .form-container {
+            padding: 1.75rem;
+            margin-top: 48px;
+            border-radius: 8px;
+         }
+      }
+   </style>
+</head>
+<body>
+   <div class="particles-container" id="particles"></div>
+
+   <header class="header">
+      <section class="flex">
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+         </div>
+   
+         <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn1" class="fa-regular fa-clock"></div>
+            <div id="toggle-btn" class="fas fa-moon"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+         </div>
+      </section>
+   </header>   
+      
+   <div class="side-bar">
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
+      </div>
+   
+      <div class="profile">
+         <div class="icon-container">
+            <i class="fas fa-ban icon"></i>
+         </div>
+         <h3 class="name">Account Banned !</h3>
+         <p class="role">Please contact support</p>
+      </div>
+   </div>
+
+   <div class="overlay"></div>
+
+   <div class="auth-container">
+      <section class="form-container">
+         <h2 class="banned-notice">Account Banned</h2>
+         
+         <div class="icon-container">
+            <i class="fas fa-ban ban-icon"></i>
+         </div>
+   
+         <p class="message">We regret to inform you that your account has been suspended due to a harmful activity ( Ex :- link shearing , Try to login as admin or access sensitive content in the server & etc ). If you believe this is an error , please contact our support team for assistance.</p>
+   
+         <div class="button-container">
+            <a href="https://api.whatsapp.com/send?phone=94767797873" class="button">Contact Support <i class="fa-solid fa-envelope"></i></a>
+            <a href="/index.html" class="button">Return to Login <i class="fa-solid fa-arrow-left"></i></a>
+         </div>
+      </section>
+   </div>
+
+   <script>
+      // Create floating particles
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+         const particle = document.createElement('div');
+         particle.classList.add('particle');
+         
+         // Randomize position, size, and animation delay
+         const size = Math.random() * 4 + 1;
+         particle.style.width = `${size}px`;
+         particle.style.height = `${size}px`;
+         
+         particle.style.left = `${Math.random() * 100}%`;
+         particle.style.bottom = `${Math.random() * 100}%`;
+         
+         const duration = Math.random() * 10 + 5;
+         particle.style.animation = `float ${duration}s infinite linear`;
+         particle.style.animationDelay = `${Math.random() * 5}s`;
+         
+         particlesContainer.appendChild(particle);
+      }
+      
+      // Side menu functionality
+      const menuBtn = document.getElementById('menu-btn');
+      const closeBtn = document.getElementById('close-btn');
+      const sideBar = document.querySelector('.side-bar');
+      const overlay = document.querySelector('.overlay');
+      
+      menuBtn.addEventListener('click', () => {
+         sideBar.classList.add('active');
+         overlay.classList.add('active');
+      });
+      
+      closeBtn.addEventListener('click', () => {
+         sideBar.classList.remove('active');
+         overlay.classList.remove('active');
+      });
+      
+      overlay.addEventListener('click', () => {
+         sideBar.classList.remove('active');
+         overlay.classList.remove('active');
+      });
+   </script>
+</body>
+</html>
